@@ -44,3 +44,19 @@ header a {
 h1 {
   padding: 20px 0px 20px 40px;
 }
+
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image:  url("https://user-images.githubusercontent.com/47605442/122488851-fa3f3f80-cfa3-11eb-8ec1-6e58bc08cc6d.jpeg");
+
+  /* Set a specific height */
+  height: 250px;
+  width: 100%;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
