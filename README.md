@@ -1,2 +1,2 @@
-# breaktime-app
+# parktime-app
 Group project for UT Full Stack Web Dev bootcamp

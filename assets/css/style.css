@@ -6,7 +6,7 @@
 
 :root {
   --main-color: #557174;
-  --secondary-color: #9DAD7F;
+  --secondary-color: #84926a;
   --light-color: #c7cfb7;
 }
 
@@ -39,10 +39,18 @@ header a {
   text-decoration: none;
   color: white;
   margin-right: 40px;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 5px;
+}
+
+header a:hover {
+  border-bottom: 2px solid #FFF;
 }
 
 h1 {
   padding: 20px 0px 20px 40px;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .hero-image {
@@ -60,3 +68,94 @@ h1 {
   position: relative;
 }
 
+main {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(25, 1fr);
+  margin-top: 30px;
+}
+
+form a {
+  grid-column: 13 / span 4;
+  font-size: 14px;
+  justify-self: end;
+  padding-top: 5px;
+  color: #000;
+  text-decoration: none;
+  color: var(--main-color);
+  font-weight: 600;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+form a:hover {
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+form p {
+  grid-column: 9 / span 10;
+  padding: 40px 0 20px;
+  font-size: 18px;
+}
+
+.address {
+  font-size: 18px;
+  grid-column: 9 / span 8;
+  padding-bottom: 10px;
+}
+
+#address {
+  grid-column: 9 / span 8;
+  padding: 10px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+input[type="checkbox"] {
+  grid-column: 13 / span 1;
+  justify-self: end;
+  margin-right: 10px;
+}
+
+input[type="checkbox"]:nth-of-type(even) {
+  grid-column: 9 / span 1;
+}
+
+input[type="checkbox" i] {
+  width: 15px;
+  height: 15px;
+}
+
+input:hover {
+  cursor: pointer;
+}
+
+label.activities {
+  grid-column: 14 / span 3;
+  margin: 0 0 15px;
+}
+
+label.activities:nth-of-type(even) {
+  grid-column: 10 / span 3;
+}
+
+form button {
+  grid-column: 11 / span 4;
+  font-size: 16px;
+  color: #FFF;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 30px 20px 0;
+}
+
+form button:hover {
+  background-color: var(--secondary-color);
+  cursor: pointer;
+}
