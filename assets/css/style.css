@@ -159,3 +159,110 @@ form button:hover {
   background-color: var(--secondary-color);
   cursor: pointer;
 }
+
+#park-result-modal {
+  display: none; /* Hidden by default */
+  position: fixed; 
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  align-items: center;
+  justify-content: center;
+}
+
+#park-result-content {
+  padding: 20px;
+  background-color: white;
+  height: 50%;
+  width: 50%;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  overflow: auto;
+}
+
+#park-result-content h3:not(#modal-subtitle) { 
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+#modal-title {
+  font-size: 30px;
+  width: 90%;
+  text-align: left;
+  height: fit-content;
+}
+
+#modal-subtitle {
+  font-size: 20px;
+  width: 100%;
+  text-align: left;
+  height: fit-content;
+  padding-top: 5px;
+}
+
+#modal-distance {
+  padding-top: 10px;
+  width: 100%;
+}
+
+#modal-description {
+  padding-left: 20px;
+}
+
+#modal-website {
+  padding-left: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+#modal-saved {
+  padding-top: 10px;
+  width: 100%;
+}
+
+#close-modal {
+  font-size: 30px;
+  width: 10%;
+  text-align: right;
+  height: fit-content;
+  font-weight: lighter;
+}
+
+#modal-activities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+#modal-forecast-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.modal-activity {
+  background-color: var(--light-color);
+  font-weight: bold;
+  padding: 2px 10px 2px 10px;
+  margin: 10px;
+}
+
+.modal-forecast {
+  background-color: var(--main-color);
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+}
