@@ -38,6 +38,22 @@ console.log(getDistance(30.437575, -97.766203, 30.111375, -97.290104));
 
 var findParksButton = $("#find-parks");
 
+var useCurrentLocation = function(event) {
+  event.preventDefault();
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(usersCurrentLocation);
+  } else {
+    console.log("failed");
+  }
+}
+
+var usersCurrentLocation = function(data) {
+  console.log(data.coords.latitude);
+  console.log(data.coords.longitude);
+}
+
+$("#current-location").on("click", useCurrentLocation);
+
 var captureUsersAddress = function(event) {
   event.preventDefault();
   let address = $("#address").val();

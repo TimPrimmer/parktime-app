@@ -81,7 +81,7 @@ form {
   margin-top: 30px;
 }
 
-form a {
+form span {
   grid-column: 13 / span 4;
   font-size: 14px;
   justify-self: end;
@@ -94,7 +94,7 @@ form a {
   border-bottom: 2px solid transparent;
 }
 
-form a:hover {
+form span:hover {
   color: var(--secondary-color);
   border-bottom: 2px solid var(--secondary-color);
 }
