@@ -35,3 +35,26 @@ var getDistance = function (lat1, lon1, lat2, lon2) { // Returns distance in mil
 }
 
 console.log(getDistance(30.437575, -97.766203, 30.111375, -97.290104));
+
+var findParksButton = $("#find-parks");
+
+var captureUsersAddress = function(event) {
+  event.preventDefault();
+  let address = $("#address").val();
+  convertAddressToLatLon(address);
+}
+
+var convertAddressToLatLon = function(address) {
+  fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=30b8ed07042d496bb70facbcf6fc2ab6").then(function(response) {
+    if (response.ok) {
+      response.json().then(function(data) {
+        console.log(data.features[0].properties.lat);
+        console.log(data.features[0].properties.lon);
+      })
+    } else {
+      console.log("Error converting users address to Lat/Lon");
+    }
+  });
+}
+
+findParksButton.on("click", captureUsersAddress);
