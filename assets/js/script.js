@@ -41,13 +41,13 @@ var findParksButton = $("#find-parks");
 var useCurrentLocation = function(event) {
   event.preventDefault();
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(usersCurrentLocation);
+    navigator.geolocation.getCurrentPosition(usersLatLon);
   } else {
     console.log("failed");
   }
 }
 
-var usersCurrentLocation = function(data) {
+var usersLatLon = function(data) {
   console.log(data.coords.latitude);
   console.log(data.coords.longitude);
 }
