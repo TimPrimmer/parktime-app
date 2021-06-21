@@ -97,7 +97,7 @@ form span {
 }
 
 #status-text { /* Styling for the error/success text underneath the initial search bar */
-  grid-column: 9 / span 4;
+  grid-column: 10 / span 3;
   justify-self: left;
 }
 
