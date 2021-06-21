@@ -180,14 +180,15 @@ form button:hover {
 #park-result-content {
   padding: 20px;
   background-color: white;
-  height: 50%;
-  width: 50%;
+  height: 70%;
+  width: 70%;
   display:flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
   align-content: flex-start;
   overflow: auto;
+  max-width: 900px;
 }
 
 #park-result-content h3:not(#modal-subtitle) { 
@@ -250,9 +251,11 @@ form button:hover {
 
 #modal-forecast-box {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
+  list-style-type: none;
+  margin: 0 20px;
+  overflow-x: auto;
 }
 
 .modal-activity {
@@ -264,7 +267,43 @@ form button:hover {
 
 .modal-forecast {
   background-color: var(--main-color);
-  height: 100px;
-  width: 100px;
-  margin: 10px;
+  padding: 10px;
+  color: #FFF;
+  font-size: 14px;
+  min-width: 150px;
+  margin-right: 10px;
 }
+
+.modal-forecast li:not(:last-child) {
+  margin-right: 10px;
+}
+
+.modal-forecast p {
+  padding-bottom: 10px;
+}
+
+.uvi {
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.low {
+  background-color: #4fa20f;
+}
+
+.moderate {
+  background-color: #fdbc04;
+}
+
+.high {
+  background-color: #fd9100;
+}
+
+.very-high {
+  background-color: #f55024;
+}
+
+.extreme {
+  background-color: #9e47cc;
+}
+
