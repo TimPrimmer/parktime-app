@@ -1,9 +1,12 @@
 var modal = $("#park-result-modal");
 var closeModal = $("#close-modal");
+var mainForm = $("#main-form");
 
 var findParksButton = $("#find-parks");
 var statusText = $("#status-text");
 
+var userLat = 0;
+var userLon = 0;
 
 // fires when we click on the test modal button
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
@@ -70,10 +73,11 @@ var useCurrentLocation = function(event) {
   }
 }
 
-var usersLatLon = function(data) {
-  console.log(data.coords.latitude);
-  console.log(data.coords.longitude);
+var usersLatLon = function(data) { // fires if we get the users current location
+  userLat = data.coords.latitude;
+  userLon = data.coords.longitude;
   searchDisplayMsg(false, 3); // display success message
+  getParkData();
 }
 
 var captureUsersAddress = function(event) { // Fires when we click on "Find parks"
@@ -92,11 +96,11 @@ var convertAddressToLatLon = function(address) {
     .then(function(response) {
       if (response.ok) {
         response.json().then(function(data) {
-          console.log(data);
           if (data.features.length >= 1) { // Checks to see if we actually got a location back by verifying the features array length
-            console.log(data.features[0].properties.lat);
-            console.log(data.features[0].properties.lon);
             searchDisplayMsg(false, 3); // display success message
+            userLat = data.features[0].properties.lat;
+            userLon = data.features[0].properties.lon;
+            getParkData();
           }
           else
           {
@@ -114,11 +118,11 @@ var convertAddressToLatLon = function(address) {
 }
 
 var getParkData = function () {
-  var apiUrl = "https://https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=9999"
+  var apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
   fetch(apiUrl).then(function(response) {
     if (response.ok) {
       response.json().then(function(data) {
-        console.log(data);
+        displayResults(data.data); //passing in the array of parks itself
       })
     } else {
       console.log("Error grabbing park data");
@@ -126,5 +130,37 @@ var getParkData = function () {
   });
 }
 
-$("#current-location").on("click", useCurrentLocation);
-findParksButton.on("click", captureUsersAddress); 
+var displayResults = function (data) {
+ var parkList = [];
+  for (x = 0; x < data.length; x++) {
+    var tempParkObj = {
+      name: "Park Name",
+      loc: "Park Location",
+      dist: 0,
+      saved: false,
+      description: "Park Description",
+      link: ""
+    }; // Have to declare this inside the loop, otherwise it passes the obj reference into the array not a new object each time
+    tempParkObj.name = data[x].fullName;
+    if (data[x].addresses[0] != null) { // some park results dont have an address field, this checks for that
+      tempParkObj.loc = data[x].addresses[0].city + ", " + data[x].states;
+    }
+    else 
+    {
+      tempParkObj.loc = data[x].states;
+    }
+    tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
+    tempParkObj.saved = false;
+    tempParkObj.description = data[x].description;
+    tempParkObj.link = data[x].url;
+
+    parkList.push(tempParkObj);
+  }
+
+  parkList.sort((a,b) => a.dist - b.dist) // sorts by distance, lower values first
+
+  console.log(parkList);
+}
+
+$("#current-location").on("click", useCurrentLocation); // "use my location" button
+findParksButton.on("click", captureUsersAddress); // "find parks" button
