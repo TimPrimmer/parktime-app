@@ -1,6 +1,9 @@
 var modal = $("#park-result-modal");
 var closeModal = $("#close-modal");
 
+var findParksButton = $("#find-parks");
+var statusText = $("#status-text");
+
 
 // fires when we click on the test modal button
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
@@ -18,8 +21,8 @@ closeModal.on("click", function (event) {
   console.log(event);
 });
 
-
-var getDistance = function (lat1, lon1, lat2, lon2) { // Returns distance in miles between two lat and lon points
+// Returns distance in miles between two lat and lon points
+var getDistance = function (lat1, lon1, lat2, lon2) { 
   var radlat1 = Math.PI * lat1 / 180;
   var radlat2 = Math.PI * lat2 / 180;
   var theta = lon1 - lon2;
@@ -34,11 +37,29 @@ var getDistance = function (lat1, lon1, lat2, lon2) { // Returns distance in mil
   return dist;
 }
 
-console.log(getDistance(30.437575, -97.766203, 30.111375, -97.290104));
+// Displays a little message underneath the search bar so the user knows when the address is invalid,
+// or the "use my address" was successful
+var myTimeout; // Declaring this outside the function allows us to keep a reference to running timeouts
+var searchDisplayMsg = function (isError, seconds) {
+  if (isError) {
+    statusText.html("Invalid Address")
+    statusText.removeClass();
+    statusText.addClass("error");
+  }
+  else
+  {
+    statusText.html("Location Gathered")
+    statusText.removeClass();
+    statusText.addClass("success");
+  }
+  clearTimeout(myTimeout); // clears any existing timeout, this resets the timer if you trigger this before the last timeout finishes
+  myTimeout = setTimeout(function() { 
+    statusText.text("")
+    statusText.removeClass();
+  }, seconds * 1000); // hide after x seconds
+}
 
-var findParksButton = $("#find-parks");
-
-var useCurrentLocation = function(event) {
+var useCurrentLocation = function(event) { 
   event.preventDefault();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(usersLatLon);
@@ -48,29 +69,60 @@ var useCurrentLocation = function(event) {
 }
 
 var usersLatLon = function(data) {
-  console.log(data.coords.latitude);
-  console.log(data.coords.longitude);
+  //console.log(data.coords.latitude);
+  //console.log(data.coords.longitude);
+  searchDisplayMsg(false, 3); // display success message
 }
 
-$("#current-location").on("click", useCurrentLocation);
-
-var captureUsersAddress = function(event) {
+var captureUsersAddress = function(event) { // Fires when we click on "Find parks"
   event.preventDefault();
   let address = $("#address").val();
   convertAddressToLatLon(address);
 }
 
 var convertAddressToLatLon = function(address) {
-  fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=30b8ed07042d496bb70facbcf6fc2ab6").then(function(response) {
+  if (!address) { // checks to see if the user has entered in an address
+    searchDisplayMsg(true, 2); // display error message
+  }
+  else
+  {
+    fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=30b8ed07042d496bb70facbcf6fc2ab6")
+    .then(function(response) {
+      if (response.ok) {
+        response.json().then(function(data) {
+          console.log(data);
+          if (data.features.length >= 1) { // Checks to see if we actually got a location back by verifying the features array length
+            console.log(data.features[0].properties.lat);
+            console.log(data.features[0].properties.lon);
+            searchDisplayMsg(false, 3); // display success message
+          }
+          else
+          {
+            searchDisplayMsg(true, 2); // display error message
+          }
+        })
+      } else {
+        console.log("Error converting users address to Lat/Lon");
+     }
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  } 
+}
+
+var getParkData = function () {
+  var apiUrl = "https://https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=9999"
+  fetch(apiUrl).then(function(response) {
     if (response.ok) {
       response.json().then(function(data) {
-        console.log(data.features[0].properties.lat);
-        console.log(data.features[0].properties.lon);
+        console.log(data);
       })
     } else {
-      console.log("Error converting users address to Lat/Lon");
+      console.log("Error grabbing park data");
     }
   });
 }
 
-findParksButton.on("click", captureUsersAddress);
+$("#current-location").on("click", useCurrentLocation);
+findParksButton.on("click", captureUsersAddress); 

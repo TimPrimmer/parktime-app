@@ -8,6 +8,8 @@
   --main-color: #557174;
   --secondary-color: #84926a;
   --light-color: #c7cfb7;
+  --error-color: #f74d5c;
+  --success-color: #33b95c;
 }
 
 body {
@@ -94,7 +96,22 @@ form span {
   border-bottom: 2px solid transparent;
 }
 
-form span:hover {
+#status-text { /* Styling for the error/success text underneath the initial search bar */
+  grid-column: 9 / span 4;
+  justify-self: left;
+}
+
+.success { /* Styling for the error/success text underneath the initial search bar */
+  color: var(--success-color);
+  display: block;
+}
+
+.error { /* Styling for the error/success text underneath the initial search bar */
+  color: var(--error-color);
+  display: block;
+}
+
+#current-location:hover {
   color: var(--secondary-color);
   border-bottom: 2px solid var(--secondary-color);
 }
