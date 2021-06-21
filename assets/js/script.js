@@ -5,19 +5,21 @@ var closeModal = $("#close-modal");
 // fires when we click on the test modal button
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
 $("#results-container").on("click", "button.park-modal-button", function (event) {
-
   modal.css("display", "flex");
-  console.log(event);
 });
 
 
 // fires when we click on the span x in the modal
 closeModal.on("click", function (event) {
-
   modal.css("display", "none");
-  console.log(event);
 });
 
+// fires when we click outside of the modal
+window.onclick = function(event) {
+  if (event.target === modal[0]) { 
+    modal.css("display", "none");
+  }
+}
 
 var getDistance = function (lat1, lon1, lat2, lon2) { // Returns distance in miles between two lat and lon points
   var radlat1 = Math.PI * lat1 / 180;
