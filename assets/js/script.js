@@ -1,20 +1,17 @@
 var modal = $("#park-result-modal");
 var closeModal = $("#close-modal");
-var isOpen = false;
 
 
 // fires when we click on the test modal button
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
 $("#results-container").on("click", "button.park-modal-button", function (event) {
   modal.css("display", "flex");
-  isOpen = true;
 });
 
 
 // fires when we click on the span x in the modal
 closeModal.on("click", function (event) {
   modal.css("display", "none");
-  isOpen = false;
 });
 
 // fires when we click outside of the modal
