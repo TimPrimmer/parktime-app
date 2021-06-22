@@ -193,6 +193,7 @@ var getParkData = function () {
   fetch(apiUrl).then(function(response) {
     if (response.ok) {
       response.json().then(function(data) {
+        console.log(data.data);
         displayResults(data.data); //passing in the array of parks itself
       })
     } else {
@@ -206,20 +207,20 @@ var displayResults = function (data) {
   for (x = 0; x < data.length; x++) {
     var tempParkObj = {
       name: "Park Name",
-      loc: "Park Location",
+      states: "Park Location",
       dist: 0,
+      lat: "",
+      lon: "",
       saved: false,
       description: "Park Description",
+      activities: "",
       link: ""
     }; // Have to declare this inside the loop, otherwise it passes the obj reference into the array not a new object each time
     tempParkObj.name = data[x].fullName;
-    if (data[x].addresses[0] != null) { // some park results dont have an address field, this checks for that
-      tempParkObj.loc = data[x].addresses[0].city + ", " + data[x].states;
-    }
-    else 
-    {
-      tempParkObj.loc = data[x].states;
-    }
+    tempParkObj.states = data[x].states;
+    tempParkObj.lat = data[x].latitude;
+    tempParkObj.lon = data[x].longitude;
+    tempParkObj.activities = data[x].activities;
     tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
     tempParkObj.saved = false;
     tempParkObj.description = data[x].description;
