@@ -193,7 +193,6 @@ var getParkData = function () {
   fetch(apiUrl).then(function(response) {
     if (response.ok) {
       response.json().then(function(data) {
-        console.log(data.data);
         displayResults(data.data); //passing in the array of parks itself
       })
     } else {
