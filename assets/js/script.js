@@ -116,7 +116,6 @@ let getWeatherForecast = function(parkCoordinates) {
           if (response.ok) {
               response.json().then(function(data) {
                   buildForecastCards(data);
-                  console.log(data);
               });
           } else {
               return; // not sure what to do here just yet
