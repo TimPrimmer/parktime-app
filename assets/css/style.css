@@ -74,7 +74,7 @@ h1 {
 
 main {
   max-width: 1500px;
-  margin: 0 auto;
+  margin: 0 auto 75px;
 }
 
 form {
@@ -84,7 +84,7 @@ form {
 }
 
 form span {
-  grid-column: 13 / span 4;
+  grid-column: 14 / span 4;
   font-size: 14px;
   justify-self: end;
   padding-top: 5px;
@@ -96,8 +96,22 @@ form span {
   border-bottom: 2px solid transparent;
 }
 
+form ul {
+    list-style-type: none;
+    grid-column: 8 / span 13;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 100%;
+    grid-gap: 8px;
+}
+
+form ul li {
+  flex: 1 26%;
+  padding-bottom: 10px;
+}
+
 #status-text { /* Styling for the error/success text underneath the initial search bar */
-  grid-column: 10 / span 3;
+  grid-column: 9 / span 3;
   justify-self: left;
 }
 
@@ -117,32 +131,28 @@ form span {
 }
 
 form p {
-  grid-column: 10 / span 7;
-  padding: 40px 0 20px;
+  grid-column: 8 / span 11;
+  padding: 40px 0 30px;
   font-size: 18px;
+  text-align: center;
 }
 
 .address {
   font-size: 18px;
-  grid-column: 10 / span 7;
+  grid-column: 9 / span 7;
   padding-bottom: 10px;
 }
 
 #address {
-  grid-column: 10 / span 7;
+  grid-column: 9 / span 9;
   padding: 10px 5px;
   font-size: 16px;
   border-radius: 5px;
+  cursor: auto;
 }
 
 input[type="checkbox"] {
-  grid-column: 14 / span 1;
-  justify-self: end;
   margin-right: 10px;
-}
-
-input[type="checkbox"]:nth-of-type(even) {
-  grid-column: 10 / span 1;
 }
 
 input[type="checkbox" i] {
@@ -154,15 +164,6 @@ input:hover {
   cursor: pointer;
 }
 
-label.activities {
-  grid-column: 15 / span 3;
-  margin: 0 0 15px;
-}
-
-label.activities:nth-of-type(even) {
-  grid-column: 11 / span 3;
-}
-
 form button {
   grid-column: 12 / span 3;
   font-size: 16px;
@@ -171,7 +172,7 @@ form button {
   border: none;
   border-radius: 5px;
   padding: 10px;
-  margin: 30px 0 0;
+  margin: 40px 0 0;
 }
 
 form button:hover {
