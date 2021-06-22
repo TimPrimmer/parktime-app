@@ -42,6 +42,7 @@ var getDistance = function (lat1, lon1, lat2, lon2) { // Returns distance in mil
   return dist;
 }
 
+
 // Displays a little message underneath the search bar so the user knows when the address is invalid,
 // or the "use my address" was successful
 var myTimeout; // Declaring this outside the function allows us to keep a reference to running timeouts
@@ -63,6 +64,77 @@ var searchDisplayMsg = function (isError, seconds) {
     statusText.removeClass();
   }, seconds * 1000); // hide after x seconds
 }
+
+
+let emptyUlElement = function() {
+  document.querySelector("#modal-forecast-box").innerHTML = "";
+}
+
+let addUviBackground = function(uvi, i) {
+  let uviSpan = document.getElementById("uvi" + i);
+  if (uvi < 3) {
+      uviSpan.classList.add("low");
+  } 
+  else if (uvi < 6) {
+      uviSpan.classList.add("moderate");
+  }
+  else if (uvi < 8) {
+      uviSpan.classList.add("high");
+  }
+  else if (uvi < 11) {
+      uviSpan.classList.add("very-high");
+  }
+  else {
+      uviSpan.classList.add("extreme");
+  }
+}
+
+let buildForecastCards = function(data) {
+  emptyUlElement();
+  for (let i = 0; i < 5; i++) {
+    let date = new Date(data.daily[i].dt * 1000);
+    date = date.toLocaleDateString();
+    let listEl = document.createElement("li");
+    listEl.classList.add("modal-forecast");
+    document.querySelector("#modal-forecast-box").appendChild(listEl);
+    let forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description +  " weather icon' title='" + data.daily[i].weather[0].description + "'>";
+    let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
+    let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
+    let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
+    let forecastUvi = "<p> UV Index: <span class='uvi' id='uvi" + i + "'>" + data.daily[i].uvi + "</span>";
+    listEl.innerHTML = "<p>" + date + "</p>" +  forecastIcon + forecastTemp + forecastWind + forecastHumidity + forecastUvi;
+    addUviBackground(data.daily[i].uvi, i);
+  }
+}
+
+let getWeatherForecast = function(parkCoordinates) {
+  let oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?" + parkCoordinates
+   + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
+
+  fetch(oneCallApi)
+      .then(function(response) {
+          if (response.ok) {
+              response.json().then(function(data) {
+                  buildForecastCards(data);
+                  console.log(data);
+              });
+          } else {
+              return; // not sure what to do here just yet
+          }
+      })
+      .catch(function(error) {
+          alert("Unable to connect to Weather API. Please try again.");
+      });
+}
+
+// move this function call to be called when modal is being built
+let getParkCoordinates = function() {
+  // hard-coding lat/lon temporarily
+  let parkCoordinates = "lat=" + 29.53539777 + "&lon=" + -101.075821;
+  getWeatherForecast(parkCoordinates);
+}
+getParkCoordinates();
+
 
 var useCurrentLocation = function(event) { 
   event.preventDefault();
