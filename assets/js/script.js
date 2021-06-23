@@ -7,7 +7,7 @@ var modalSaved = $("#modal-saved");
 var modalActs = $("#modal-activities");
 var modalDescription = $("#modal-description");
 var modalWebsite = $("#modal-website");
-
+var gMapsBox = $("#gmaps-box");
 var mainForm = $("#main-form");
 
 var findParksButton = $("#find-parks");
@@ -141,13 +141,12 @@ let getWeatherForecast = function(parkCoordinates) {
       });
 }
 
-// move this function call to be called when modal is being built
-let getParkCoordinates = function() {
-  // hard-coding lat/lon temporarily
-  let parkCoordinates = "lat=" + 29.53539777 + "&lon=" + -101.075821;
+
+let getParkCoordinates = function(index) {
+  let parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
   getWeatherForecast(parkCoordinates);
 }
-getParkCoordinates();
+
 
 
 var useCurrentLocation = function(event) { 
@@ -235,7 +234,6 @@ var formatResults = function (data) {
     tempParkObj.states = data[x].states;
     tempParkObj.lat = data[x].latitude;
     tempParkObj.lon = data[x].longitude;
-    // Need to add img line
     tempParkObj.activities = data[x].activities;
     tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
     tempParkObj.saved = false;
@@ -256,6 +254,7 @@ var displayParklist = function () {
   formBox.css("display", "none");
   heroImg.css("display", "none");
   resultsSection.css("display", "block");
+  resultsBox.html(""); // clearing any previous results
   var searchLimit = parkList.length; // We can set this to something else to limit results
   for (x = 0; x < searchLimit; x++)
   {
@@ -325,8 +324,33 @@ var displayParklist = function () {
   }
 }
 
+
 var populateModal = function (index) {
-  console.log(index);
+  modalTitle.text(parkList[index].name);
+  modalSubtitle.text(parkList[index].states);
+  modalDistance.text(parkList[index].dist + " miles away");
+  if (parkList[index].saved){
+    modalSaved.text("Saved");
+  }
+  else{
+    modalSaved.text("Save");
+  }
+  modalActs.html("") //clearing any previous activities
+  for(x = 0; x < parkList[index].activities.length; x++) {
+    var activity = $(document.createElement("div"));
+    activity.addClass("modal-activity");
+    activity.text(parkList[index].activities[x].name);
+    modalActs.append(activity);
+  }
+  modalDescription.text(parkList[index].description);
+  modalWebsite.attr("href", parkList[index].link)
+  modalWebsite.attr("target", "_blank");
+  
+  var gUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBvUej8oCiG__h7_jtiZKORjFKY1Uk-fu8&q=" 
+  + parkList[index].name.replace(/&/g, '');
+  gMapsBox.attr("src", gUrl);
+  
+  getParkCoordinates(index);
 }
 
 $("#current-location").on("click", useCurrentLocation); // "use my location" button
