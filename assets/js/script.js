@@ -324,11 +324,28 @@ var updateActivitiesArray = function(activities) {
     if (winterActivities.includes(activity.name)) {
       activity["category"] = "Winter Activities";
     }
-
-
-    //console.log(activity);
   }
-  
+}
+
+var checkCategories = function(index) {
+  var categoriesFound = [];
+  // for each park, get categories in an array
+  for (var i = 0; i < parkList[index].activities.length; i++) {
+    var category = parkList[index].activities[i]["category"];
+    var categoryIndex = checkedActivities.indexOf(category);
+    
+    if (categoryIndex !== -1) { // if category is found add it to an array once
+      if (categoriesFound.indexOf(checkedActivities[categoryIndex]) === -1) {
+        categoriesFound.push(checkedActivities[categoryIndex]);
+      }
+    }
+  }
+  if (categoriesFound.length === checkedActivities.length) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 // Displays the current formatted list of parks onto the page
@@ -340,20 +357,9 @@ var displayParklist = function () {
   var searchLimit = parkList.length; // We can set this to something else to limit results
   for (var x = 0; x < searchLimit; x++)
   {
-    var counter = 0;
-    // for each park, get categories in an array
-    for (var i = 0; i < parkList[x].activities.length; i++) {
-      //console.log(parkList[x].activities[i]["category"]);
-      var category = parkList[x].activities[i]["category"];
-      var categoryIndex = checkedActivities.indexOf(category);
-      
-      if (categoryIndex !== -1) {
-        //console.log(parkList[x].name + category);
-        counter++;
-      }
-    }
-    //console.log(counter);
-    if (counter >= checkedActivities.length) {
+    // checking to see if park has at least one of each checked category
+    // if true, build park results
+    if (checkCategories(x)) { 
       var parkCard = $(document.createElement("div"));
       parkCard.addClass("park-card");
 
