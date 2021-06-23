@@ -219,6 +219,7 @@ var getParkData = function () {
     if (response.ok) {
       response.json().then(function(data) {
         formatResults(data.data); //passing in the array of parks itself
+        mergeParkData(); // merges the formatted data with our saved data if any
         displayParklist(); // displaying the results
       })
     } else {
@@ -491,6 +492,14 @@ var savePark = function (index, saveText) {
 
 var loadParks = function () { 
   loadedParkList = JSON.parse(localStorage.getItem("ParksList"));
+}
+
+var mergeParkData = function () { // merges our loaded park data with the formatted park data from a fresh fetch, this way we get accurate up-to-date data but still know which parks we saved
+  if (!loadedParkList === false) { // only runs if we have saved data
+    for (x = 0; x < parkList.length; x++) { // runs off parklist length in the case that new parks get added
+      parkList[x].saved = loadedParkList[x].saved;
+    }
+  }
 }
 
 loadParks(); // fires on page load
