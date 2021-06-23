@@ -65,7 +65,6 @@ var searchDisplayMsg = function (isError, seconds) {
   }, seconds * 1000); // hide after x seconds
 }
 
-
 let emptyUlElement = function() {
   document.querySelector("#modal-forecast-box").innerHTML = "";
 }
@@ -233,5 +232,30 @@ var displayResults = function (data) {
   console.log(parkList);
 }
 
+var toggleCheckbox = function(elem) {
+  if (elem.hasAttribute("checked")) {
+    elem.removeAttribute("checked");
+  }
+
+  else if (!elem.hasAttribute("checked")) {
+    elem.setAttribute("checked", "");
+  }
+}
+
+// move variable to top after merging with results from Tim
+var checkedActivities = [];
+var captureCheckedActivities = function() {
+  var activities = document.querySelectorAll("#main-form ul li label input");
+  for (var item of activities) {
+    if (item.checked === true) {
+      checkedActivities.push(item.defaultValue);
+    }
+  }
+  console.log("activities", checkedActivities);
+}
+
+
+
 $("#current-location").on("click", useCurrentLocation); // "use my location" button
 findParksButton.on("click", captureUsersAddress); // "find parks" button
+findParksButton.on("click", captureCheckedActivities);
