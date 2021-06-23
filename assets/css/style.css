@@ -325,10 +325,18 @@ form button:hover {
   background-color: #9e47cc;
 }
 
+#results-container {
+  overflow: auto;
+}
+
 #results-filters,
-#results-container section {
+#results-page section {
   width: 90%;
   margin: 15px auto 0;
+}
+
+#results-page {
+  display: none;
 }
 
 .park-card {
