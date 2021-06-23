@@ -273,7 +273,7 @@ var captureCheckedActivities = function() {
 
 var rangerProgram = ["Junior Ranger Program"];
 var wildlifeWatching = ["Wildlife Watching", "Birdwatching", "Scenic Driving"];
-var artsAndScience = ["Stargazing", "Hands-On", "Park Film", "Arts and Crafts", "Live Music", "Arts and Culture", "Theater", "Astronomy", "Citizen", "Science", "Planetarium"];
+var artsAndScience = ["Stargazing", "Hands-On", "Park Film", "Arts and Crafts", "Live Music", "Arts and Culture", "Theater", "Astronomy", "Citizen Science", "Planetarium"];
 var historyAndCulture = ["Museum Exhibits", "Living History", "Cultural Demonstrations", "Historic Weapons Demonstration", "Craft Demonstrations", "First Person Interpretation", "Reenactments"];
 var waterActivities = ["Fishing", "Paddling", "Boating", "Kayaking", "Canoeing", "Boat Tour", "Freshwater Fishing", "Swimming", "Stand Up Paddleboarding", "Fly Fishing", "Saltwater Fishing", "Motorized Boating", "Saltwater Swimming", "Freshwater Swimming", "SCUBA Diving", "Tubing", 'Sailing', "Whitewater Rafting", "Snorkeling", "Surfing", "River Tubing", "Water Skiing", "Jet Skiing", "Pool Swimming"];
 var shopping = ["Shopping", "Bookstore and Park Store", "Gift Shop and Souvenirs"];
@@ -326,11 +326,10 @@ var updateActivitiesArray = function(activities) {
     }
 
 
-    console.log(activity);
+    //console.log(activity);
   }
   
 }
-
 
 // Displays the current formatted list of parks onto the page
 var displayParklist = function () {
@@ -339,71 +338,86 @@ var displayParklist = function () {
   resultsSection.css("display", "block");
   resultsBox.html(""); // clearing any previous results
   var searchLimit = parkList.length; // We can set this to something else to limit results
-  for (x = 0; x < searchLimit; x++)
+  for (var x = 0; x < searchLimit; x++)
   {
-    var parkCard = $(document.createElement("div"));
-    parkCard.addClass("park-card");
-
-    var parkImgDiv = $(document.createElement("div"));
-    var parkImg = parkList[x].img;
-    parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
-
-    var parkInfoDiv = $(document.createElement("div"));
-    var parkName = $(document.createElement("h4"));
-    parkName.addClass("park-name");
-    parkName.text(parkList[x].name);
-
-    var parkStates = $(document.createElement("p"));
-    parkStates.addClass("park-states");
-    parkStates.text(parkList[x].states);
-
-    var parkDist = $(document.createElement("p"));
-    parkDist.addClass("miles-away");
-    parkDist.text(parkList[x].dist + " miles away");
-
-    var parkSaved = $(document.createElement("p"));
-    parkSaved.addClass("saved");
-    if (parkList[x].saved){
-      parkSaved.text("Saved");
+    var counter = 0;
+    // for each park, get categories in an array
+    for (var i = 0; i < parkList[x].activities.length; i++) {
+      //console.log(parkList[x].activities[i]["category"]);
+      var category = parkList[x].activities[i]["category"];
+      var categoryIndex = checkedActivities.indexOf(category);
+      
+      if (categoryIndex !== -1) {
+        //console.log(parkList[x].name + category);
+        counter++;
+      }
     }
-    else{
-      parkSaved.text("Save");
+    //console.log(counter);
+    if (counter >= checkedActivities.length) {
+      var parkCard = $(document.createElement("div"));
+      parkCard.addClass("park-card");
+
+      var parkImgDiv = $(document.createElement("div"));
+      var parkImg = parkList[x].img;
+      parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
+
+      var parkInfoDiv = $(document.createElement("div"));
+      var parkName = $(document.createElement("h4"));
+      parkName.addClass("park-name");
+      parkName.text(parkList[x].name);
+
+      var parkStates = $(document.createElement("p"));
+      parkStates.addClass("park-states");
+      parkStates.text(parkList[x].states);
+
+      var parkDist = $(document.createElement("p"));
+      parkDist.addClass("miles-away");
+      parkDist.text(parkList[x].dist + " miles away");
+
+      var parkSaved = $(document.createElement("p"));
+      parkSaved.addClass("saved");
+      if (parkList[x].saved){
+        parkSaved.text("Saved");
+      }
+      else{
+        parkSaved.text("Save");
+      }
+      
+      parkInfoDiv.append(parkName);
+      parkInfoDiv.append(parkStates);
+      parkInfoDiv.append(parkDist);
+      parkInfoDiv.append(parkSaved);
+
+      var boxLine = $(document.createElement("hr"));
+      boxLine.addClass("park-horizontal-row");
+
+      var parkDesBox = $(document.createElement("div"));
+      var parkDescription = $(document.createElement("p"));
+      parkDescription.addClass("park-description");
+      parkDescription.text(parkList[x].description);
+
+      var parkModalLink = $(document.createElement("span"));
+      parkModalLink.addClass("park-modal park-modal-link");
+      parkModalLink.text("View Details");
+      parkModalLink.attr("index", x);
+
+      var parkUrl = $(document.createElement("a"));
+      parkUrl.addClass("park-website");
+      parkUrl.text("Website");
+      parkUrl.attr("href", parkList[x].link)
+      parkUrl.attr("target", "_blank");
+
+      parkDesBox.append(parkDescription);
+      parkDesBox.append(parkModalLink);
+      parkDesBox.append(parkUrl);
+
+      parkCard.append(parkImgDiv);
+      parkCard.append(parkInfoDiv);
+      parkCard.append(boxLine);
+      parkCard.append(parkDesBox);
+
+      resultsBox.append(parkCard);
     }
-    
-    parkInfoDiv.append(parkName);
-    parkInfoDiv.append(parkStates);
-    parkInfoDiv.append(parkDist);
-    parkInfoDiv.append(parkSaved);
-
-    var boxLine = $(document.createElement("hr"));
-    boxLine.addClass("park-horizontal-row");
-
-    var parkDesBox = $(document.createElement("div"));
-    var parkDescription = $(document.createElement("p"));
-    parkDescription.addClass("park-description");
-    parkDescription.text(parkList[x].description);
-
-    var parkModalLink = $(document.createElement("span"));
-    parkModalLink.addClass("park-modal park-modal-link");
-    parkModalLink.text("View Details");
-    parkModalLink.attr("index", x);
-
-    var parkUrl = $(document.createElement("a"));
-    parkUrl.addClass("park-website");
-    parkUrl.text("Website");
-    parkUrl.attr("href", parkList[x].link)
-    parkUrl.attr("target", "_blank");
-
-    parkDesBox.append(parkDescription);
-    parkDesBox.append(parkModalLink);
-    parkDesBox.append(parkUrl);
-
-    parkCard.append(parkImgDiv);
-    parkCard.append(parkInfoDiv);
-    parkCard.append(boxLine);
-    parkCard.append(parkDesBox);
-
-    resultsBox.append(parkCard);
   }
 }
 
