@@ -246,6 +246,7 @@ var toggleCheckbox = function(elem) {
 var checkedActivities = [];
 var captureCheckedActivities = function() {
   var activities = document.querySelectorAll("#main-form ul li label input");
+  checkedActivities = [];
   for (var item of activities) {
     if (item.checked === true) {
       checkedActivities.push(item.defaultValue);
