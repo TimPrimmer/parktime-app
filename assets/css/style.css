@@ -83,7 +83,7 @@ form {
   margin-top: 30px;
 }
 
-form span {
+#current-location {
   grid-column: 14 / span 4;
   font-size: 14px;
   justify-self: end;
@@ -94,6 +94,7 @@ form span {
   font-weight: 600;
   padding-bottom: 2px;
   border-bottom: 2px solid transparent;
+  position: relative;
 }
 
 form ul {
@@ -128,6 +129,20 @@ form ul li {
 #current-location:hover {
   color: var(--secondary-color);
   border-bottom: 2px solid var(--secondary-color);
+}
+
+#current-location::before {
+  content: "";
+  background-image: url(../icons/open-iconic/svg/location.svg);
+  width: 12px;
+  height: 12px;
+  background-size: 12px 12px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  position: absolute;
+  left: -17px;
+  top: 7px;
 }
 
 form p {
@@ -377,4 +392,21 @@ form button:hover {
   border-left: 1px solid #000;
   padding-right: 25px;
   margin: auto 0;
+}
+
+.external-link-icon {
+  width: 16px;
+  padding-left: 5px;
+}
+
+.miles-away::before {
+  content: "";
+  background-image: url(../icons/open-iconic/svg/map-marker.svg); 
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  margin-right: 6px;
 }

@@ -420,8 +420,7 @@ var buildResult = function (index) {
     else{
       parkSaved.text("Save");
     }
-    parkSaved.attr("index", index); // adding custom index for saving/loading purposes
-
+      
     parkInfoDiv.append(parkName);
     parkInfoDiv.append(parkStates);
     parkInfoDiv.append(parkDist);
@@ -438,8 +437,7 @@ var buildResult = function (index) {
     var parkModalLink = $(document.createElement("span"));
     parkModalLink.addClass("park-modal park-modal-link");
     parkModalLink.text("View Details");
-    parkModalLink.attr("index", index);
-    parkModalLink.attr("index", index); // adding custom index to each modal link so the modal knows which park data to load from the array
+    parkModalLink.attr("index", index); 
 
     var parkUrl = $(document.createElement("a"));
     parkUrl.addClass("park-website");
@@ -447,9 +445,16 @@ var buildResult = function (index) {
     parkUrl.attr("href", parkList[index].link)
     parkUrl.attr("target", "_blank");
 
+    // add external link icon <img src="/open-iconic/svg/external-link.svg">
+    var externalLinkIcon = $(document.createElement("img"));
+    externalLinkIcon.addClass("external-link-icon");
+    externalLinkIcon.attr("src", "assets/icons/open-iconic/svg/external-link.svg");
+    externalLinkIcon.attr("alt", "external link icon");
+
     parkDesBox.append(parkDescription);
     parkDesBox.append(parkModalLink);
     parkDesBox.append(parkUrl);
+    parkDesBox.append(externalLinkIcon);
 
     parkCard.append(parkImgDiv);
     parkCard.append(parkInfoDiv);
