@@ -234,6 +234,7 @@ var formatResults = function (data) {
     tempParkObj.lat = data[x].latitude;
     tempParkObj.lon = data[x].longitude;
     tempParkObj.activities = data[x].activities;
+    updateActivitiesArray(data[x].activities);
     tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
     tempParkObj.saved = false;
     tempParkObj.description = data[x].description;
@@ -260,7 +261,7 @@ var toggleCheckbox = function(elem) {
 // move variable to top after merging with results from Tim
 var checkedActivities = [];
 var captureCheckedActivities = function() {
-  var activities = document.querySelectorAll("#main-form ul li label input");
+  var activities = document.querySelectorAll("#main-form .activities");
   checkedActivities = [];
   for (var item of activities) {
     if (item.checked === true) {
@@ -344,6 +345,45 @@ var displayParklist = function () {
     parkCard.append(parkDesBox);
 
     resultsBox.append(parkCard);
+
+var rangerProgram = ["Junior Ranger Program"];
+var wildlifeWatching = ["Wildlife Watching", "Birdwatching", "Scenic Driving"];
+var artsAndScience = ["Stargazing", "Hands-On", "Park Film", "Arts and Crafts", "Live Music", "Arts and Culture", "Theater", "Astronomy", "Citizen", "Science", "Planetarium"];
+var historyAndCulture = ["Museum Exhibits", "Living History", "Cultural Demonstrations", "Historic Weapons Demonstration", "Craft Demonstrations", "First Person Interpretation", "Reenactments"];
+var waterActivities = ["Fishing", "Paddling", "Boating", "Kayaking", "Canoeing", "Boat Tour", "Freshwater Fishing", "Swimming", "Stand Up Paddleboarding", "Fly Fishing", "Saltwater Fishing", "Motorized Boating", "Saltwater Swimming", "Freshwater Swimming", "SCUBA Diving", "Tubing", 'Sailing', "Whitewater Rafting", "Snorkeling", "Surfing", "River Tubing", "Water Skiing", "Jet Skiing", "Pool Swimming"];
+var shopping = ["Shopping"
+  "Bookstore and Park StorageEvent",
+  "Gift Shop and Souvenirs"]
+
+// get list of activities
+// compare each activity against some list and add key/value 
+// if (stargazing) push category: artsAndScience to object
+
+
+var updateActivitiesArray = function(activities) {
+  // console.log(activities);
+  for (var activity of activities) {
+    
+    if (rangerProgram.includes(activity)) {
+      activity["category"] = "Junior Ranger Program";
+    }
+    if (wildlifeWatching.includes(activity)) {
+      activity["category"] = "Wildlife Watching";
+    }
+    if (artsAndScience.includes(activity)) {
+      activity["category"] = "Arts and Science";
+    }
+    if (historyAndCulture.includes(activity)) {
+      activity["category"] = "History and Culture";
+    }
+    if (waterActivities.includes(activity)) {
+      activity["category"] = "Water Activities";
+    }
+    //if ()
+
+
+
+    console.log(activity);
   }
 }
 
@@ -375,6 +415,8 @@ var populateModal = function (index) {
   
   getParkCoordinates(index);
 }
+
+
 
 
 
