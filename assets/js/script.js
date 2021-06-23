@@ -57,8 +57,9 @@ window.onclick = function(event) {
 // fires when we click on "saved parks"
 savedParks.on("click", function (event) {
   if (!loadedParkList === false) { 
+    loadParks();
     parkList = loadedParkList;
-    displayParklist(true); // displaying all parks that saved saved
+    displayParklist(true); // displaying all parks that are saved
   }
   else {
     searchDisplayMsg(true, 2, "No saved parks"); // displays error message
@@ -232,6 +233,7 @@ var getParkData = function () {
       response.json().then(function(data) {
         formatResults(data.data); //passing in the array of parks itself
         mergeParkData(); // merges the formatted data with our saved data if any
+        saveAllParks();
         displayParklist(false); // displaying the results
       })
     } else {
@@ -383,15 +385,22 @@ var displayParklist = function (onlySaved) {
   var searchLimit = parkList.length; // We can set this to something else to limit results
   for (var x = 0; x < searchLimit; x++)
   {
-    buildResult(x);
+    if (onlySaved === false) {
+      buildResult(x, false);
+    }
+    else {
+      if (parkList[x].saved === true) {
+        buildResult(x, true);
+      }
+    }
   }
 }
 
 // Builds the actual html for each result and appends it to the results container
-var buildResult = function (index) {
+var buildResult = function (index, ignoreCats) {
   // checking to see if park has at least one of each checked category
   // if true, build park results
-  if (checkCategories(index)) { 
+  if (checkCategories(index) || ignoreCats === true) { 
     var parkCard = $(document.createElement("div"));
     parkCard.addClass("park-card");
 
@@ -414,6 +423,7 @@ var buildResult = function (index) {
 
     var parkSaved = $(document.createElement("p"));
     parkSaved.addClass("saved");
+    parkSaved.attr("index", index); 
     if (parkList[index].saved){
       parkSaved.text("Saved");
     }
@@ -497,6 +507,7 @@ var populateModal = function (index) {
   getParkCoordinates(index);
 }
 
+// handles saving the park to the array
 var savePark = function (index, saveText) {
   var resultBoxSaveText = $(".saved[index='" + index + "']");
   if (parkList[index].saved === true) {
@@ -509,7 +520,24 @@ var savePark = function (index, saveText) {
     saveText.text("Saved");
     $(resultBoxSaveText).text("Saved"); // updates the results page save p element as well
   }
-  localStorage.setItem("ParksList", JSON.stringify(parkList));
+  saveAllParks();
+}
+
+// saves the current result list to the local storage
+var saveAllParks = function () {
+  var counter = 0;
+  for (x = 0; x < parkList.length; x++) {
+    if (parkList[x].saved === true) {
+      counter++;
+    }
+  }
+  if (counter > 0) {
+    localStorage.setItem("ParksList", JSON.stringify(parkList));
+  }
+  else
+  {
+    localStorage.clear();// if we unsave the last item in our save list, clear and storage we have
+  }
 }
 
 var loadParks = function () { 
@@ -518,8 +546,13 @@ var loadParks = function () {
 
 var mergeParkData = function () { // merges our loaded park data with the formatted park data from a fresh fetch, this way we get accurate up-to-date data but still know which parks we saved
   if (!loadedParkList === false) { // only runs if we have saved data
-    for (x = 0; x < parkList.length; x++) { // runs off parklist length in the case that new parks get added
-      parkList[x].saved = loadedParkList[x].saved;
+    for (y = 0; y < parkList.length; y++) { // runs off parklist length in the case that new parks get added
+      for (x = 0; x < loadedParkList.length; x++) {
+       // console.log(parkList[y].name, "\n", loadedParkList[x].name);
+        if (parkList[y].name === loadedParkList[x].name) {
+          parkList[y].saved = loadedParkList[x].saved;
+        }
+      }
     }
   }
 }
