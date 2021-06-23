@@ -38,7 +38,7 @@ header li {
   color: white;
 }
 
-header a {
+#saved-parks {
   text-decoration: none;
   color: white;
   margin-right: 40px;
@@ -46,14 +46,25 @@ header a {
   padding-bottom: 5px;
 }
 
-header a:hover {
+#saved-parks:hover {
   border-bottom: 2px solid #FFF;
+}
+
+#heart-icon {
+  height: 13px;
+  width: 13px;
+  margin-right: 3px;
 }
 
 h1 {
   padding: 20px 0px 20px 40px;
   font-weight: 500;
   letter-spacing: 1px;
+}
+
+h1 a {
+  color: #FFF;
+  text-decoration: none;
 }
 
 .hero-image {
@@ -410,3 +421,104 @@ form button:hover {
   background-position: bottom;
   margin-right: 6px;
 }
+
+@media screen and (max-width: 1024px) {
+  form {
+    grid-template-columns: repeat(13, 1fr);
+  }
+  
+  .address,
+  #address {
+    grid-column: 4 / span 6;
+  }
+  
+  #status-text {
+    grid-column: 4 / span 2;
+  }
+
+  #current-location {
+    grid-column: 6 / span 4;
+  }
+
+  form span {
+    grid-column: 7 / span 4;
+  }
+
+  form p {
+    grid-column: 3 / span 8;
+  }
+
+  form ul {
+    grid-column: 3 / span 10;
+  }
+
+  form button {
+    grid-column: 6 / span 3;
+  }
+}
+
+@media screen and (max-width: 816px) {
+  .address, #address {
+    grid-column: 4 / span 7;
+  }
+
+  form p {
+    grid-column: 3 / span 9;
+  }
+  
+  #current-location {
+    grid-column: 7 / span 4;
+  }
+
+  form button {
+    grid-column: 6 / span 3;
+  }
+ 
+}
+
+@media screen and (max-width: 670px) {
+  .address, #address {
+    grid-column: 3 / span 9;
+  }
+
+  #current-location {
+    grid-column: 8 / span 4;
+  }
+
+  form p {
+    grid-column: 3 / span 9;
+  }
+
+  form ul {
+    grid-column: 2 / span 12;
+  }
+
+}
+
+@media screen and (max-width: 560px) {
+  .address, #address {
+    grid-column: 2 / span 11;
+  }
+
+  #current-location {
+    grid-column: 9 / span 4;
+  }
+
+  form p {
+    grid-column: 2 / span 12;
+    text-align: left;
+  }
+
+  form ul li {
+    flex: 1 35%;
+  }
+
+  form ul {
+    grid-column: 2 / span 12;
+  }
+
+  form button {
+    grid-column: 4 / span 6;
+  }
+}
+
