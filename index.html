@@ -12,7 +12,7 @@
 <body>
   <header>
 
-    <h1>Parktime</h1>
+    <h1><a href="">Parktime</a></h1>
     <nav>
       <ul>
         <li><a href="">National Parks</a></li>
@@ -80,10 +80,7 @@
       <button id="find-parks" value="button">Find parks</button>
     </form>
 
-    <div id="results-container">
-      <button class="park-modal-button">Open Test Modal</button>
-      <!-- just a test button, we should eventually make the results themselves clickable to open the modal-->
-
+    <div id="modal-container">
       <!-- using IDs here as there is only going to be 1 modal, we can just update its content dynamically-->
       <div id="park-result-modal">
         <div id="park-result-content">
@@ -94,37 +91,28 @@
           <p id="modal-saved"> &#9829; Saved</p>
           <h3>Activities</h3>
           <div id="modal-activities">
-
+            <!-- example activity
             <div class="modal-activity">Kayaking</div>
-            <div class="modal-activity">Hiking</div>
-            <div class="modal-activity">Swimming</div>
-            <div class="modal-activity">Boating</div>
-            <div class="modal-activity">Backcountry Camping</div>
-            <div class="modal-activity">Mountain Climbing</div>
-            <div class="modal-activity">Flying</div>
-
+            -->
           </div>
           <h3>Description</h3>
-          <p id="modal-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, cum autem! Architecto
-            quibusdam, quisquam
-            hic facere a aliquid quo provident totam at labore dolorem, repellat fugiat ullam maiores perferendis
-            asperiores?</p>
+          <p id="modal-description"></p>
           <a href="" id="modal-website">View Website</a>
           <h3>5-Day Forecast</h3>
           <ul id="modal-forecast-box">
           </ul>
           <h3>Directions</h3>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1722.650974796267!2d-97.73437941916706!3d30.28546452908222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b59b2584cfb7%3A0x8131ee4f174a21de!2sThe%20University%20of%20Texas%20at%20Austin!5e0!3m2!1sen!2sus!4v1624062691519!5m2!1sen!2sus"
-            width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          <iframe src="" id="gmaps-box" width="2000" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
       </div>
 
     </div>
 
-    <section id="results-container">
+    <section id="results-page">
       <p id="results-filters">Results for parks near users address</p>
-      <section>
+      <section id="results-container">
+
+        <!-- example results card
         <div class="park-card">
           <div>
             <img class="park-image" src="https://via.placeholder.com/150">
@@ -142,23 +130,9 @@
             <a class="park-website" href="">Website</a>
           </div>
         </div>
-        <div class="park-card">
-          <div>
-            <img class="park-image" src="https://via.placeholder.com/150">
-          </div>
-          <div>
-            <h4 class="park-name">Amistad National Recreation Area</h4>
-            <p class="park-states">TX</p>
-            <p class="miles-away">40 miles away</p>
-            <p class="saved">Saved</p>
-          </div>
-          <hr class="park-horizontal-row">
-          <div>
-            <p class="park-description">An oasis in the desert, Amistad National Recreation Area consists of the US portion of the International Amistad Reservoir. Amistad, whose name comes from the Spanish word meaning friendship, is best known for excellent water-based recreation, camping, hiking, rock art viewing, and its rich cultural history. Amistad is also home to a wide variety of plant and animal life above and below the water.</p>
-            <a class="park-modal" href="">View details</a>
-            <a class="park-website" href="">Website</a>
-          </div>
-        </div>
+        -->
+
+
       </section>
     </section>
 
