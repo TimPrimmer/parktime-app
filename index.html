@@ -12,7 +12,7 @@
 <body>
   <header>
 
-    <h1>Parktime</h1>
+    <h1><a href="">Parktime</a></h1>
     <nav>
       <ul>
         <li><a href="">National Parks</a></li>
@@ -80,10 +80,7 @@
       <button id="find-parks" value="button">Find parks</button>
     </form>
 
-    <div id="results-container">
-      <button class="park-modal-button">Open Test Modal</button>
-      <!-- just a test button, we should eventually make the results themselves clickable to open the modal-->
-
+    <div id="modal-container">
       <!-- using IDs here as there is only going to be 1 modal, we can just update its content dynamically-->
       <div id="park-result-modal">
         <div id="park-result-content">
@@ -122,9 +119,11 @@
 
     </div>
 
-    <section id="results-container">
+    <section id="results-page">
       <p id="results-filters">Results for parks near users address</p>
-      <section>
+      <section id="results-container">
+
+        <!-- example results card
         <div class="park-card">
           <div>
             <img class="park-image" src="https://via.placeholder.com/150">
@@ -142,23 +141,9 @@
             <a class="park-website" href="">Website</a>
           </div>
         </div>
-        <div class="park-card">
-          <div>
-            <img class="park-image" src="https://via.placeholder.com/150">
-          </div>
-          <div>
-            <h4 class="park-name">Amistad National Recreation Area</h4>
-            <p class="park-states">TX</p>
-            <p class="miles-away">40 miles away</p>
-            <p class="saved">Saved</p>
-          </div>
-          <hr class="park-horizontal-row">
-          <div>
-            <p class="park-description">An oasis in the desert, Amistad National Recreation Area consists of the US portion of the International Amistad Reservoir. Amistad, whose name comes from the Spanish word meaning friendship, is best known for excellent water-based recreation, camping, hiking, rock art viewing, and its rich cultural history. Amistad is also home to a wide variety of plant and animal life above and below the water.</p>
-            <a class="park-modal" href="">View details</a>
-            <a class="park-website" href="">Website</a>
-          </div>
-        </div>
+        -->
+
+
       </section>
     </section>
 
