@@ -248,6 +248,8 @@ form button:hover {
 #modal-distance {
   padding-top: 10px;
   width: 100%;
+  font-weight: 400;
+  font-size: 20px;
 }
 
 #modal-description {
@@ -265,6 +267,8 @@ form button:hover {
 #modal-saved {
   padding-top: 10px;
   width: 100%;
+  font-weight: 400;
+  font-size: 20px;
 }
 
 #close-modal {
@@ -354,6 +358,11 @@ form button:hover {
   display: none;
 }
 
+#results-filters {
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .park-card {
   display: flex;
   flex-wrap: wrap;
@@ -364,9 +373,9 @@ form button:hover {
   flex: 1 15%;
 }
 
-.park-card div:nth-child(2) {
+.park-card div:nth-child(2) { /*Result Name, miles away, and saved box*/
   flex: 1 15%;
-  padding: 15px 10px 10px 5px;
+  padding: 15px 10px 10px 15px;
 } 
 
 .park-card div h4 {
@@ -377,12 +386,46 @@ form button:hover {
   flex: 1 50%;
 }
 
-.park-description {
-  padding: 15px 0 20px;
+.park-name {
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 0;
+}
+
+.park-image-div {
+  background-position: center;
+  background-size: cover;
 }
 
 .park-website {
   margin-left: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+
+.park-states {
+  font-weight: bold;
+  font-size: 15px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.park-modal-link {
+  font-weight: bold;
+  color: black;
+}
+
+.park-description {
+  width: 100%;
+  padding-top: 10px;
+}
+
+
+.park-description-div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .park-horizontal-row {
@@ -399,9 +442,32 @@ form button:hover {
   padding-left: 5px;
 }
 
-.miles-away::before {
+
+.miles-away {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.miles-away::before, #modal-distance::before {
   content: "";
   background-image: url(../icons/open-iconic/svg/map-marker.svg); 
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  margin-right: 6px;
+}
+
+.saved {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.saved::before, #modal-saved::before {
+  content: "";
+  background-image: url(../icons/open-iconic/svg/heart.svg); 
   width: 16px;
   height: 16px;
   background-size: 16px 16px;
