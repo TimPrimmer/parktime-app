@@ -104,12 +104,12 @@ var searchDisplayMsg = function (isError, seconds, errorMsg) {
   }, seconds * 1000); // hide after x seconds
 }
 
-let emptyUlElement = function() {
+var emptyUlElement = function() {
   document.querySelector("#modal-forecast-box").innerHTML = "";
 }
 
-let addUviBackground = function(uvi, i) {
-  let uviSpan = document.getElementById("uvi" + i);
+var addUviBackground = function(uvi, i) {
+  var uviSpan = document.getElementById("uvi" + i);
   if (uvi < 3) {
       uviSpan.classList.add("low");
   } 
@@ -127,26 +127,26 @@ let addUviBackground = function(uvi, i) {
   }
 }
 
-let buildForecastCards = function(data) {
+var buildForecastCards = function(data) {
   emptyUlElement();
-  for (let i = 0; i < 5; i++) {
-    let date = new Date(data.daily[i].dt * 1000);
+  for (var i = 0; i < 5; i++) {
+    var date = new Date(data.daily[i].dt * 1000);
     date = date.toLocaleDateString();
-    let listEl = document.createElement("li");
+    var listEl = document.createElement("li");
     listEl.classList.add("modal-forecast");
     document.querySelector("#modal-forecast-box").appendChild(listEl);
-    let forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description +  " weather icon' title='" + data.daily[i].weather[0].description + "'>";
-    let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
-    let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
-    let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
-    let forecastUvi = "<p> UV Index: <span class='uvi' id='uvi" + i + "'>" + data.daily[i].uvi + "</span>";
+    var forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description +  " weather icon' title='" + data.daily[i].weather[0].description + "'>";
+    var forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
+    var forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
+    var forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
+    var forecastUvi = "<p> UV Index: <span class='uvi' id='uvi" + i + "'>" + data.daily[i].uvi + "</span>";
     listEl.innerHTML = "<p>" + date + "</p>" +  forecastIcon + forecastTemp + forecastWind + forecastHumidity + forecastUvi;
     addUviBackground(data.daily[i].uvi, i);
   }
 }
 
-let getWeatherForecast = function(parkCoordinates) {
-  let oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?" + parkCoordinates
+var getWeatherForecast = function(parkCoordinates) {
+  var oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?" + parkCoordinates
    + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
 
   fetch(oneCallApi)
@@ -165,8 +165,8 @@ let getWeatherForecast = function(parkCoordinates) {
 }
 
 
-let getParkCoordinates = function(index) {
-  let parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
+var getParkCoordinates = function(index) {
+  var parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
   getWeatherForecast(parkCoordinates);
 }
 
@@ -190,7 +190,7 @@ var usersLatLon = function(data) { // fires if we get the users current location
 
 var captureUsersAddress = function(event) { // Fires when we click on "Find parks"
   event.preventDefault();
-  let address = $("#address").val();
+  var address = $("#address").val();
   convertAddressToLatLon(address);
 }
 
@@ -258,10 +258,13 @@ var formatResults = function (data) {
       link: ""
     }; // Have to declare this inside the loop, otherwise it passes the obj reference into the array not a new object each time
     tempParkObj.name = data[x].fullName;
-    tempParkObj.states = data[x].states;
+    tempParkObj.states = data[x].states.replace(/,/g, ', '); // replacing commas with commas and spaces, this allows the text to wrap
     tempParkObj.lat = data[x].latitude;
     tempParkObj.lon = data[x].longitude;
     tempParkObj.activities = data[x].activities;
+    if (data[x].images.length > 0) {
+      tempParkObj.img = data[x].images[0].url;
+    }
     updateActivitiesArray(data[x].activities);
     tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
     tempParkObj.saved = false;
@@ -406,7 +409,9 @@ var buildResult = function (index, ignoreCats) {
 
     var parkImgDiv = $(document.createElement("div"));
     var parkImg = parkList[index].img;
-    parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
+    //parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
+    parkImgDiv.css("background-image", "url(" + parkImg + ")");
+    parkImgDiv.addClass("park-image-div");
 
     var parkInfoDiv = $(document.createElement("div"));
     var parkName = $(document.createElement("h4"));
@@ -440,6 +445,7 @@ var buildResult = function (index, ignoreCats) {
     boxLine.addClass("park-horizontal-row");
 
     var parkDesBox = $(document.createElement("div"));
+    parkDesBox.addClass("park-description-div");
     var parkDescription = $(document.createElement("p"));
     parkDescription.addClass("park-description");
     parkDescription.text(parkList[index].description);
