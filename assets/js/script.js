@@ -16,11 +16,14 @@ var resultsBox = $("#results-container");
 var resultsSection = $("#results-page");
 var heroImg = $(".hero-image");
 var formBox = $("#main-form");
+var savedParks = $("#saved-parks");
 
 var userLat = 0;
 var userLon = 0;
 
-var parkList = [];
+var parkList = []; // This will hold all the formatted parks 
+var loadedParkList = [];  // This will hold the parks we haved saved from local storage, we use another array so we can 
+                          // reference the correct index while pulling data to determine if the park has been previously saved or not
 
 // fires when we click on the test modal button
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
@@ -29,6 +32,15 @@ resultsBox.on("click", "span.park-modal", function (event) {
   populateModal($(event.target).attr("index"));
 });
 
+// fires when we click on the "save" or "saved" button in the modal
+modalSaved.on("click", function (event) {
+  savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
+});
+
+// fires when we click on the "save" or "saved" button in the results section
+$(document).on("click", "p.saved", function (event) {
+  savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
+});
 
 // fires when we click on the span x in the modal
 closeModal.on("click", function (event) {
@@ -41,6 +53,18 @@ window.onclick = function(event) {
     modal.css("display", "none");
   }
 }
+
+// fires when we click on "saved parks"
+savedParks.on("click", function (event) {
+  if (!loadedParkList === false) { 
+    loadParks();
+    parkList = loadedParkList;
+    displayParklist(true); // displaying all parks that are saved
+  }
+  else {
+    searchDisplayMsg(true, 2, "No saved parks"); // displays error message
+  }
+});
 
 var getDistance = function (lat1, lon1, lat2, lon2) { // Returns distance in miles between two lat and lon points
   var radlat1 = Math.PI * lat1 / 180;
@@ -61,15 +85,15 @@ var getDistance = function (lat1, lon1, lat2, lon2) { // Returns distance in mil
 // Displays a little message underneath the search bar so the user knows when the address is invalid,
 // or the "use my address" was successful
 var myTimeout; // Declaring this outside the function allows us to keep a reference to running timeouts
-var searchDisplayMsg = function (isError, seconds) {
+var searchDisplayMsg = function (isError, seconds, errorMsg) {
   if (isError) {
-    statusText.html("Invalid Address")
+    statusText.html(errorMsg)
     statusText.removeClass();
     statusText.addClass("error");
   }
   else
   {
-    statusText.html("Location Gathered")
+    statusText.html(errorMsg)
     statusText.removeClass();
     statusText.addClass("success");
   }
@@ -160,7 +184,7 @@ var useCurrentLocation = function(event) {
 var usersLatLon = function(data) { // fires if we get the users current location
   userLat = data.coords.latitude;
   userLon = data.coords.longitude;
-  searchDisplayMsg(false, 3); // display success message
+  searchDisplayMsg(false, 3, "Success"); // display success message
   getParkData();
 }
 
@@ -172,7 +196,7 @@ var captureUsersAddress = function(event) { // Fires when we click on "Find park
 
 var convertAddressToLatLon = function(address) {
   if (!address) { // checks to see if the user has entered in an address
-    searchDisplayMsg(true, 2); // display error message
+    searchDisplayMsg(true, 2, "Invalid Location"); // display error message
   }
   else
   {
@@ -181,14 +205,14 @@ var convertAddressToLatLon = function(address) {
       if (response.ok) {
         response.json().then(function(data) {
           if (data.features.length >= 1) { // Checks to see if we actually got a location back by verifying the features array length
-            searchDisplayMsg(false, 3); // display success message
+            searchDisplayMsg(false, 3, "Success"); // display success message
             userLat = data.features[0].properties.lat;
             userLon = data.features[0].properties.lon;
             getParkData();
           }
           else
           {
-            searchDisplayMsg(true, 2); // display error message
+            searchDisplayMsg(true, 2, "Invalid Location"); // display error message
           }
         })
       } else {
@@ -201,13 +225,16 @@ var convertAddressToLatLon = function(address) {
   } 
 }
 
+// gets the park data sends it to other functions
 var getParkData = function () {
   var apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
   fetch(apiUrl).then(function(response) {
     if (response.ok) {
       response.json().then(function(data) {
         formatResults(data.data); //passing in the array of parks itself
-        displayParklist(); // displaying the results
+        mergeParkData(); // merges the formatted data with our saved data if any
+        saveAllParks();
+        displayParklist(false); // displaying the results
       })
     } else {
       console.log("Error grabbing park data");
@@ -215,6 +242,7 @@ var getParkData = function () {
   });
 }
 
+// formats the park data into a more usable array of objects for us
 var formatResults = function (data) {
   for (x = 0; x < data.length; x++) {
     var tempParkObj = {
@@ -349,7 +377,7 @@ var checkCategories = function(index) {
 }
 
 // Displays the current formatted list of parks onto the page
-var displayParklist = function () {
+var displayParklist = function (onlySaved) {
   formBox.css("display", "none");
   heroImg.css("display", "none");
   resultsSection.css("display", "block");
@@ -357,93 +385,110 @@ var displayParklist = function () {
   var searchLimit = parkList.length; // We can set this to something else to limit results
   for (var x = 0; x < searchLimit; x++)
   {
-    // checking to see if park has at least one of each checked category
-    // if true, build park results
-    if (checkCategories(x)) { 
-      var parkCard = $(document.createElement("div"));
-      parkCard.addClass("park-card");
-
-      var parkImgDiv = $(document.createElement("div"));
-      var parkImg = parkList[x].img;
-      parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
-
-      var parkInfoDiv = $(document.createElement("div"));
-      var parkName = $(document.createElement("h4"));
-      parkName.addClass("park-name");
-      parkName.text(parkList[x].name);
-
-      var parkStates = $(document.createElement("p"));
-      parkStates.addClass("park-states");
-      parkStates.text(parkList[x].states);
-
-      var parkDist = $(document.createElement("p"));
-      parkDist.addClass("miles-away");
-      parkDist.text(parkList[x].dist + " miles away");
-
-      var parkSaved = $(document.createElement("p"));
-      parkSaved.addClass("saved");
-      if (parkList[x].saved){
-        parkSaved.text("Saved");
+    if (onlySaved === false) {
+      buildResult(x, false);
+    }
+    else {
+      if (parkList[x].saved === true) {
+        buildResult(x, true);
       }
-      else{
-        parkSaved.text("Save");
-      }
-      
-      parkInfoDiv.append(parkName);
-      parkInfoDiv.append(parkStates);
-      parkInfoDiv.append(parkDist);
-      parkInfoDiv.append(parkSaved);
-
-      var boxLine = $(document.createElement("hr"));
-      boxLine.addClass("park-horizontal-row");
-
-      var parkDesBox = $(document.createElement("div"));
-      var parkDescription = $(document.createElement("p"));
-      parkDescription.addClass("park-description");
-      parkDescription.text(parkList[x].description);
-
-      var parkModalLink = $(document.createElement("span"));
-      parkModalLink.addClass("park-modal park-modal-link");
-      parkModalLink.text("View Details");
-      parkModalLink.attr("index", x); 
-
-      var parkUrl = $(document.createElement("a"));
-      parkUrl.addClass("park-website");
-      parkUrl.text("Website");
-      parkUrl.attr("href", parkList[x].link)
-      parkUrl.attr("target", "_blank");
-
-      // add external link icon <img src="/open-iconic/svg/external-link.svg">
-      var externalLinkIcon = $(document.createElement("img"));
-      externalLinkIcon.addClass("external-link-icon");
-      externalLinkIcon.attr("src", "assets/icons/open-iconic/svg/external-link.svg");
-      externalLinkIcon.attr("alt", "external link icon");
-
-      parkDesBox.append(parkDescription);
-      parkDesBox.append(parkModalLink);
-      parkDesBox.append(parkUrl);
-      parkDesBox.append(externalLinkIcon);
-
-      parkCard.append(parkImgDiv);
-      parkCard.append(parkInfoDiv);
-      parkCard.append(boxLine);
-      parkCard.append(parkDesBox);
-
-      resultsBox.append(parkCard);
     }
   }
 }
 
+// Builds the actual html for each result and appends it to the results container
+var buildResult = function (index, ignoreCats) {
+  // checking to see if park has at least one of each checked category
+  // if true, build park results
+  if (checkCategories(index) || ignoreCats === true) { 
+    var parkCard = $(document.createElement("div"));
+    parkCard.addClass("park-card");
+
+    var parkImgDiv = $(document.createElement("div"));
+    var parkImg = parkList[index].img;
+    parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
+
+    var parkInfoDiv = $(document.createElement("div"));
+    var parkName = $(document.createElement("h4"));
+    parkName.addClass("park-name");
+    parkName.text(parkList[index].name);
+
+    var parkStates = $(document.createElement("p"));
+    parkStates.addClass("park-states");
+    parkStates.text(parkList[index].states);
+
+    var parkDist = $(document.createElement("p"));
+    parkDist.addClass("miles-away");
+    parkDist.text(parkList[index].dist + " miles away");
+
+    var parkSaved = $(document.createElement("p"));
+    parkSaved.addClass("saved");
+    parkSaved.attr("index", index); 
+    if (parkList[index].saved){
+      parkSaved.text("Saved");
+    }
+    else{
+      parkSaved.text("Save");
+    }
+      
+    parkInfoDiv.append(parkName);
+    parkInfoDiv.append(parkStates);
+    parkInfoDiv.append(parkDist);
+    parkInfoDiv.append(parkSaved);
+
+    var boxLine = $(document.createElement("hr"));
+    boxLine.addClass("park-horizontal-row");
+
+    var parkDesBox = $(document.createElement("div"));
+    var parkDescription = $(document.createElement("p"));
+    parkDescription.addClass("park-description");
+    parkDescription.text(parkList[index].description);
+
+    var parkModalLink = $(document.createElement("span"));
+    parkModalLink.addClass("park-modal park-modal-link");
+    parkModalLink.text("View Details");
+    parkModalLink.attr("index", index); 
+
+    var parkUrl = $(document.createElement("a"));
+    parkUrl.addClass("park-website");
+    parkUrl.text("Website");
+    parkUrl.attr("href", parkList[index].link)
+    parkUrl.attr("target", "_blank");
+
+    // add external link icon <img src="/open-iconic/svg/external-link.svg">
+    var externalLinkIcon = $(document.createElement("img"));
+    externalLinkIcon.addClass("external-link-icon");
+    externalLinkIcon.attr("src", "assets/icons/open-iconic/svg/external-link.svg");
+    externalLinkIcon.attr("alt", "external link icon");
+
+    parkDesBox.append(parkDescription);
+    parkDesBox.append(parkModalLink);
+    parkDesBox.append(parkUrl);
+    parkDesBox.append(externalLinkIcon);
+
+    parkCard.append(parkImgDiv);
+    parkCard.append(parkInfoDiv);
+    parkCard.append(boxLine);
+    parkCard.append(parkDesBox);
+
+    resultsBox.append(parkCard);
+  }
+}
+
+// updates the modal with the clicked parks info
 var populateModal = function (index) {
   modalTitle.text(parkList[index].name);
   modalSubtitle.text(parkList[index].states);
   modalDistance.text(parkList[index].dist + " miles away");
+
   if (parkList[index].saved){
     modalSaved.text("Saved");
   }
   else{
     modalSaved.text("Save");
   }
+  modalSaved.attr("index", index); // adding custom index for saving/loading purposes
+
   modalActs.html("") //clearing any previous activities
   for(x = 0; x < parkList[index].activities.length; x++) {
     var activity = $(document.createElement("div"));
@@ -462,11 +507,57 @@ var populateModal = function (index) {
   getParkCoordinates(index);
 }
 
+// handles saving the park to the array
+var savePark = function (index, saveText) {
+  var resultBoxSaveText = $(".saved[index='" + index + "']");
+  if (parkList[index].saved === true) {
+    parkList[index].saved = false; // unsaving the item if its already saved
+    saveText.text("Save");
+    $(resultBoxSaveText).text("Save"); // updates the results page save p element as well 
+  }
+  else {
+    parkList[index].saved = true; // saving the item if its not saved
+    saveText.text("Saved");
+    $(resultBoxSaveText).text("Saved"); // updates the results page save p element as well
+  }
+  saveAllParks();
+}
 
+// saves the current result list to the local storage
+var saveAllParks = function () {
+  var counter = 0;
+  for (x = 0; x < parkList.length; x++) {
+    if (parkList[x].saved === true) {
+      counter++;
+    }
+  }
+  if (counter > 0) {
+    localStorage.setItem("ParksList", JSON.stringify(parkList));
+  }
+  else
+  {
+    localStorage.clear();// if we unsave the last item in our save list, clear and storage we have
+  }
+}
 
+var loadParks = function () { 
+  loadedParkList = JSON.parse(localStorage.getItem("ParksList"));
+}
 
+var mergeParkData = function () { // merges our loaded park data with the formatted park data from a fresh fetch, this way we get accurate up-to-date data but still know which parks we saved
+  if (!loadedParkList === false) { // only runs if we have saved data
+    for (y = 0; y < parkList.length; y++) { // runs off parklist length in the case that new parks get added
+      for (x = 0; x < loadedParkList.length; x++) {
+       // console.log(parkList[y].name, "\n", loadedParkList[x].name);
+        if (parkList[y].name === loadedParkList[x].name) {
+          parkList[y].saved = loadedParkList[x].saved;
+        }
+      }
+    }
+  }
+}
 
-
+loadParks(); // fires on page load
 $("#current-location").on("click", useCurrentLocation); // "use my location" button
 findParksButton.on("click", captureUsersAddress); // "find parks" button
 findParksButton.on("click", captureCheckedActivities);
