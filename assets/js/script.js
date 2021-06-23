@@ -80,7 +80,6 @@ var searchDisplayMsg = function (isError, seconds) {
   }, seconds * 1000); // hide after x seconds
 }
 
-
 let emptyUlElement = function() {
   document.querySelector("#modal-forecast-box").innerHTML = "";
 }
@@ -235,6 +234,7 @@ var formatResults = function (data) {
     tempParkObj.lat = data[x].latitude;
     tempParkObj.lon = data[x].longitude;
     tempParkObj.activities = data[x].activities;
+    updateActivitiesArray(data[x].activities);
     tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
     tempParkObj.saved = false;
     tempParkObj.description = data[x].description;
@@ -248,6 +248,105 @@ var formatResults = function (data) {
   console.log(parkList);
 }
 
+var toggleCheckbox = function(elem) {
+  if (elem.hasAttribute("checked")) {
+    elem.removeAttribute("checked");
+  }
+
+  else if (!elem.hasAttribute("checked")) {
+    elem.setAttribute("checked", "");
+  }
+}
+
+// move variable to top after merging with results from Tim
+var checkedActivities = [];
+var captureCheckedActivities = function() {
+  var activities = document.querySelectorAll("#main-form .activities");
+  checkedActivities = [];
+  for (var item of activities) {
+    if (item.checked === true) {
+      checkedActivities.push(item.defaultValue);
+    }
+  }
+  console.log("activities", checkedActivities);
+}
+
+var rangerProgram = ["Junior Ranger Program"];
+var wildlifeWatching = ["Wildlife Watching", "Birdwatching", "Scenic Driving"];
+var artsAndScience = ["Stargazing", "Hands-On", "Park Film", "Arts and Crafts", "Live Music", "Arts and Culture", "Theater", "Astronomy", "Citizen Science", "Planetarium"];
+var historyAndCulture = ["Museum Exhibits", "Living History", "Cultural Demonstrations", "Historic Weapons Demonstration", "Craft Demonstrations", "First Person Interpretation", "Reenactments"];
+var waterActivities = ["Fishing", "Paddling", "Boating", "Kayaking", "Canoeing", "Boat Tour", "Freshwater Fishing", "Swimming", "Stand Up Paddleboarding", "Fly Fishing", "Saltwater Fishing", "Motorized Boating", "Saltwater Swimming", "Freshwater Swimming", "SCUBA Diving", "Tubing", 'Sailing', "Whitewater Rafting", "Snorkeling", "Surfing", "River Tubing", "Water Skiing", "Jet Skiing", "Pool Swimming"];
+var shopping = ["Shopping", "Bookstore and Park Store", "Gift Shop and Souvenirs"];
+var hikingAndClimbing = ["Hiking", "Front-Country Hiking", "Backcountry Hiking", "Off-Trail Permitted Hiking", "Climbing", "Rock Climbing", "Mountain Climbing"];
+var tours = ["Guided Tours", "Self-Guided Tours - Walking", "Self-Guided Tours - Auto", "Bus/Shuttle Guided Tour"];
+var foodAndDining = ["Picnicking", "Food", "Dining"];
+var biking = ["Road Biking", "Mountain Biking", "Biking"];
+var camping = ["Horse Camping (see also Horse/Stock Use)", "Horse Camping (see also camping)","Camping", "Backcountry Camping", "Car or Front Country Camping", "Canoe or Kayak Camping", "Group Camping", "RV Camping"];
+var winterActivities = ["Skiing", "Snowshoeing", "Cross-Country Skiing", "Snow Play", "Snowmobiling", "Downhill Skiing", "Snow Tubing", "Ice Climbing", "Dog Sledding", "Ice Skating"];
+
+var updateActivitiesArray = function(activities) {
+  // console.log(activities);
+  for (var activity of activities) {
+    
+    if (rangerProgram.includes(activity.name)) {
+      activity["category"] = "Junior Ranger Program";
+    }
+    if (wildlifeWatching.includes(activity.name)) {
+      activity["category"] = "Wildlife Watching";
+    }
+    if (artsAndScience.includes(activity.name)) {
+      activity["category"] = "Arts and Science";
+    }
+    if (historyAndCulture.includes(activity.name)) {
+      activity["category"] = "History and Culture";
+    }
+    if (waterActivities.includes(activity.name)) {
+      activity["category"] = "Water Activities";
+    }
+    if (shopping.includes(activity.name)) {
+      activity["category"] = "Shopping";
+    }
+    if (hikingAndClimbing.includes(activity.name)) {
+      activity["category"] = "Hiking and Climbing";
+    }
+    if (tours.includes(activity.name)) {
+      activity["category"] = "Tours";
+    }
+    if (foodAndDining.includes(activity.name)) {
+      activity["category"] = "Food and Dining";
+    }
+    if (biking.includes(activity.name)) {
+      activity["category"] = "Biking";
+    } 
+    if (camping.includes(activity.name)) {
+      activity["category"] = "Camping";
+    }
+    if (winterActivities.includes(activity.name)) {
+      activity["category"] = "Winter Activities";
+    }
+  }
+}
+
+var checkCategories = function(index) {
+  var categoriesFound = [];
+  // for each park, get categories in an array
+  for (var i = 0; i < parkList[index].activities.length; i++) {
+    var category = parkList[index].activities[i]["category"];
+    var categoryIndex = checkedActivities.indexOf(category);
+    
+    if (categoryIndex !== -1) { // if category is found add it to an array once
+      if (categoriesFound.indexOf(checkedActivities[categoryIndex]) === -1) {
+        categoriesFound.push(checkedActivities[categoryIndex]);
+      }
+    }
+  }
+  if (categoriesFound.length === checkedActivities.length) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 
 // Displays the current formatted list of parks onto the page
 var displayParklist = function () {
@@ -256,74 +355,77 @@ var displayParklist = function () {
   resultsSection.css("display", "block");
   resultsBox.html(""); // clearing any previous results
   var searchLimit = parkList.length; // We can set this to something else to limit results
-  for (x = 0; x < searchLimit; x++)
+  for (var x = 0; x < searchLimit; x++)
   {
-    var parkCard = $(document.createElement("div"));
-    parkCard.addClass("park-card");
+    // checking to see if park has at least one of each checked category
+    // if true, build park results
+    if (checkCategories(x)) { 
+      var parkCard = $(document.createElement("div"));
+      parkCard.addClass("park-card");
 
-    var parkImgDiv = $(document.createElement("div"));
-    var parkImg = parkList[x].img;
-    parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
+      var parkImgDiv = $(document.createElement("div"));
+      var parkImg = parkList[x].img;
+      parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
 
-    var parkInfoDiv = $(document.createElement("div"));
-    var parkName = $(document.createElement("h4"));
-    parkName.addClass("park-name");
-    parkName.text(parkList[x].name);
+      var parkInfoDiv = $(document.createElement("div"));
+      var parkName = $(document.createElement("h4"));
+      parkName.addClass("park-name");
+      parkName.text(parkList[x].name);
 
-    var parkStates = $(document.createElement("p"));
-    parkStates.addClass("park-states");
-    parkStates.text(parkList[x].states);
+      var parkStates = $(document.createElement("p"));
+      parkStates.addClass("park-states");
+      parkStates.text(parkList[x].states);
 
-    var parkDist = $(document.createElement("p"));
-    parkDist.addClass("miles-away");
-    parkDist.text(parkList[x].dist + " miles away");
+      var parkDist = $(document.createElement("p"));
+      parkDist.addClass("miles-away");
+      parkDist.text(parkList[x].dist + " miles away");
 
-    var parkSaved = $(document.createElement("p"));
-    parkSaved.addClass("saved");
-    if (parkList[x].saved){
-      parkSaved.text("Saved");
+      var parkSaved = $(document.createElement("p"));
+      parkSaved.addClass("saved");
+      if (parkList[x].saved){
+        parkSaved.text("Saved");
+      }
+      else{
+        parkSaved.text("Save");
+      }
+      
+      parkInfoDiv.append(parkName);
+      parkInfoDiv.append(parkStates);
+      parkInfoDiv.append(parkDist);
+      parkInfoDiv.append(parkSaved);
+
+      var boxLine = $(document.createElement("hr"));
+      boxLine.addClass("park-horizontal-row");
+
+      var parkDesBox = $(document.createElement("div"));
+      var parkDescription = $(document.createElement("p"));
+      parkDescription.addClass("park-description");
+      parkDescription.text(parkList[x].description);
+
+      var parkModalLink = $(document.createElement("span"));
+      parkModalLink.addClass("park-modal park-modal-link");
+      parkModalLink.text("View Details");
+      parkModalLink.attr("index", x);
+
+      var parkUrl = $(document.createElement("a"));
+      parkUrl.addClass("park-website");
+      parkUrl.text("Website");
+      parkUrl.attr("href", parkList[x].link)
+      parkUrl.attr("target", "_blank");
+
+      parkDesBox.append(parkDescription);
+      parkDesBox.append(parkModalLink);
+      parkDesBox.append(parkUrl);
+
+      parkCard.append(parkImgDiv);
+      parkCard.append(parkInfoDiv);
+      parkCard.append(boxLine);
+      parkCard.append(parkDesBox);
+
+      resultsBox.append(parkCard);
     }
-    else{
-      parkSaved.text("Save");
-    }
-    
-    parkInfoDiv.append(parkName);
-    parkInfoDiv.append(parkStates);
-    parkInfoDiv.append(parkDist);
-    parkInfoDiv.append(parkSaved);
-
-    var boxLine = $(document.createElement("hr"));
-    boxLine.addClass("park-horizontal-row");
-
-    var parkDesBox = $(document.createElement("div"));
-    var parkDescription = $(document.createElement("p"));
-    parkDescription.addClass("park-description");
-    parkDescription.text(parkList[x].description);
-
-    var parkModalLink = $(document.createElement("span"));
-    parkModalLink.addClass("park-modal park-modal-link");
-    parkModalLink.text("View Details");
-    parkModalLink.attr("index", x);
-
-    var parkUrl = $(document.createElement("a"));
-    parkUrl.addClass("park-website");
-    parkUrl.text("Website");
-    parkUrl.attr("href", parkList[x].link)
-    parkUrl.attr("target", "_blank");
-
-    parkDesBox.append(parkDescription);
-    parkDesBox.append(parkModalLink);
-    parkDesBox.append(parkUrl);
-
-    parkCard.append(parkImgDiv);
-    parkCard.append(parkInfoDiv);
-    parkCard.append(boxLine);
-    parkCard.append(parkDesBox);
-
-    resultsBox.append(parkCard);
   }
 }
-
 
 var populateModal = function (index) {
   modalTitle.text(parkList[index].name);
@@ -353,5 +455,11 @@ var populateModal = function (index) {
   getParkCoordinates(index);
 }
 
+
+
+
+
+
 $("#current-location").on("click", useCurrentLocation); // "use my location" button
 findParksButton.on("click", captureUsersAddress); // "find parks" button
+findParksButton.on("click", captureCheckedActivities);
