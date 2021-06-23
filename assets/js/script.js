@@ -20,7 +20,9 @@ var formBox = $("#main-form");
 var userLat = 0;
 var userLon = 0;
 
-var parkList = [];
+var parkList = []; // This will hold all the formatted parks 
+var loadedParkList = [];  // This will hold the parks we haved saved from local storage, we use another array so we can 
+                          // reference the correct index while pulling data to determine if the park has been previously saved or not
 
 // fires when we click on the test modal button
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
@@ -29,6 +31,15 @@ resultsBox.on("click", "span.park-modal", function (event) {
   populateModal($(event.target).attr("index"));
 });
 
+// fires when we click on the "save" or "saved" button in the modal
+modalSaved.on("click", function (event) {
+  savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
+});
+
+// fires when we click on the "save" or "saved" button in the results section
+$(document).on("click", "p.saved", function (event) {
+  savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
+});
 
 // fires when we click on the span x in the modal
 closeModal.on("click", function (event) {
@@ -202,6 +213,7 @@ var convertAddressToLatLon = function(address) {
   } 
 }
 
+// gets the park data sends it to other functions
 var getParkData = function () {
   var apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
   fetch(apiUrl).then(function(response) {
@@ -216,6 +228,7 @@ var getParkData = function () {
   });
 }
 
+// formats the park data into a more usable array of objects for us
 var formatResults = function (data) {
   for (x = 0; x < data.length; x++) {
     var tempParkObj = {
@@ -286,6 +299,7 @@ var displayParklist = function () {
     else{
       parkSaved.text("Save");
     }
+    parkSaved.attr("index", x); // adding custom index for saving/loading purposes
     
     parkInfoDiv.append(parkName);
     parkInfoDiv.append(parkStates);
@@ -303,7 +317,7 @@ var displayParklist = function () {
     var parkModalLink = $(document.createElement("span"));
     parkModalLink.addClass("park-modal park-modal-link");
     parkModalLink.text("View Details");
-    parkModalLink.attr("index", x);
+    parkModalLink.attr("index", x); // adding custom index to each modal link so the modal knows which park data to load from the array
 
     var parkUrl = $(document.createElement("a"));
     parkUrl.addClass("park-website");
@@ -324,17 +338,20 @@ var displayParklist = function () {
   }
 }
 
-
+// updates the modal with the clicked parks info
 var populateModal = function (index) {
   modalTitle.text(parkList[index].name);
   modalSubtitle.text(parkList[index].states);
   modalDistance.text(parkList[index].dist + " miles away");
+
   if (parkList[index].saved){
     modalSaved.text("Saved");
   }
   else{
     modalSaved.text("Save");
   }
+  modalSaved.attr("index", index); // adding custom index for saving/loading purposes
+
   modalActs.html("") //clearing any previous activities
   for(x = 0; x < parkList[index].activities.length; x++) {
     var activity = $(document.createElement("div"));
@@ -353,5 +370,25 @@ var populateModal = function (index) {
   getParkCoordinates(index);
 }
 
+var savePark = function (index, saveText) {
+  var allSaveTexts = $('.saved');
+  if (parkList[index].saved === true) {
+    parkList[index].saved = false; // unsaving the item if its already saved
+    saveText.text("Save");
+    $(allSaveTexts[index]).text("Save"); // updates the results page save p element as well 
+  }
+  else {
+    parkList[index].saved = true; // saving the item if its not saved
+    saveText.text("Saved");
+    $(allSaveTexts[index]).text("Saved"); // updates the results page save p element as well
+  }
+  localStorage.setItem("ParksList", JSON.stringify(parkList));
+}
+
+var loadParks = function () { 
+  loadedParkList = JSON.parse(localStorage.getItem("ParksList"));
+}
+
+loadParks(); // fires on page load
 $("#current-location").on("click", useCurrentLocation); // "use my location" button
 findParksButton.on("click", captureUsersAddress); // "find parks" button
