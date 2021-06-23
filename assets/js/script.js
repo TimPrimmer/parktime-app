@@ -405,7 +405,7 @@ var displayParklist = function () {
       var parkModalLink = $(document.createElement("span"));
       parkModalLink.addClass("park-modal park-modal-link");
       parkModalLink.text("View Details");
-      parkModalLink.attr("index", x);
+      parkModalLink.attr("index", x); 
 
       var parkUrl = $(document.createElement("a"));
       parkUrl.addClass("park-website");
@@ -413,9 +413,16 @@ var displayParklist = function () {
       parkUrl.attr("href", parkList[x].link)
       parkUrl.attr("target", "_blank");
 
+      // add external link icon <img src="/open-iconic/svg/external-link.svg">
+      var externalLinkIcon = $(document.createElement("img"));
+      externalLinkIcon.addClass("external-link-icon");
+      externalLinkIcon.attr("src", "assets/icons/open-iconic/svg/external-link.svg");
+      externalLinkIcon.attr("alt", "external link icon");
+
       parkDesBox.append(parkDescription);
       parkDesBox.append(parkModalLink);
       parkDesBox.append(parkUrl);
+      parkDesBox.append(externalLinkIcon);
 
       parkCard.append(parkImgDiv);
       parkCard.append(parkInfoDiv);
