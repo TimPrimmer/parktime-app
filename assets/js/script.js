@@ -23,6 +23,8 @@ var latestAddressEntered = [];
 
 var userLat = 0;
 var userLon = 0;
+var searchLimit = 50; // Limits search
+var searchCounter = 0;
 var address;
 
 var isFetching = false; // bool to make sure a user cant spam fetch requests when spamming the buttons
@@ -318,8 +320,6 @@ var formatResults = function (data) {
   }
 
   parkList.sort((a, b) => a.dist - b.dist); // sorts by distance, lower values first
-
-  console.log(parkList);
 }
 
 var toggleCheckbox = function (elem) {
@@ -426,9 +426,7 @@ var displayParklist = function (onlySaved) {
   heroImg.css("display", "none");
   resultsSection.css("display", "block");
   resultsBox.html(""); // clearing any previous results
-  // var searchLimit = parkList.length; // We can set this to something else to limit results
-  var searchLimit = 50; // Limit of 50 searches
-  for (var x = 0; x < searchLimit; x++) {
+  for (var x = 0; x < parkList.length; x++) {
     if (onlySaved === false) {
       buildResult(x, false);
     }
@@ -438,6 +436,7 @@ var displayParklist = function (onlySaved) {
       }
     }
   }
+  searchCounter = 0;
 }
 
 // Builds the actual html for each result and appends it to the results container
@@ -445,13 +444,13 @@ var buildResult = function (index, ignoreCats) {
   resultsPageAddressDisplay();
   // checking to see if park has at least one of each checked category
   // if true, build park results
-  if (checkCategories(index) || ignoreCats === true) {
+  if ( (checkCategories(index) || ignoreCats === true) && searchCounter < searchLimit) {
+    searchCounter++;
     var parkCard = $(document.createElement("div"));
     parkCard.addClass("park-card");
 
     var parkImgDiv = $(document.createElement("div"));
     var parkImg = parkList[index].img;
-    //parkImgDiv.html("<img class='park-image' src='" + parkImg + "'>");
     parkImgDiv.css("background-image", "url(" + parkImg + ")");
     parkImgDiv.addClass("park-image-div");
 
@@ -595,7 +594,6 @@ var mergeParkData = function () { // merges our loaded park data with the format
   if (!loadedParkList === false) { // only runs if we have saved data
     for (y = 0; y < parkList.length; y++) { // runs off parklist length in the case that new parks get added
       for (x = 0; x < loadedParkList.length; x++) {
-        // console.log(parkList[y].name, "\n", loadedParkList[x].name);
         if (parkList[y].name === loadedParkList[x].name) {
           parkList[y].saved = loadedParkList[x].saved;
         }
