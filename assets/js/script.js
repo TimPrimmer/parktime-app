@@ -175,6 +175,8 @@ var getParkCoordinates = function(index) {
 var useCurrentLocation = function(event) { 
   event.preventDefault();
   if (navigator.geolocation) {
+    var resultsNearAddress = $("#results-filters");
+    resultsNearAddress.text("Results for parks near users current location");
     navigator.geolocation.getCurrentPosition(usersLatLon);
   } else {
     console.log("failed");
@@ -191,6 +193,8 @@ var usersLatLon = function(data) { // fires if we get the users current location
 var captureUsersAddress = function(event) { // Fires when we click on "Find parks"
   event.preventDefault();
   var address = $("#address").val();
+  var resultsNearAddress = $("#results-filters");
+  resultsNearAddress.text("Results for parks near " + address);
   convertAddressToLatLon(address);
 }
 

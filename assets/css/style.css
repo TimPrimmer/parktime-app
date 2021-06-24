@@ -457,6 +457,7 @@ form button:hover {
 .miles-away {
   font-weight: bold;
   font-size: 15px;
+  padding-bottom: 5px;
 }
 
 .miles-away::before, #modal-distance::before {
