@@ -190,13 +190,12 @@ var usersLatLon = function (data) { // fires if we get the users current locatio
   userLon = data.coords.longitude;
   searchDisplayMsg(false, 2, "Success"); // display success message
   address = String(userLat) + ", " + String(userLon);
-  $("#address").val("Current location");
   //getParkData();
 }
 
 var captureUsersAddress = function (event) { // Fires when we click on "Find parks"
   event.preventDefault();
-  if ($("#address").val() != "" && $("#address").val() != "Current location") { // checks if the field is empty or "Current location"
+  if ($("#address").val() != "") { // checks if the field is empty or "Current location"
     address = $("#address").val();
     resultsNearAddress.text("Results for parks near " + address);
   }
