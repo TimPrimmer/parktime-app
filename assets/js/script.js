@@ -17,9 +17,11 @@ var resultsSection = $("#results-page");
 var heroImg = $(".hero-image");
 var formBox = $("#main-form");
 var savedParks = $("#saved-parks");
+var resultsNearAddress = $("#results-filters");
 
 var userLat = 0;
 var userLon = 0;
+var address;
 
 var isFetching = false; // bool to make sure a user cant spam fetch requests when spamming the buttons
 // gets reset everytime the user resets the page, and that is how you reset a search anyways
@@ -177,26 +179,30 @@ var getParkCoordinates = function (index) {
 var useCurrentLocation = function (event) {
   event.preventDefault();
   if (navigator.geolocation) {
-    var resultsNearAddress = $("#results-filters");
-    resultsNearAddress.text("Results for parks near users current location");
     navigator.geolocation.getCurrentPosition(usersLatLon);
   } else {
-    console.log("failed");
+    searchDisplayMsg(false, 3, "Error grabbing location");
   }
 }
 
 var usersLatLon = function (data) { // fires if we get the users current location
   userLat = data.coords.latitude;
   userLon = data.coords.longitude;
-  searchDisplayMsg(false, 3, "Valid Location"); // display success message
-  getParkData();
+  searchDisplayMsg(false, 2, "Success"); // display success message
+  address = String(userLat) + ", " + String(userLon);
+  $("#address").val("Current location");
+  //getParkData();
 }
 
 var captureUsersAddress = function (event) { // Fires when we click on "Find parks"
   event.preventDefault();
-  var address = $("#address").val();
-  var resultsNearAddress = $("#results-filters");
-  resultsNearAddress.text("Results for parks near " + address);
+  if ($("#address").val() != "" && $("#address").val() != "Current location") { // checks if the field is empty or "Current location"
+    address = $("#address").val();
+    resultsNearAddress.text("Results for parks near " + address);
+  }
+  else{
+    resultsNearAddress.text("Results for parks near users current location");
+  }
   convertAddressToLatLon(address);
 }
 
@@ -213,7 +219,7 @@ var convertAddressToLatLon = function (address) {
           if (response.ok) {
             response.json().then(function (data) {
               if (data.features.length >= 1) { // Checks to see if we actually got a location back by verifying the features array length
-                searchDisplayMsg(false, 3, "Location Valid"); // display success message
+                searchDisplayMsg(false, 3, "Searching"); // display success message
                 userLat = data.features[0].properties.lat;
                 userLon = data.features[0].properties.lon;
                 getParkData();
