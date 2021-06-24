@@ -707,8 +707,6 @@ form button:hover {
   #current-location {
     grid-column: 8 / span 5;
   }
-
-  
 }
 
 @media screen and (max-width: 375px) {
