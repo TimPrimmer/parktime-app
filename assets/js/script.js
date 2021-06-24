@@ -208,13 +208,12 @@ var usersLatLon = function (data) { // fires if we get the users current locatio
   searchDisplayMsg(false, 2, "Success"); // display success message
   address = String(userLat) + ", " + String(userLon);
   $("#address").val(address);
-  console.log(address);
-  //getParkData();
 }
 
 var captureUsersAddress = function (event) { // Fires when we click on "Find parks"
   event.preventDefault();
   address = $("#address").val();
+  latestAddressEntered = [];
   latestAddressEntered.push(address);
   saveUserLocation();
   convertAddressToLatLon(address);
@@ -586,7 +585,7 @@ var saveAllParks = function () {
     localStorage.setItem("ParksList", JSON.stringify(parkList));
   }
   else {
-    localStorage.removeItem(parkList);// if we unsave the last item in our save list, clear and storage we have
+    localStorage.removeItem("ParksList");// if we unsave the last item in our save list, clear and storage we have
   }
 }
 
