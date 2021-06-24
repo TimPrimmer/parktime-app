@@ -19,6 +19,8 @@ var formBox = $("#main-form");
 var savedParks = $("#saved-parks");
 var resultsNearAddress = $("#results-filters");
 
+var latestAddressEntered = [];
+
 var userLat = 0;
 var userLon = 0;
 var address;
@@ -173,6 +175,24 @@ var getParkCoordinates = function (index) {
   getWeatherForecast(parkCoordinates);
 }
 
+var resultsPageAddressDisplay = function () {
+  loadUsersAddress();
+  var resultsNearElement = $("#results-filters");
+  resultsNearElement.text("Results for parks near " + latestAddressEntered[0]);
+}
+
+var saveUserLocation = function () {
+  localStorage.setItem("latestAddress", JSON.stringify(latestAddressEntered));
+}
+
+var loadUsersAddress = function () {
+  let loadedAddress = JSON.parse(localStorage.getItem("latestAddress"));
+  if (!loadedAddress) {
+    return;
+  }
+  latestAddressEntered.push(loadedAddress);
+}
+
 var useCurrentLocation = function (event) {
   event.preventDefault();
   if (navigator.geolocation) {
@@ -187,18 +207,16 @@ var usersLatLon = function (data) { // fires if we get the users current locatio
   userLon = data.coords.longitude;
   searchDisplayMsg(false, 2, "Success"); // display success message
   address = String(userLat) + ", " + String(userLon);
+  $("#address").val(address);
+  console.log(address);
   //getParkData();
 }
 
 var captureUsersAddress = function (event) { // Fires when we click on "Find parks"
   event.preventDefault();
-  if ($("#address").val() != "") { // checks if the field is empty or "Current location"
-    address = $("#address").val();
-    resultsNearAddress.text("Results for parks near " + address);
-  }
-  else{
-    resultsNearAddress.text("Results for parks near users current location");
-  }
+  address = $("#address").val();
+  latestAddressEntered.push(address);
+  saveUserLocation();
   convertAddressToLatLon(address);
 }
 
@@ -427,6 +445,7 @@ var displayParklist = function (onlySaved) {
 
 // Builds the actual html for each result and appends it to the results container
 var buildResult = function (index, ignoreCats) {
+  resultsPageAddressDisplay();
   // checking to see if park has at least one of each checked category
   // if true, build park results
   if (checkCategories(index) || ignoreCats === true) {
@@ -567,7 +586,7 @@ var saveAllParks = function () {
     localStorage.setItem("ParksList", JSON.stringify(parkList));
   }
   else {
-    localStorage.clear();// if we unsave the last item in our save list, clear and storage we have
+    localStorage.removeItem(parkList);// if we unsave the last item in our save list, clear and storage we have
   }
 }
 
