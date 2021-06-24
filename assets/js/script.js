@@ -201,6 +201,7 @@ var useCurrentLocation = function (event) {
     navigator.geolocation.getCurrentPosition(usersLatLon);
   } else {
     searchDisplayMsg(false, 3, "Error grabbing location");
+    isFetching = false;
   }
 }
 
@@ -241,6 +242,7 @@ var convertAddressToLatLon = function (address) {
               }
               else {
                 searchDisplayMsg(true, 2, "Invalid Location"); // display error message
+                isFetching = false;
               }
             })
           } else {
