@@ -188,7 +188,7 @@ var useCurrentLocation = function (event) {
 var usersLatLon = function (data) { // fires if we get the users current location
   userLat = data.coords.latitude;
   userLon = data.coords.longitude;
-  searchDisplayMsg(false, 3, "Success"); // display success message
+  searchDisplayMsg(false, 3, "Valid Location"); // display success message
   getParkData();
 }
 
@@ -213,7 +213,7 @@ var convertAddressToLatLon = function (address) {
           if (response.ok) {
             response.json().then(function (data) {
               if (data.features.length >= 1) { // Checks to see if we actually got a location back by verifying the features array length
-                searchDisplayMsg(false, 3, "Success"); // display success message
+                searchDisplayMsg(false, 3, "Location Valid"); // display success message
                 userLat = data.features[0].properties.lat;
                 userLon = data.features[0].properties.lon;
                 getParkData();
@@ -237,14 +237,26 @@ var convertAddressToLatLon = function (address) {
 
 // gets the park data sends it to other functions
 var getParkData = function () {
+  var counter = 0;
   var apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
   fetch(apiUrl).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
         formatResults(data.data); //passing in the array of parks itself
-        mergeParkData(); // merges the formatted data with our saved data if any
-        saveAllParks();
-        displayParklist(false); // displaying the results
+        for (x = 0; x < parkList.length; x++) { // checks how many results we are going to get using the categories
+          if (checkCategories(x) === true) { 
+            counter++;
+          }
+        }
+        if (counter === 0) {// if there's no results after applying the catergories, do the following:
+          searchDisplayMsg(true, 3, "No results");
+          isFetching = false;
+        }
+        else{
+          mergeParkData(); // merges the formatted data with our saved data if any
+          saveAllParks();
+          displayParklist(false); // displaying the results
+        }
       })
     } else {
       console.log("Error grabbing park data");
@@ -255,6 +267,7 @@ var getParkData = function () {
 
 // formats the park data into a more usable array of objects for us
 var formatResults = function (data) {
+  parkList = []; // resetting the previous parklist if any is there
   for (x = 0; x < data.length; x++) {
     var tempParkObj = {
       name: "Park Name",
