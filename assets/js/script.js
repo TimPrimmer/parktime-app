@@ -19,6 +19,8 @@ var formBox = $("#main-form");
 var savedParks = $("#saved-parks");
 var resultsNearAddress = $("#results-filters");
 
+var latestAddressEntered = [];
+
 var userLat = 0;
 var userLon = 0;
 var address;
@@ -168,13 +170,28 @@ var getWeatherForecast = function (parkCoordinates) {
     });
 }
 
-
 var getParkCoordinates = function (index) {
   var parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
   getWeatherForecast(parkCoordinates);
 }
 
+var resultsPageAddressDisplay = function () {
+  loadUsersAddress();
+  var resultsNearElement = $("#results-filters");
+  resultsNearElement.text("Results for parks near " + latestAddressEntered[0]);
+}
 
+var saveUserLocation = function () {
+  localStorage.setItem("latestAddress", JSON.stringify(latestAddressEntered));
+}
+
+var loadUsersAddress = function () {
+  let loadedAddress = JSON.parse(localStorage.getItem("latestAddress"));
+  if (!loadedAddress) {
+    return;
+  }
+  latestAddressEntered.push(loadedAddress);
+}
 
 var useCurrentLocation = function (event) {
   event.preventDefault();
@@ -190,18 +207,15 @@ var usersLatLon = function (data) { // fires if we get the users current locatio
   userLon = data.coords.longitude;
   searchDisplayMsg(false, 2, "Success"); // display success message
   address = String(userLat) + ", " + String(userLon);
-  //getParkData();
+  $("#address").val(address);
 }
 
 var captureUsersAddress = function (event) { // Fires when we click on "Find parks"
   event.preventDefault();
-  if ($("#address").val() != "") { // checks if the field is empty or "Current location"
-    address = $("#address").val();
-    resultsNearAddress.text("Results for parks near " + address);
-  }
-  else{
-    resultsNearAddress.text("Results for parks near users current location");
-  }
+  address = $("#address").val();
+  latestAddressEntered = [];
+  latestAddressEntered.push(address);
+  saveUserLocation();
   convertAddressToLatLon(address);
 }
 
@@ -412,7 +426,8 @@ var displayParklist = function (onlySaved) {
   heroImg.css("display", "none");
   resultsSection.css("display", "block");
   resultsBox.html(""); // clearing any previous results
-  var searchLimit = parkList.length; // We can set this to something else to limit results
+  // var searchLimit = parkList.length; // We can set this to something else to limit results
+  var searchLimit = 50; // Limit of 50 searches
   for (var x = 0; x < searchLimit; x++) {
     if (onlySaved === false) {
       buildResult(x, false);
@@ -427,6 +442,7 @@ var displayParklist = function (onlySaved) {
 
 // Builds the actual html for each result and appends it to the results container
 var buildResult = function (index, ignoreCats) {
+  resultsPageAddressDisplay();
   // checking to see if park has at least one of each checked category
   // if true, build park results
   if (checkCategories(index) || ignoreCats === true) {
@@ -567,7 +583,7 @@ var saveAllParks = function () {
     localStorage.setItem("ParksList", JSON.stringify(parkList));
   }
   else {
-    localStorage.clear();// if we unsave the last item in our save list, clear and storage we have
+    localStorage.removeItem("ParksList");// if we unsave the last item in our save list, clear and storage we have
   }
 }
 
