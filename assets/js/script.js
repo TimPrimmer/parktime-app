@@ -168,13 +168,10 @@ var getWeatherForecast = function (parkCoordinates) {
     });
 }
 
-
 var getParkCoordinates = function (index) {
   var parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
   getWeatherForecast(parkCoordinates);
 }
-
-
 
 var useCurrentLocation = function (event) {
   event.preventDefault();
@@ -414,7 +411,8 @@ var displayParklist = function (onlySaved) {
   heroImg.css("display", "none");
   resultsSection.css("display", "block");
   resultsBox.html(""); // clearing any previous results
-  var searchLimit = parkList.length; // We can set this to something else to limit results
+  // var searchLimit = parkList.length; // We can set this to something else to limit results
+  var searchLimit = 50; // Limit of 50 searches
   for (var x = 0; x < searchLimit; x++) {
     if (onlySaved === false) {
       buildResult(x, false);
