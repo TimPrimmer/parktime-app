@@ -268,11 +268,17 @@ form button:hover {
 }
 
 #modal-website {
-  padding-left: 20px;
+  margin-left: 20px;
   margin-top: 10px;
   font-weight: bold;
   text-decoration: none;
   color: black;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 5px;
+}
+
+#modal-website:hover {
+  border-bottom: 2px solid #000;
 }
 
 #modal-saved {
@@ -451,9 +457,12 @@ form button:hover {
 .external-link-icon {
   width: 16px;
   padding-left: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 7px;
 }
 
+#park-result-content .external-link-icon {
+  padding-top: 12px;
+}
 
 .miles-away {
   font-weight: bold;
