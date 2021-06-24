@@ -328,7 +328,6 @@ var captureCheckedActivities = function () {
       checkedActivities.push(item.defaultValue);
     }
   }
-  console.log("activities", checkedActivities);
 }
 
 var rangerProgram = ["Junior Ranger Program"];
@@ -345,7 +344,6 @@ var camping = ["Horse Camping (see also Horse/Stock Use)", "Horse Camping (see a
 var winterActivities = ["Skiing", "Snowshoeing", "Cross-Country Skiing", "Snow Play", "Snowmobiling", "Downhill Skiing", "Snow Tubing", "Ice Climbing", "Dog Sledding", "Ice Skating"];
 
 var updateActivitiesArray = function (activities) {
-  // console.log(activities);
   for (var activity of activities) {
 
     if (rangerProgram.includes(activity.name)) {
