@@ -21,9 +21,12 @@ var savedParks = $("#saved-parks");
 var userLat = 0;
 var userLon = 0;
 
+var isFetching = false; // bool to make sure a user cant spam fetch requests when spamming the buttons
+// gets reset everytime the user resets the page, and that is how you reset a search anyways
+
 var parkList = []; // This will hold all the formatted parks 
 var loadedParkList = [];  // This will hold the parks we haved saved from local storage, we use another array so we can 
-                          // reference the correct index while pulling data to determine if the park has been previously saved or not
+// reference the correct index while pulling data to determine if the park has been previously saved or not
 
 // fires when we click on the test modal button
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
@@ -48,16 +51,16 @@ closeModal.on("click", function (event) {
 });
 
 // fires when we click outside of the modal
-window.onclick = function(event) {
-  if (event.target === modal[0]) { 
+window.onclick = function (event) {
+  if (event.target === modal[0]) {
     modal.css("display", "none");
   }
 }
 
 // fires when we click on "saved parks"
 savedParks.on("click", function (event) {
-  if (!loadedParkList === false) { 
-    loadParks();
+  loadParks();
+  if (!loadedParkList === false) {
     parkList = loadedParkList;
     displayParklist(true); // displaying all parks that are saved
   }
@@ -91,43 +94,42 @@ var searchDisplayMsg = function (isError, seconds, errorMsg) {
     statusText.removeClass();
     statusText.addClass("error");
   }
-  else
-  {
+  else {
     statusText.html(errorMsg)
     statusText.removeClass();
     statusText.addClass("success");
   }
   clearTimeout(myTimeout); // clears any existing timeout, this resets the timer if you trigger this before the last timeout finishes
-  myTimeout = setTimeout(function() { 
+  myTimeout = setTimeout(function () {
     statusText.text("")
     statusText.removeClass();
   }, seconds * 1000); // hide after x seconds
 }
 
-var emptyUlElement = function() {
+var emptyUlElement = function () {
   document.querySelector("#modal-forecast-box").innerHTML = "";
 }
 
-var addUviBackground = function(uvi, i) {
+var addUviBackground = function (uvi, i) {
   var uviSpan = document.getElementById("uvi" + i);
   if (uvi < 3) {
-      uviSpan.classList.add("low");
-  } 
+    uviSpan.classList.add("low");
+  }
   else if (uvi < 6) {
-      uviSpan.classList.add("moderate");
+    uviSpan.classList.add("moderate");
   }
   else if (uvi < 8) {
-      uviSpan.classList.add("high");
+    uviSpan.classList.add("high");
   }
   else if (uvi < 11) {
-      uviSpan.classList.add("very-high");
+    uviSpan.classList.add("very-high");
   }
   else {
-      uviSpan.classList.add("extreme");
+    uviSpan.classList.add("extreme");
   }
 }
 
-var buildForecastCards = function(data) {
+var buildForecastCards = function (data) {
   emptyUlElement();
   for (var i = 0; i < 5; i++) {
     var date = new Date(data.daily[i].dt * 1000);
@@ -135,44 +137,44 @@ var buildForecastCards = function(data) {
     var listEl = document.createElement("li");
     listEl.classList.add("modal-forecast");
     document.querySelector("#modal-forecast-box").appendChild(listEl);
-    var forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description +  " weather icon' title='" + data.daily[i].weather[0].description + "'>";
+    var forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description + " weather icon' title='" + data.daily[i].weather[0].description + "'>";
     var forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
     var forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
     var forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
     var forecastUvi = "<p> UV Index: <span class='uvi' id='uvi" + i + "'>" + data.daily[i].uvi + "</span>";
-    listEl.innerHTML = "<p>" + date + "</p>" +  forecastIcon + forecastTemp + forecastWind + forecastHumidity + forecastUvi;
+    listEl.innerHTML = "<p>" + date + "</p>" + forecastIcon + forecastTemp + forecastWind + forecastHumidity + forecastUvi;
     addUviBackground(data.daily[i].uvi, i);
   }
 }
 
-var getWeatherForecast = function(parkCoordinates) {
+var getWeatherForecast = function (parkCoordinates) {
   var oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?" + parkCoordinates
-   + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
+    + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
 
   fetch(oneCallApi)
-      .then(function(response) {
-          if (response.ok) {
-              response.json().then(function(data) {
-                  buildForecastCards(data);
-              });
-          } else {
-              return; // not sure what to do here just yet
-          }
-      })
-      .catch(function(error) {
-          alert("Unable to connect to Weather API. Please try again.");
-      });
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          buildForecastCards(data);
+        });
+      } else {
+        return; // not sure what to do here just yet
+      }
+    })
+    .catch(function (error) {
+      alert("Unable to connect to Weather API. Please try again.");
+    });
 }
 
 
-var getParkCoordinates = function(index) {
+var getParkCoordinates = function (index) {
   var parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
   getWeatherForecast(parkCoordinates);
 }
 
 
 
-var useCurrentLocation = function(event) { 
+var useCurrentLocation = function (event) {
   event.preventDefault();
   if (navigator.geolocation) {
     var resultsNearAddress = $("#results-filters");
@@ -183,14 +185,14 @@ var useCurrentLocation = function(event) {
   }
 }
 
-var usersLatLon = function(data) { // fires if we get the users current location
+var usersLatLon = function (data) { // fires if we get the users current location
   userLat = data.coords.latitude;
   userLon = data.coords.longitude;
   searchDisplayMsg(false, 3, "Success"); // display success message
   getParkData();
 }
 
-var captureUsersAddress = function(event) { // Fires when we click on "Find parks"
+var captureUsersAddress = function (event) { // Fires when we click on "Find parks"
   event.preventDefault();
   var address = $("#address").val();
   var resultsNearAddress = $("#results-filters");
@@ -198,43 +200,47 @@ var captureUsersAddress = function(event) { // Fires when we click on "Find park
   convertAddressToLatLon(address);
 }
 
-var convertAddressToLatLon = function(address) {
+var convertAddressToLatLon = function (address) {
   if (!address) { // checks to see if the user has entered in an address
     searchDisplayMsg(true, 2, "Invalid Location"); // display error message
+    isFetching = false;
   }
-  else
-  {
-    fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=30b8ed07042d496bb70facbcf6fc2ab6")
-    .then(function(response) {
-      if (response.ok) {
-        response.json().then(function(data) {
-          if (data.features.length >= 1) { // Checks to see if we actually got a location back by verifying the features array length
-            searchDisplayMsg(false, 3, "Success"); // display success message
-            userLat = data.features[0].properties.lat;
-            userLon = data.features[0].properties.lon;
-            getParkData();
-          }
-          else
-          {
-            searchDisplayMsg(true, 2, "Invalid Location"); // display error message
+  else {
+    if (isFetching === false) {
+      isFetching = true;
+      fetch("https://api.geoapify.com/v1/geocode/search?text=" + address + "&apiKey=30b8ed07042d496bb70facbcf6fc2ab6")
+        .then(function (response) {
+          if (response.ok) {
+            response.json().then(function (data) {
+              if (data.features.length >= 1) { // Checks to see if we actually got a location back by verifying the features array length
+                searchDisplayMsg(false, 3, "Success"); // display success message
+                userLat = data.features[0].properties.lat;
+                userLon = data.features[0].properties.lon;
+                getParkData();
+              }
+              else {
+                searchDisplayMsg(true, 2, "Invalid Location"); // display error message
+              }
+            })
+          } else {
+            console.log("Error converting users address to Lat/Lon");
+            isFetching = false;
           }
         })
-      } else {
-        console.log("Error converting users address to Lat/Lon");
-     }
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-  } 
+        .catch(function (error) {
+          console.log(error);
+          isFetching = false;
+        });
+    }
+  }
 }
 
 // gets the park data sends it to other functions
 var getParkData = function () {
   var apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
-  fetch(apiUrl).then(function(response) {
+  fetch(apiUrl).then(function (response) {
     if (response.ok) {
-      response.json().then(function(data) {
+      response.json().then(function (data) {
         formatResults(data.data); //passing in the array of parks itself
         mergeParkData(); // merges the formatted data with our saved data if any
         saveAllParks();
@@ -242,6 +248,7 @@ var getParkData = function () {
       })
     } else {
       console.log("Error grabbing park data");
+      isFetching = false;
     }
   });
 }
@@ -255,7 +262,7 @@ var formatResults = function (data) {
       dist: 0,
       lat: "",
       lon: "",
-      img: "https://via.placeholder.com/200x100",
+      img: "https://cdn.thewirecutter.com/wp-content/uploads/2020/07/nationalpark-yosemitetopimage-2x1-lowres-1024x512.jpg", // default image if the park api data doesnt have any
       saved: false,
       description: "Park Description",
       activities: "",
@@ -278,12 +285,12 @@ var formatResults = function (data) {
     parkList.push(tempParkObj);
   }
 
-  parkList.sort((a,b) => a.dist - b.dist); // sorts by distance, lower values first
+  parkList.sort((a, b) => a.dist - b.dist); // sorts by distance, lower values first
 
   console.log(parkList);
 }
 
-var toggleCheckbox = function(elem) {
+var toggleCheckbox = function (elem) {
   if (elem.hasAttribute("checked")) {
     elem.removeAttribute("checked");
   }
@@ -295,7 +302,7 @@ var toggleCheckbox = function(elem) {
 
 // move variable to top after merging with results from Tim
 var checkedActivities = [];
-var captureCheckedActivities = function() {
+var captureCheckedActivities = function () {
   var activities = document.querySelectorAll("#main-form .activities");
   checkedActivities = [];
   for (var item of activities) {
@@ -316,13 +323,13 @@ var hikingAndClimbing = ["Hiking", "Front-Country Hiking", "Backcountry Hiking",
 var tours = ["Guided Tours", "Self-Guided Tours - Walking", "Self-Guided Tours - Auto", "Bus/Shuttle Guided Tour"];
 var foodAndDining = ["Picnicking", "Food", "Dining"];
 var biking = ["Road Biking", "Mountain Biking", "Biking"];
-var camping = ["Horse Camping (see also Horse/Stock Use)", "Horse Camping (see also camping)","Camping", "Backcountry Camping", "Car or Front Country Camping", "Canoe or Kayak Camping", "Group Camping", "RV Camping"];
+var camping = ["Horse Camping (see also Horse/Stock Use)", "Horse Camping (see also camping)", "Camping", "Backcountry Camping", "Car or Front Country Camping", "Canoe or Kayak Camping", "Group Camping", "RV Camping"];
 var winterActivities = ["Skiing", "Snowshoeing", "Cross-Country Skiing", "Snow Play", "Snowmobiling", "Downhill Skiing", "Snow Tubing", "Ice Climbing", "Dog Sledding", "Ice Skating"];
 
-var updateActivitiesArray = function(activities) {
+var updateActivitiesArray = function (activities) {
   // console.log(activities);
   for (var activity of activities) {
-    
+
     if (rangerProgram.includes(activity.name)) {
       activity["category"] = "Junior Ranger Program";
     }
@@ -352,7 +359,7 @@ var updateActivitiesArray = function(activities) {
     }
     if (biking.includes(activity.name)) {
       activity["category"] = "Biking";
-    } 
+    }
     if (camping.includes(activity.name)) {
       activity["category"] = "Camping";
     }
@@ -362,13 +369,13 @@ var updateActivitiesArray = function(activities) {
   }
 }
 
-var checkCategories = function(index) {
+var checkCategories = function (index) {
   var categoriesFound = [];
   // for each park, get categories in an array
   for (var i = 0; i < parkList[index].activities.length; i++) {
     var category = parkList[index].activities[i]["category"];
     var categoryIndex = checkedActivities.indexOf(category);
-    
+
     if (categoryIndex !== -1) { // if category is found add it to an array once
       if (categoriesFound.indexOf(checkedActivities[categoryIndex]) === -1) {
         categoriesFound.push(checkedActivities[categoryIndex]);
@@ -390,8 +397,7 @@ var displayParklist = function (onlySaved) {
   resultsSection.css("display", "block");
   resultsBox.html(""); // clearing any previous results
   var searchLimit = parkList.length; // We can set this to something else to limit results
-  for (var x = 0; x < searchLimit; x++)
-  {
+  for (var x = 0; x < searchLimit; x++) {
     if (onlySaved === false) {
       buildResult(x, false);
     }
@@ -407,7 +413,7 @@ var displayParklist = function (onlySaved) {
 var buildResult = function (index, ignoreCats) {
   // checking to see if park has at least one of each checked category
   // if true, build park results
-  if (checkCategories(index) || ignoreCats === true) { 
+  if (checkCategories(index) || ignoreCats === true) {
     var parkCard = $(document.createElement("div"));
     parkCard.addClass("park-card");
 
@@ -432,14 +438,14 @@ var buildResult = function (index, ignoreCats) {
 
     var parkSaved = $(document.createElement("p"));
     parkSaved.addClass("saved");
-    parkSaved.attr("index", index); 
-    if (parkList[index].saved){
+    parkSaved.attr("index", index);
+    if (parkList[index].saved) {
       parkSaved.text("Saved");
     }
-    else{
+    else {
       parkSaved.text("Save");
     }
-      
+
     parkInfoDiv.append(parkName);
     parkInfoDiv.append(parkStates);
     parkInfoDiv.append(parkDist);
@@ -457,7 +463,7 @@ var buildResult = function (index, ignoreCats) {
     var parkModalLink = $(document.createElement("span"));
     parkModalLink.addClass("park-modal park-modal-link");
     parkModalLink.text("View Details");
-    parkModalLink.attr("index", index); 
+    parkModalLink.attr("index", index);
 
     var parkUrl = $(document.createElement("a"));
     parkUrl.addClass("park-website");
@@ -491,16 +497,16 @@ var populateModal = function (index) {
   modalSubtitle.text(parkList[index].states);
   modalDistance.text(parkList[index].dist + " miles away");
 
-  if (parkList[index].saved){
+  if (parkList[index].saved) {
     modalSaved.text("Saved");
   }
-  else{
+  else {
     modalSaved.text("Save");
   }
   modalSaved.attr("index", index); // adding custom index for saving/loading purposes
 
   modalActs.html("") //clearing any previous activities
-  for(x = 0; x < parkList[index].activities.length; x++) {
+  for (x = 0; x < parkList[index].activities.length; x++) {
     var activity = $(document.createElement("div"));
     activity.addClass("modal-activity");
     activity.text(parkList[index].activities[x].name);
@@ -509,11 +515,11 @@ var populateModal = function (index) {
   modalDescription.text(parkList[index].description);
   modalWebsite.attr("href", parkList[index].link)
   modalWebsite.attr("target", "_blank");
-  
-  var gUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBvUej8oCiG__h7_jtiZKORjFKY1Uk-fu8&q=" 
-  + parkList[index].name.replace(/&/g, '');
+
+  var gUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBvUej8oCiG__h7_jtiZKORjFKY1Uk-fu8&q="
+    + parkList[index].name.replace(/&/g, '');
   gMapsBox.attr("src", gUrl);
-  
+
   getParkCoordinates(index);
 }
 
@@ -544,13 +550,12 @@ var saveAllParks = function () {
   if (counter > 0) {
     localStorage.setItem("ParksList", JSON.stringify(parkList));
   }
-  else
-  {
+  else {
     localStorage.clear();// if we unsave the last item in our save list, clear and storage we have
   }
 }
 
-var loadParks = function () { 
+var loadParks = function () {
   loadedParkList = JSON.parse(localStorage.getItem("ParksList"));
 }
 
@@ -558,7 +563,7 @@ var mergeParkData = function () { // merges our loaded park data with the format
   if (!loadedParkList === false) { // only runs if we have saved data
     for (y = 0; y < parkList.length; y++) { // runs off parklist length in the case that new parks get added
       for (x = 0; x < loadedParkList.length; x++) {
-       // console.log(parkList[y].name, "\n", loadedParkList[x].name);
+        // console.log(parkList[y].name, "\n", loadedParkList[x].name);
         if (parkList[y].name === loadedParkList[x].name) {
           parkList[y].saved = loadedParkList[x].saved;
         }
