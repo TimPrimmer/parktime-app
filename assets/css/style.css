@@ -309,7 +309,7 @@ form button:hover {
 .modal-activity {
   background-color: var(--light-color);
   font-weight: bold;
-  padding: 2px 10px 2px 10px;
+  padding: 5px 10px 5px 10px;
   margin: 10px;
 }
 
@@ -443,7 +443,7 @@ form button:hover {
   width: 1px;
   height: 100px;
   border: none;
-  border-left: 1px solid #000;
+  border-left: 1px solid #c7c7c7;
   padding-right: 25px;
   margin: auto 0;
 }
@@ -522,6 +522,19 @@ form button:hover {
   form button {
     grid-column: 6 / span 3;
   }
+
+  .park-card div:nth-child(2) {
+    flex: 1 20%;
+  }
+
+  .park-modal-link, 
+  .park-website {
+    padding-top: 10px;
+  }
+
+  .external-link-icon {
+    padding-top: 10px;
+  }
 }
 
 @media screen and (max-width: 816px) {
@@ -532,6 +545,10 @@ form button:hover {
   form p {
     grid-column: 3 / span 9;
   }
+
+  #status-text {
+    grid-column: 4 / span 3;
+  }
   
   #current-location {
     grid-column: 7 / span 4;
@@ -540,12 +557,40 @@ form button:hover {
   form button {
     grid-column: 6 / span 3;
   }
- 
+
+  .park-card div:first-child {
+    flex: 0 45%;
+  }
+
+  .park-card div:nth-child(2) {
+    flex: 1 55%;
+  } 
+
+  .park-horizontal-row {
+    display: none;
+  }
+
+  .park-card div:nth-child(4) {
+    flex: 100%;
+  }
+
+  .park-card div:nth-child(4) {
+    border-bottom: 1px solid #c7c7c7;
+    padding-bottom: 30px;
+  }
+
+  #park-result-content {
+    width: 90%;
+  }
 }
 
 @media screen and (max-width: 670px) {
   .address, #address {
     grid-column: 3 / span 9;
+  }
+
+  #status-text {
+    grid-column: 3 / span 3;
   }
 
   #current-location {
@@ -560,6 +605,32 @@ form button:hover {
     grid-column: 2 / span 12;
   }
 
+  #modal-title {
+    font-size: 25px;
+  }
+
+  #modal-subtitle {
+    font-size: 16px;
+  } 
+  
+  #modal-distance, 
+  #modal-saved {
+    font-size: 16px;
+  }
+
+  #modal-activities,
+  #modal-description,
+  #modal-website {
+    padding-left: 0;
+  }
+
+  .modal-activity {
+    margin: 7px;
+  }
+
+  #modal-forecast-box {
+    margin: 0;
+  }
 }
 
 @media screen and (max-width: 560px) {
@@ -569,6 +640,10 @@ form button:hover {
 
   #current-location {
     grid-column: 9 / span 4;
+  }
+
+  #status-text {
+    grid-column: 2 / span 4;
   }
 
   form p {
@@ -587,5 +662,58 @@ form button:hover {
   form button {
     grid-column: 4 / span 6;
   }
+
+  .park-card div:first-child {
+    flex: 100%;
+    width: 400px;
+    height: 250px;
+  }
+
+  .park-card div:nth-child(2) {
+    flex: 100%;
+    padding-left: 0;
+  }
+
 }
 
+@media screen and (max-width: 415px) {
+  h1 {
+    text-align: center;
+    flex: 100%;
+    padding-left: 0;
+  }
+
+  h1 a {
+    text-align: center;
+  }
+
+  header nav {
+    flex: 100%;
+  }
+
+  nav ul {
+    display: block;
+    padding-bottom: 20px;
+  }  
+
+  nav ul li {
+    text-align: center;
+  }
+
+  #status-text {
+    grid-column: 2 / span 4;
+  }
+
+  #current-location {
+    grid-column: 8 / span 5;
+  }
+
+  
+}
+
+@media screen and (max-width: 375px) {
+  form ul {
+    grid-column: 1 / span 13;
+    margin-left: 20px;
+  }
+}
