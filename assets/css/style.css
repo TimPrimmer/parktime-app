@@ -85,6 +85,7 @@ h1 a {
 
 main {
   max-width: 1500px;
+  min-height: 60vh;
   margin: 0 auto 75px;
 }
 
@@ -514,6 +515,56 @@ form button:hover {
   padding-bottom: 5px;
 }
 
+footer {
+  background-color: var(--main-color);
+  height: 180px;
+  padding: 40px 10px;
+}
+
+footer > p:first-of-type {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #FFF;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+footer .contact-info {
+  color: #FFF;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+footer .erin-info {
+  display: flex;
+  padding: 0 0 0 10px;
+}
+
+footer .tim-info {
+  display: flex;
+  padding: 0 0 0 10px;
+}
+
+footer .github-icon,
+footer .website-icon,
+footer .linked-icon {
+  width: 25px;
+  height: 25px;
+  margin-left: 8px;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+#line {
+  padding: 0 10px 0 20px;
+}
+  
+
 @media screen and (max-width: 1024px) {
   form {
     grid-template-columns: repeat(13, 1fr);
@@ -699,6 +750,24 @@ form button:hover {
     padding-left: 0;
   }
 
+  footer .erin-info,
+  footer .tim-info {
+    display: block;
+    padding: 0 0;
+    justify-content: center;
+    flex: 1 40%;
+    text-align: center;
+  }
+
+  footer .erin-info p,
+  footer .tim-info p {
+    padding-bottom: 5px;
+  }
+
+  #line {
+    display: none;
+  }
+
 }
 
 @media screen and (max-width: 415px) {
@@ -723,6 +792,10 @@ form button:hover {
 
   nav ul li {
     text-align: center;
+  }
+
+  #saved-parks {
+    margin-right: 0;
   }
 
   #status-text {
