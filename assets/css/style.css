@@ -551,11 +551,13 @@ footer .tim-info {
 footer .github-icon,
 footer .website-icon,
 footer .linked-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-self: baseline;
+  width: 25px;
+  height: 25px;
   margin-left: 8px;
+}
+
+footer a {
+  text-decoration: none;
 }
 
 #line {
@@ -748,15 +750,18 @@ footer .linked-icon {
     padding-left: 0;
   }
 
-  footer .contact-info {
-    display: block;
-  }
-
   footer .erin-info,
   footer .tim-info {
-    display: flex;
+    display: block;
     padding: 0 0;
     justify-content: center;
+    flex: 1 40%;
+    text-align: center;
+  }
+
+  footer .erin-info p,
+  footer .tim-info p {
+    padding-bottom: 5px;
   }
 
   #line {
