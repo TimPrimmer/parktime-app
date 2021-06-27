@@ -1,4 +1,7 @@
-# Parktime App
+# Parktime
+## Project 1: UT Full-Stack Web Development Bootcamp
+### Developers: Tim Primmer & Erin Holmes
+
 ## Purpose
 Find National Parks near you with the Parktime app! Users enter a starting address and choose which activities they’d like the park to have, and Parktime will show parks near the user that match the activity criteria. Users can also save their favorite parks to a list, so they can view them at any time!
 
@@ -30,7 +33,5 @@ The saving system, formatting and displaying the park API data, filtering by cat
 # Successes
 Working website, styling and presentation, overcoming the challenges
 
-## Contribution
-Made by Erin Holmes and Tim Primmer
 
 
