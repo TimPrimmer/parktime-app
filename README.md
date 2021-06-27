@@ -1,5 +1,6 @@
 # Parktime
 ## Project 1: UT Full-Stack Web Development Bootcamp
+### Developers: Tim Primmer & Erin Holmes
 
 What is Parktime?
 - Parktime is a responsive, single-page application that helps users find National Parks near by. Users enter a starting address and choose which activities they’d like the park to have, and Parktime will show parks near the user that match the activity criteria. Users can also save their favorite parks to view any time!
