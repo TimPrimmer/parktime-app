@@ -1,16 +1,17 @@
-const getParks = (event) => {
+async function getParks(event) {
   event.preventDefault();
-  document.location.replace("/api/parks");
-  // let queryUrl = "/api/parks";
+  const response = await fetch("/api/parks", {
+    method: "GET",
+    headers: { "Content-Type": "application/json"}
+  });
   
-  // fetch(queryUrl) 
-  //   .then(response => {
-  //     if (response.ok) {
-        
-  //     }
-  //   })
-        
+  
+  if (response.ok) {
+    window.location.replace("/parks");
+    
+  }
+  
 }
-console.log("Hi");
 
-document.querySelector("#find-parks").addEventListener("submit", getParks);
+document.querySelector("#find-parks").addEventListener("click", getParks);
+

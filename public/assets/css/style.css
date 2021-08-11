@@ -372,9 +372,9 @@ form button:hover {
   margin: 15px auto 0;
 }
 
-#results-page {
+/* #results-page {
   display: none;
-}
+} */
 
 #results-filters {
   font-weight: bold;
