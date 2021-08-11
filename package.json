@@ -1,0 +1,23 @@
+{
+  "name": "parktime-app",
+  "version": "1.0.0",
+  "description": "## Purpose Find National Parks near you with the Parktime app! Users enter a starting address and choose which activities they’d like the park to have, and Parktime will show parks near the user that match the activity criteria. Users can also save their favorite parks to a list, so they can view them at any time!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimPrimmer/breaktime-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TimPrimmer/breaktime-app/issues"
+  },
+  "homepage": "https://github.com/TimPrimmer/breaktime-app#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
