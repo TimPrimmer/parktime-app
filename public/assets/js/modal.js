@@ -1,19 +1,25 @@
 function openModal(parkCode) {
-  let allModals = document.getElementsByClassName("park-result-modal");
-  for (let modal of allModals) {
-    modal.style.display = "none";
-  }
-
-  let modal = document.getElementById(parkCode + "-modal");
-  modal.style.display = "flex";
-
+  document.getElementById(parkCode + "-modal").style.display = "flex";
 }
 
 const detailsLink = document.getElementsByClassName("park-modal");
-// pass value into event listener method
+
+// adding event listener to "View Details" 
 for (let i = 0; i < detailsLink.length; i++) {
   detailsLink[i].addEventListener("click", function(){
     openModal(detailsLink[i].dataset.parkCode);
   });
 }
 
+function closeModal(parkCode) {
+  document.getElementById(parkCode + "-modal").style.display = "none";
+}
+
+const closeModalX = document.getElementsByClassName("close-modal");
+
+// adding event listener to modal's X (close)
+for (let i = 0; i < closeModalX.length; i++) {
+  closeModalX[i].addEventListener("click", function() {
+    closeModal(closeModalX[i].dataset.parkCode);
+  });
+}
