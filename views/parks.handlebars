@@ -9,16 +9,50 @@
       <div>
         <h4 class="park-name">{{fullName}}</h4>
         <p class="park-states">{{states}}</p>
-        <p class="miles-away">{40} miles away</p>
+        <p class="miles-away">40 miles away</p>
         <p class="saved">Saved</p>
       </div>
       <hr class="park-horizontal-row">
       <div>
         <p class="park-description">{{description}}</p>
-        <a class="park-modal" href="">View details</a>
+        <p class="park-modal" data-park-code="{{parkCode}}" >View details</p>
         <a class="park-website" href="{{url}}">Website</a>
       </div>
     </div>
     {{/each}}
+    <div id="modal-container">
+      {{#each parks }}
+      <div id="{{parkCode}}-modal" class="park-result-modal" style="display: none">
+        <div class="park-result-content">
+          <h2 class="modal-title">{{fullName}}</h2>
+          <p class="close-modal">X</p>
+          <h3 class="modal-subtitle">{{states}}</h3>
+          <p class="modal-distance">40 miles away</p>
+          <p class="modal-saved"> &#9829; Saved</p>
+          <h3>Activities</h3>
+          <div class="modal-activities">
+            <!-- example activity
+            <div class="modal-activity">Kayaking</div>
+            -->
+          </div>
+          <h3>Description</h3>
+          <p class="modal-description"></p>
+          <a href="" class="modal-website">View Website</a>
+          <img class="external-link-icon" src="assets/icons/open-iconic/svg/external-link.svg" alt="external link icon">
+          <h3>5-Day Forecast</h3>
+          <ul class="modal-forecast-box">
+          </ul>
+          <h3>Directions</h3>
+          {{!-- <iframe src="" id="gmaps-box" width="2000" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe> --}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{!-- {{> modal parks}} --}}
+    
+
   </section>
 </section>
+
+
+<script src="/assets/js/modal.js"></script>
