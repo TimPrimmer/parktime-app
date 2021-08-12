@@ -21,35 +21,12 @@
     </div>
     {{/each}}
     <div id="modal-container">
-      {{#each parks }}
+      {{#each parks as |park| }}
       <div id="{{parkCode}}-modal" class="park-result-modal" style="display: none">
-        <div class="park-result-content">
-          <h2 class="modal-title">{{fullName}}</h2>
-          <p class="close-modal" data-park-code="{{parkCode}}">X</p>
-          <h3 class="modal-subtitle">{{states}}</h3>
-          <p class="modal-distance">40 miles away</p>
-          <p class="modal-saved"> &#9829; Saved</p>
-          <h3>Activities</h3>
-          <div class="modal-activities">
-            <!-- example activity
-            <div class="modal-activity">Kayaking</div>
-            -->
-          </div>
-          <h3>Description</h3>
-          <p class="modal-description"></p>
-          <a href="" class="modal-website">View Website</a>
-          <img class="external-link-icon" src="assets/icons/open-iconic/svg/external-link.svg" alt="external link icon">
-          <h3>5-Day Forecast</h3>
-          <ul class="modal-forecast-box">
-          </ul>
-          <h3>Directions</h3>
-          {{!-- <iframe src="" id="gmaps-box" width="2000" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe> --}}
-        </div>
-      </div>
+        {{> modal park}}
+      </div> 
       {{/each}}
     </div>
-    {{!-- {{> modal parks}} --}}
-    
 
   </section>
 </section>
