@@ -4,8 +4,7 @@
 
     {{#each parks }}
     <div class="park-card">
-      <div>
-        <img class="park-image" src="https://via.placeholder.com/150">
+      <div class="park-image park-image-div" style="background-image: url({{images.[0].url}})">
       </div>
       <div>
         <h4 class="park-name">{{fullName}}</h4>
@@ -16,7 +15,7 @@
       <hr class="park-horizontal-row">
       <div>
         <p class="park-description">{{description}}</p>
-        {{!-- <a class="park-modal" href="{{}}">View details</a> --}}
+        <a class="park-modal" href="">View details</a>
         <a class="park-website" href="{{url}}">Website</a>
       </div>
     </div>
