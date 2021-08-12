@@ -6,13 +6,13 @@
   <p class="modal-saved"> &#9829; Saved</p>
   <h3>Activities</h3>
   <div class="modal-activities">
-    <!-- example activity
-    <div class="modal-activity">Kayaking</div>
-    -->
+    {{#each activities}}
+      <div class="modal-activity">{{name}}</div>
+    {{/each}}
   </div>
   <h3>Description</h3>
   <p class="modal-description"></p>
-  <a href="" class="modal-website">View Website</a>
+  <a href="{{url}}" class="modal-website">View Website</a>
   <img class="external-link-icon" src="assets/icons/open-iconic/svg/external-link.svg" alt="external link icon">
   <h3>5-Day Forecast</h3>
   <ul class="modal-forecast-box">
