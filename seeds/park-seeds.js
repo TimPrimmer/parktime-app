@@ -1,14 +1,70 @@
 const { Park } = require('../models');
+const fetch = require('node-fetch');
+const fs = require('fs');
 
-const parkdata = [
+// gets the park data sends it to other functions
+
+
+// const getParkData = async () => {
+//   let apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=10";
+//   let data = await fetch(apiUrl);
+//   console.log("national park api data", data);
+// }
+
+// const getParkData = () => {
+//   let apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=10";
+//   fetch(apiUrl)
+//   .then(data => console.log(data));
+// }
+
+// need to fix to actually work
+// const getParkData = async () => {
+//   let apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
+//   const response = await fetch(apiUrl, {
+//     method: "GET",
+//     headers: { "Content-Type": "application/json"},
+//     credentials: 'include'
+//   });
+
+//   console.log(response);
+// }
+
+
+const writeToFile = (fileName, data) => {
+  fs.writeFile(fileName, data, err => {
+    if (err) {
+      console.log("JSON generation failed.");
+      return console.error(err);
+    } else {
+      console.log("JSON generated successfully!");
+    }
+  });
+}
+
+const parkdata = [ // example of the formatted park-data
   {
     id: 1,
-    url: "https://www.nps.gov/abli/index.htm",
-    name: "Abraham Lincoln Birthplace National Historical Park",
-    description: "For over a century people from around the world have come to rural Central Kentucky to honor the humble beginnings of our 16th president, Abraham Lincoln. His early life on Kentucky's frontier shaped his character and prepared him to lead the nation through Civil War. The country's first memorial to Lincoln, built with donations from young and old, enshrines the symbolic birthplace cabin."
+    park_id: "77E0D7F0-1942-494A-ACE2-9004D2BDC59E"
+  },
+  {
+    id: 2,
+    park_id: "77E0D7F0-1942-494A-ACE2-9453634563456"
+  },
+  {
+    id: 3,
+    park_id: "77E0D7F0-1942-494A-ACE2-345634563456"
+  },
+  {
+    id: 4,
+    park_id: "77E0D7F0-1942-494A-ACE2-345643563456"
   }
 ];
 
-const seedParks = () => Park.bulkCreate(parkdata);
+
+const seedParks = async () => {
+  //await getParkData();
+  await Park.bulkCreate(parkdata);
+}
 
 module.exports = seedParks;
+

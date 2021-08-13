@@ -14,19 +14,8 @@ Park.init(
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    park_id: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isURL: true
-      }
-    },
-    description: {
-      type: DataTypes.TEXT,
       allowNull: false
     }
   },

@@ -10,9 +10,11 @@ const seedAll = async () => {
   await seedParks();
 
   console.log('--------------');
-//await seedUsers();
+  //await seedUsers();
 
   process.exit(0);
 };
 
 seedAll();
+
+
