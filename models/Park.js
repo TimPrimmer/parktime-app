@@ -23,6 +23,7 @@ Park.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
+    timestamps: false,
     modelName: 'park'
   }
 );
