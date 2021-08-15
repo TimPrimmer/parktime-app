@@ -8,7 +8,7 @@ const seedAll = async () => {
 
   console.log('--------------');
   await seedParks();
-
+  
   console.log('--------------');
   //await seedUsers();
 
