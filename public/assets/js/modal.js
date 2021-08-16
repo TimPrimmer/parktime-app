@@ -1,5 +1,12 @@
 function openModal(parkCode) {
   document.getElementById(parkCode + "-modal").style.display = "flex";
+
+  let lat = document.getElementById(parkCode).dataset.lat;
+  let lon = document.getElementById(parkCode).dataset.lon;
+  getParkCoordinates(lat, lon);
+  getParkCode(parkCode);
+
+  // send this data to another js file
 }
 
 const detailsLink = document.getElementsByClassName("park-modal");
