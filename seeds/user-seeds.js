@@ -18,7 +18,7 @@ const userSql = [
 ];
 
 const seedUsers = async () => {
-  await User.bulkCreate(userSql);
+  await User.bulkCreate(userSql, {individualHooks: true});
   console.log('Users seeded!');
 }
 
