@@ -1,6 +1,7 @@
 const sequelize = require('../config/connection');
 
 const seedParks = require('./park-seeds');
+const seedUsers = require('./user-seeds');
 
 
 const seedAll = async () => {
@@ -10,7 +11,7 @@ const seedAll = async () => {
   await seedParks();
   
   console.log('--------------');
-  //await seedUsers();
+  await seedUsers();
 
   process.exit(0);
 };
