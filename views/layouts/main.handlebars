@@ -17,10 +17,20 @@
     <h1><a href="/">Parktime</a></h1>
     <nav>
       <ul>
+        {{#unless loggedIn}}
+        <li>
+          <a href="/login">Login</a>
+        </li>
+        {{/unless}}
+        {{#if loggedIn}}
         <li>
           <img id="heart-icon" src="assets/icons/open-iconic/svg/heart-white.svg" alt="">
           <a id="saved-parks">Saved Parks</a>
         </li>
+        <li>
+          <button id="logout">Logout</button>
+        </li>
+        {{/if}}
       </ul>
     </nav>
   </header>
@@ -61,6 +71,10 @@
   <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
     integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
   <script src="/assets/js/script.js"></script>
+
+  {{#if loggedIn}}
+  <script src="/assets/js/logout.js"></script>
+  {{/if}}
 </body>
 
 </html>

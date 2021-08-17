@@ -21,7 +21,8 @@ router.get('/', (req, res) => {
     .then(dbParkData => {
       const parks = dbParkData.map(park => park.get({ plain: true }));
       res.render("parks", { 
-        parks
+        parks, 
+        loggedIn: req.session.loggedIn
       });
     })
     .catch(err => {
