@@ -112,65 +112,65 @@ var searchDisplayMsg = function (isError, seconds, errorMsg) {
   }, seconds * 1000); // hide after x seconds
 }
 
-var emptyUlElement = function () {
-  document.querySelector("#modal-forecast-box").innerHTML = "";
-}
+// var emptyUlElement = function () {
+//   document.querySelector("#modal-forecast-box").innerHTML = "";
+// }
 
-var addUviBackground = function (uvi, i) {
-  var uviSpan = document.getElementById("uvi" + i);
-  if (uvi < 3) {
-    uviSpan.classList.add("low");
-  }
-  else if (uvi < 6) {
-    uviSpan.classList.add("moderate");
-  }
-  else if (uvi < 8) {
-    uviSpan.classList.add("high");
-  }
-  else if (uvi < 11) {
-    uviSpan.classList.add("very-high");
-  }
-  else {
-    uviSpan.classList.add("extreme");
-  }
-}
+// var addUviBackground = function (uvi, i) {
+//   var uviSpan = document.getElementById("uvi" + i);
+//   if (uvi < 3) {
+//     uviSpan.classList.add("low");
+//   }
+//   else if (uvi < 6) {
+//     uviSpan.classList.add("moderate");
+//   }
+//   else if (uvi < 8) {
+//     uviSpan.classList.add("high");
+//   }
+//   else if (uvi < 11) {
+//     uviSpan.classList.add("very-high");
+//   }
+//   else {
+//     uviSpan.classList.add("extreme");
+//   }
+// }
 
-var buildForecastCards = function (data) {
-  emptyUlElement();
-  for (var i = 0; i < 5; i++) {
-    var date = new Date(data.daily[i].dt * 1000);
-    date = date.toLocaleDateString();
-    var listEl = document.createElement("li");
-    listEl.classList.add("modal-forecast");
-    document.querySelector("#modal-forecast-box").appendChild(listEl);
-    var forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description + " weather icon' title='" + data.daily[i].weather[0].description + "'>";
-    var forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
-    var forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
-    var forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
-    var forecastUvi = "<p> UV Index: <span class='uvi' id='uvi" + i + "'>" + data.daily[i].uvi + "</span>";
-    listEl.innerHTML = "<p>" + date + "</p>" + forecastIcon + forecastTemp + forecastWind + forecastHumidity + forecastUvi;
-    addUviBackground(data.daily[i].uvi, i);
-  }
-}
+// var buildForecastCards = function (data) {
+//   emptyUlElement();
+//   for (var i = 0; i < 5; i++) {
+//     var date = new Date(data.daily[i].dt * 1000);
+//     date = date.toLocaleDateString();
+//     var listEl = document.createElement("li");
+//     listEl.classList.add("modal-forecast");
+//     document.querySelector("#modal-forecast-box").appendChild(listEl);
+//     var forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description + " weather icon' title='" + data.daily[i].weather[0].description + "'>";
+//     var forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
+//     var forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
+//     var forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
+//     var forecastUvi = "<p> UV Index: <span class='uvi' id='uvi" + i + "'>" + data.daily[i].uvi + "</span>";
+//     listEl.innerHTML = "<p>" + date + "</p>" + forecastIcon + forecastTemp + forecastWind + forecastHumidity + forecastUvi;
+//     addUviBackground(data.daily[i].uvi, i);
+//   }
+// }
 
-var getWeatherForecast = function (parkCoordinates) {
-  var oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?" + parkCoordinates
-    + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
+// var getWeatherForecast = function (parkCoordinates) {
+//   var oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?" + parkCoordinates
+//     + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
 
-  fetch(oneCallApi)
-    .then(function (response) {
-      if (response.ok) {
-        response.json().then(function (data) {
-          buildForecastCards(data);
-        });
-      } else {
-        return; // not sure what to do here just yet
-      }
-    })
-    .catch(function (error) {
-      alert("Unable to connect to Weather API. Please try again.");
-    });
-}
+//   fetch(oneCallApi)
+//     .then(function (response) {
+//       if (response.ok) {
+//         response.json().then(function (data) {
+//           buildForecastCards(data);
+//         });
+//       } else {
+//         return; // not sure what to do here just yet
+//       }
+//     })
+//     .catch(function (error) {
+//       alert("Unable to connect to Weather API. Please try again.");
+//     });
+// }
 
 var getParkCoordinates = function (index) {
   var parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
@@ -259,147 +259,147 @@ var convertAddressToLatLon = function (address) {
 }
 
 // gets the park data sends it to other functions
-var getParkData = function () {
-  var counter = 0;
-  var apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
-  fetch(apiUrl).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        formatResults(data.data); //passing in the array of parks itself
-        for (x = 0; x < parkList.length; x++) { // checks how many results we are going to get using the categories
-          if (checkCategories(x) === true) { 
-            counter++;
-          }
-        }
-        if (counter === 0) {// if there's no results after applying the catergories, do the following:
-          searchDisplayMsg(true, 3, "No results");
-          isFetching = false;
-        }
-        else{
-          mergeParkData(); // merges the formatted data with our saved data if any
-          saveAllParks();
-          displayParklist(false); // displaying the results
-        }
-      })
-    } else {
-      console.log("Error grabbing park data");
-      isFetching = false;
-    }
-  });
-}
+// var getParkData = function () {
+//   var counter = 0;
+//   var apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=2vw10xovy9QiRhFAyNBZFHnpXusF6ygII6GCVlgB&limit=999";
+//   fetch(apiUrl).then(function (response) {
+//     if (response.ok) {
+//       response.json().then(function (data) {
+//         formatResults(data.data); //passing in the array of parks itself
+//         for (x = 0; x < parkList.length; x++) { // checks how many results we are going to get using the categories
+//           if (checkCategories(x) === true) { 
+//             counter++;
+//           }
+//         }
+//         if (counter === 0) {// if there's no results after applying the catergories, do the following:
+//           searchDisplayMsg(true, 3, "No results");
+//           isFetching = false;
+//         }
+//         else{
+//           mergeParkData(); // merges the formatted data with our saved data if any
+//           saveAllParks();
+//           displayParklist(false); // displaying the results
+//         }
+//       })
+//     } else {
+//       console.log("Error grabbing park data");
+//       isFetching = false;
+//     }
+//   });
+// }
 
 // formats the park data into a more usable array of objects for us
-var formatResults = function (data) {
-  parkList = []; // resetting the previous parklist if any is there
-  for (x = 0; x < data.length; x++) {
-    var tempParkObj = {
-      name: "Park Name",
-      states: "Park Location",
-      dist: 0,
-      lat: "",
-      lon: "",
-      img: "https://cdn.thewirecutter.com/wp-content/uploads/2020/07/nationalpark-yosemitetopimage-2x1-lowres-1024x512.jpg", // default image if the park api data doesnt have any
-      saved: false,
-      description: "Park Description",
-      activities: "",
-      link: ""
-    }; // Have to declare this inside the loop, otherwise it passes the obj reference into the array not a new object each time
-    tempParkObj.name = data[x].fullName;
-    tempParkObj.states = data[x].states.replace(/,/g, ', '); // replacing commas with commas and spaces, this allows the text to wrap
-    tempParkObj.lat = data[x].latitude;
-    tempParkObj.lon = data[x].longitude;
-    tempParkObj.activities = data[x].activities;
-    if (data[x].images.length > 0) {
-      tempParkObj.img = data[x].images[0].url;
-    }
-    updateActivitiesArray(data[x].activities);
-    tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
-    tempParkObj.saved = false;
-    tempParkObj.description = data[x].description;
-    tempParkObj.link = data[x].url;
+// var formatResults = function (data) {
+//   parkList = []; // resetting the previous parklist if any is there
+//   for (x = 0; x < data.length; x++) {
+//     var tempParkObj = {
+//       name: "Park Name",
+//       states: "Park Location",
+//       dist: 0,
+//       lat: "",
+//       lon: "",
+//       img: "https://cdn.thewirecutter.com/wp-content/uploads/2020/07/nationalpark-yosemitetopimage-2x1-lowres-1024x512.jpg", // default image if the park api data doesnt have any
+//       saved: false,
+//       description: "Park Description",
+//       activities: "",
+//       link: ""
+//     }; // Have to declare this inside the loop, otherwise it passes the obj reference into the array not a new object each time
+//     tempParkObj.name = data[x].fullName;
+//     tempParkObj.states = data[x].states.replace(/,/g, ', '); // replacing commas with commas and spaces, this allows the text to wrap
+//     tempParkObj.lat = data[x].latitude;
+//     tempParkObj.lon = data[x].longitude;
+//     tempParkObj.activities = data[x].activities;
+//     if (data[x].images.length > 0) {
+//       tempParkObj.img = data[x].images[0].url;
+//     }
+//     updateActivitiesArray(data[x].activities);
+//     tempParkObj.dist = Math.trunc(getDistance(userLat, userLon, data[x].latitude, data[x].longitude));
+//     tempParkObj.saved = false;
+//     tempParkObj.description = data[x].description;
+//     tempParkObj.link = data[x].url;
 
-    parkList.push(tempParkObj);
-  }
+//     parkList.push(tempParkObj);
+//   }
 
-  parkList.sort((a, b) => a.dist - b.dist); // sorts by distance, lower values first
-}
+//   parkList.sort((a, b) => a.dist - b.dist); // sorts by distance, lower values first
+// }
 
-var toggleCheckbox = function (elem) {
-  if (elem.hasAttribute("checked")) {
-    elem.removeAttribute("checked");
-  }
+// var toggleCheckbox = function (elem) {
+//   if (elem.hasAttribute("checked")) {
+//     elem.removeAttribute("checked");
+//   }
 
-  else if (!elem.hasAttribute("checked")) {
-    elem.setAttribute("checked", "");
-  }
-}
+//   else if (!elem.hasAttribute("checked")) {
+//     elem.setAttribute("checked", "");
+//   }
+// }
 
-// move variable to top after merging with results from Tim
-var checkedActivities = [];
-var captureCheckedActivities = function () {
-  var activities = document.querySelectorAll("#main-form .activities");
-  checkedActivities = [];
-  for (var item of activities) {
-    if (item.checked === true) {
-      checkedActivities.push(item.defaultValue);
-    }
-  }
-}
+// // move variable to top after merging with results from Tim
+// var checkedActivities = [];
+// var captureCheckedActivities = function () {
+//   var activities = document.querySelectorAll("#main-form .activities");
+//   checkedActivities = [];
+//   for (var item of activities) {
+//     if (item.checked === true) {
+//       checkedActivities.push(item.defaultValue);
+//     }
+//   }
+// }
 
-var rangerProgram = ["Junior Ranger Program"];
-var wildlifeWatching = ["Wildlife Watching", "Birdwatching", "Scenic Driving"];
-var artsAndScience = ["Stargazing", "Hands-On", "Park Film", "Arts and Crafts", "Live Music", "Arts and Culture", "Theater", "Astronomy", "Citizen Science", "Planetarium"];
-var historyAndCulture = ["Museum Exhibits", "Living History", "Cultural Demonstrations", "Historic Weapons Demonstration", "Craft Demonstrations", "First Person Interpretation", "Reenactments"];
-var waterActivities = ["Fishing", "Paddling", "Boating", "Kayaking", "Canoeing", "Boat Tour", "Freshwater Fishing", "Swimming", "Stand Up Paddleboarding", "Fly Fishing", "Saltwater Fishing", "Motorized Boating", "Saltwater Swimming", "Freshwater Swimming", "SCUBA Diving", "Tubing", 'Sailing', "Whitewater Rafting", "Snorkeling", "Surfing", "River Tubing", "Water Skiing", "Jet Skiing", "Pool Swimming"];
-var shopping = ["Shopping", "Bookstore and Park Store", "Gift Shop and Souvenirs"];
-var hikingAndClimbing = ["Hiking", "Front-Country Hiking", "Backcountry Hiking", "Off-Trail Permitted Hiking", "Climbing", "Rock Climbing", "Mountain Climbing"];
-var tours = ["Guided Tours", "Self-Guided Tours - Walking", "Self-Guided Tours - Auto", "Bus/Shuttle Guided Tour"];
-var foodAndDining = ["Picnicking", "Food", "Dining"];
-var biking = ["Road Biking", "Mountain Biking", "Biking"];
-var camping = ["Horse Camping (see also Horse/Stock Use)", "Horse Camping (see also camping)", "Camping", "Backcountry Camping", "Car or Front Country Camping", "Canoe or Kayak Camping", "Group Camping", "RV Camping"];
-var winterActivities = ["Skiing", "Snowshoeing", "Cross-Country Skiing", "Snow Play", "Snowmobiling", "Downhill Skiing", "Snow Tubing", "Ice Climbing", "Dog Sledding", "Ice Skating"];
+// var rangerProgram = ["Junior Ranger Program"];
+// var wildlifeWatching = ["Wildlife Watching", "Birdwatching", "Scenic Driving"];
+// var artsAndScience = ["Stargazing", "Hands-On", "Park Film", "Arts and Crafts", "Live Music", "Arts and Culture", "Theater", "Astronomy", "Citizen Science", "Planetarium"];
+// var historyAndCulture = ["Museum Exhibits", "Living History", "Cultural Demonstrations", "Historic Weapons Demonstration", "Craft Demonstrations", "First Person Interpretation", "Reenactments"];
+// var waterActivities = ["Fishing", "Paddling", "Boating", "Kayaking", "Canoeing", "Boat Tour", "Freshwater Fishing", "Swimming", "Stand Up Paddleboarding", "Fly Fishing", "Saltwater Fishing", "Motorized Boating", "Saltwater Swimming", "Freshwater Swimming", "SCUBA Diving", "Tubing", 'Sailing', "Whitewater Rafting", "Snorkeling", "Surfing", "River Tubing", "Water Skiing", "Jet Skiing", "Pool Swimming"];
+// var shopping = ["Shopping", "Bookstore and Park Store", "Gift Shop and Souvenirs"];
+// var hikingAndClimbing = ["Hiking", "Front-Country Hiking", "Backcountry Hiking", "Off-Trail Permitted Hiking", "Climbing", "Rock Climbing", "Mountain Climbing"];
+// var tours = ["Guided Tours", "Self-Guided Tours - Walking", "Self-Guided Tours - Auto", "Bus/Shuttle Guided Tour"];
+// var foodAndDining = ["Picnicking", "Food", "Dining"];
+// var biking = ["Road Biking", "Mountain Biking", "Biking"];
+// var camping = ["Horse Camping (see also Horse/Stock Use)", "Horse Camping (see also camping)", "Camping", "Backcountry Camping", "Car or Front Country Camping", "Canoe or Kayak Camping", "Group Camping", "RV Camping"];
+// var winterActivities = ["Skiing", "Snowshoeing", "Cross-Country Skiing", "Snow Play", "Snowmobiling", "Downhill Skiing", "Snow Tubing", "Ice Climbing", "Dog Sledding", "Ice Skating"];
 
-var updateActivitiesArray = function (activities) {
-  for (var activity of activities) {
+// var updateActivitiesArray = function (activities) {
+//   for (var activity of activities) {
 
-    if (rangerProgram.includes(activity.name)) {
-      activity["category"] = "Junior Ranger Program";
-    }
-    if (wildlifeWatching.includes(activity.name)) {
-      activity["category"] = "Wildlife Watching";
-    }
-    if (artsAndScience.includes(activity.name)) {
-      activity["category"] = "Arts and Science";
-    }
-    if (historyAndCulture.includes(activity.name)) {
-      activity["category"] = "History and Culture";
-    }
-    if (waterActivities.includes(activity.name)) {
-      activity["category"] = "Water Activities";
-    }
-    if (shopping.includes(activity.name)) {
-      activity["category"] = "Shopping";
-    }
-    if (hikingAndClimbing.includes(activity.name)) {
-      activity["category"] = "Hiking and Climbing";
-    }
-    if (tours.includes(activity.name)) {
-      activity["category"] = "Tours";
-    }
-    if (foodAndDining.includes(activity.name)) {
-      activity["category"] = "Food and Dining";
-    }
-    if (biking.includes(activity.name)) {
-      activity["category"] = "Biking";
-    }
-    if (camping.includes(activity.name)) {
-      activity["category"] = "Camping";
-    }
-    if (winterActivities.includes(activity.name)) {
-      activity["category"] = "Winter Activities";
-    }
-  }
-}
+//     if (rangerProgram.includes(activity.name)) {
+//       activity["category"] = "Junior Ranger Program";
+//     }
+//     if (wildlifeWatching.includes(activity.name)) {
+//       activity["category"] = "Wildlife Watching";
+//     }
+//     if (artsAndScience.includes(activity.name)) {
+//       activity["category"] = "Arts and Science";
+//     }
+//     if (historyAndCulture.includes(activity.name)) {
+//       activity["category"] = "History and Culture";
+//     }
+//     if (waterActivities.includes(activity.name)) {
+//       activity["category"] = "Water Activities";
+//     }
+//     if (shopping.includes(activity.name)) {
+//       activity["category"] = "Shopping";
+//     }
+//     if (hikingAndClimbing.includes(activity.name)) {
+//       activity["category"] = "Hiking and Climbing";
+//     }
+//     if (tours.includes(activity.name)) {
+//       activity["category"] = "Tours";
+//     }
+//     if (foodAndDining.includes(activity.name)) {
+//       activity["category"] = "Food and Dining";
+//     }
+//     if (biking.includes(activity.name)) {
+//       activity["category"] = "Biking";
+//     }
+//     if (camping.includes(activity.name)) {
+//       activity["category"] = "Camping";
+//     }
+//     if (winterActivities.includes(activity.name)) {
+//       activity["category"] = "Winter Activities";
+//     }
+//   }
+// }
 
 var checkCategories = function (index) {
   var categoriesFound = [];
@@ -423,23 +423,23 @@ var checkCategories = function (index) {
 }
 
 // Displays the current formatted list of parks onto the page
-var displayParklist = function (onlySaved) {
-  formBox.css("display", "none");
-  heroImg.css("display", "none");
-  resultsSection.css("display", "block");
-  resultsBox.html(""); // clearing any previous results
-  for (var x = 0; x < parkList.length; x++) {
-    if (onlySaved === false) {
-      buildResult(x, false);
-    }
-    else {
-      if (parkList[x].saved === true) {
-        buildResult(x, true);
-      }
-    }
-  }
-  searchCounter = 0;
-}
+// var displayParklist = function (onlySaved) {
+//   formBox.css("display", "none");
+//   heroImg.css("display", "none");
+//   resultsSection.css("display", "block");
+//   resultsBox.html(""); // clearing any previous results
+//   for (var x = 0; x < parkList.length; x++) {
+//     if (onlySaved === false) {
+//       buildResult(x, false);
+//     }
+//     else {
+//       if (parkList[x].saved === true) {
+//         buildResult(x, true);
+//       }
+//     }
+//   }
+//   searchCounter = 0;
+// }
 
 // Builds the actual html for each result and appends it to the results container
 var buildResult = function (index, ignoreCats) {
@@ -525,36 +525,36 @@ var buildResult = function (index, ignoreCats) {
 }
 
 // updates the modal with the clicked parks info
-var populateModal = function (index) {
-  modalTitle.text(parkList[index].name);
-  modalSubtitle.text(parkList[index].states);
-  modalDistance.text(parkList[index].dist + " miles away");
+// var populateModal = function (index) {
+//   modalTitle.text(parkList[index].name);
+//   modalSubtitle.text(parkList[index].states);
+//   modalDistance.text(parkList[index].dist + " miles away");
 
-  if (parkList[index].saved) {
-    modalSaved.text("Saved");
-  }
-  else {
-    modalSaved.text("Save");
-  }
-  modalSaved.attr("index", index); // adding custom index for saving/loading purposes
+//   if (parkList[index].saved) {
+//     modalSaved.text("Saved");
+//   }
+//   else {
+//     modalSaved.text("Save");
+//   }
+//   modalSaved.attr("index", index); // adding custom index for saving/loading purposes
 
-  modalActs.html("") //clearing any previous activities
-  for (x = 0; x < parkList[index].activities.length; x++) {
-    var activity = $(document.createElement("div"));
-    activity.addClass("modal-activity");
-    activity.text(parkList[index].activities[x].name);
-    modalActs.append(activity);
-  }
-  modalDescription.text(parkList[index].description);
-  modalWebsite.attr("href", parkList[index].link)
-  modalWebsite.attr("target", "_blank");
+//   modalActs.html("") //clearing any previous activities
+//   for (x = 0; x < parkList[index].activities.length; x++) {
+//     var activity = $(document.createElement("div"));
+//     activity.addClass("modal-activity");
+//     activity.text(parkList[index].activities[x].name);
+//     modalActs.append(activity);
+//   }
+//   modalDescription.text(parkList[index].description);
+//   modalWebsite.attr("href", parkList[index].link)
+//   modalWebsite.attr("target", "_blank");
 
-  var gUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBvUej8oCiG__h7_jtiZKORjFKY1Uk-fu8&q="
-    + parkList[index].name.replace(/&/g, '');
-  gMapsBox.attr("src", gUrl);
+//   var gUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBvUej8oCiG__h7_jtiZKORjFKY1Uk-fu8&q="
+//     + parkList[index].name.replace(/&/g, '');
+//   gMapsBox.attr("src", gUrl);
 
-  getParkCoordinates(index);
-}
+//   getParkCoordinates(index);
+// }
 
 // handles saving the park to the array
 var savePark = function (index, saveText) {

@@ -18,14 +18,7 @@ Categories.init(
     category_abbr: {
       type: DataTypes.STRING, 
       allowNull: false
-    },
-    parks_id: {
-      type: DataTypes.INTEGER, 
-      references: {
-        model: "park",
-        key: "id"
-      }
-    },
+    }
   },
   {
     sequelize,
