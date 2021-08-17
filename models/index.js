@@ -2,7 +2,6 @@
 const Park = require('./Park');
 const Categories = require("./Categories");
 
-
 // create associations eventually
 Park.hasMany(Categories, {
   foreignKey: "parks_id"

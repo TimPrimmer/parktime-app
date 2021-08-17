@@ -15,12 +15,6 @@ router.get('/', (req, res) => {
       "image", 
       "latitude",
       "longitude"
-    ], 
-    include: [
-      {
-        model: Categories,
-        attributes: ["category_abbr"]
-      }
     ]
   })
     .then(dbParkData => res.json(dbParkData))
