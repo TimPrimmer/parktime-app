@@ -17,10 +17,20 @@
     <h1><a href="/">Parktime</a></h1>
     <nav>
       <ul>
+        {{!-- {{#unless loggedIn}} --}}
+        <li>
+          <a href="/login">Login</a>
+        </li>
+        {{!-- {{/unless}}
+        {{#if loggedIn}} --}}
         <li>
           <img id="heart-icon" src="assets/icons/open-iconic/svg/heart-white.svg" alt="">
           <a id="saved-parks">Saved Parks</a>
         </li>
+        <li>
+          <button id="logout">Logout</button>
+        </li>
+        {{!-- {{/if}} --}}
       </ul>
     </nav>
   </header>
