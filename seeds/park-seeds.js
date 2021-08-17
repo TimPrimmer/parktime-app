@@ -42,7 +42,18 @@ const generateSqlArray = (parkData) => {
   let formattedSql = [];
   let parks = parkData.parks;
   for (let x = 0; x < parks.length; x++) {
-    formattedSql.push({id: x + 1, park_id: parks[x].id})
+    formattedSql.push({
+      id: x + 1, 
+      park_id: parks[x].id, 
+      park_code: parks[x].parkCode,
+      name: parks[x].fullName, 
+      description: parks[x].description,
+      state: parks[x].states,
+      url: parks[x].url,
+      image: parks[x].images[0].url,
+      latitude: parks[x].latitude,
+      longitude: parks[x].longitude
+    })
   }
   return formattedSql;
 }
@@ -53,7 +64,7 @@ const seedParks = async () => {
   for (let park of parkData.parks) {
     updateActivitiesArray(park.activities);
   }
-  writeToFile("./data/parks.json", JSON.stringify(parkData))
+  // writeToFile("./data/parks.json", JSON.stringify(parkData))
 
   const parkSql = generateSqlArray(parkData);
 
@@ -76,42 +87,53 @@ var winterActivities = ["Skiing", "Snowshoeing", "Cross-Country Skiing", "Snow P
 
 var updateActivitiesArray = function (activities) {
   for (var activity of activities) {
-
     if (rangerProgram.includes(activity.name)) {
       activity["category"] = "Junior Ranger Program";
+      activity["categoryAbbr"] = "Jur";
     }
     if (wildlifeWatching.includes(activity.name)) {
       activity["category"] = "Wildlife Watching";
+      activity["categoryAbbr"] = "Wil";
     }
     if (artsAndScience.includes(activity.name)) {
       activity["category"] = "Arts and Science";
+      activity["categoryAbbr"] = "Art";
     }
     if (historyAndCulture.includes(activity.name)) {
       activity["category"] = "History and Culture";
+      activity["categoryAbbr"] = "His";
     }
     if (waterActivities.includes(activity.name)) {
       activity["category"] = "Water Activities";
+      activity["categoryAbbr"] = "Wat";
     }
     if (shopping.includes(activity.name)) {
       activity["category"] = "Shopping";
+      activity["categoryAbbr"] = "Sho";
     }
     if (hikingAndClimbing.includes(activity.name)) {
       activity["category"] = "Hiking and Climbing";
+      activity["categoryAbbr"] = "Hik";
     }
     if (tours.includes(activity.name)) {
       activity["category"] = "Tours";
+      activity["categoryAbbr"] = "Tou";
     }
     if (foodAndDining.includes(activity.name)) {
       activity["category"] = "Food and Dining";
+      activity["categoryAbbr"] = "Foo";
     }
     if (biking.includes(activity.name)) {
       activity["category"] = "Biking";
+      activity["categoryAbbr"] = "Bik";
     }
     if (camping.includes(activity.name)) {
       activity["category"] = "Camping";
+      activity["categoryAbbr"] = "Cam";
     }
     if (winterActivities.includes(activity.name)) {
       activity["category"] = "Winter Activities";
+      activity["categoryAbbr"] = "Win";
     }
   }
 }
