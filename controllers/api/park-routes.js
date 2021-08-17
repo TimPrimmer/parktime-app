@@ -3,7 +3,20 @@ const { Park } = require('../../models');
 
 // get all parks
 router.get('/', (req, res) => {
-  Park.findAll()
+  Park.findAll({
+    attributes: [
+      "id",
+      "park_id",
+      "park_code",
+      "name",
+      "description",
+      "state",
+      "url",
+      "image", 
+      "latitude",
+      "longitude"
+    ]
+  })
     .then(dbParkData => res.json(dbParkData))
     .catch(err => {
       console.log(err);

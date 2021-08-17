@@ -1,0 +1,54 @@
+<div class="hero-image"></div>
+  <main>
+    <form id="main-form">
+      <label class="address" for="address">Pick a starting point:</label>
+      <input type="address" id="address" placeholder="Address">
+      <span id="status-text"></span>
+      <span id="current-location">Use current location</span> 
+
+      <p>Pick some activities you'd like the park to have:</p>
+      <ul>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities1" name="activities1" value="Water Activities" onclick="toggleCheckbox(this)">Water Activities</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities2" name="activities2" value="History and Culture" onclick="toggleCheckbox(this)">History &amp; Culture</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities3" name="activities3" value="Biking" onclick="toggleCheckbox(this)">Biking</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities4" name="activities4" value="Arts and Science" onclick="toggleCheckbox(this)">Arts &amp; Science</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities5" name="activities5" value="Hiking and Climbing" onclick="toggleCheckbox(this)">Hiking &amp; Climbing</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities6" name="activities6" value="Wildlife Watching" onclick="toggleCheckbox(this)">Wildlife Watching</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities7" name="activities7" value="Food and Dining" onclick="toggleCheckbox(this)">Food &amp; Dining</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities8" name="activities8" value="Tours" onclick="toggleCheckbox(this)">Tours</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities9" name="activities9" value="Shopping" onclick="toggleCheckbox(this)">Shopping</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities10" name="activities10" value="Camping" onclick="toggleCheckbox(this)">Camping</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities11" name="activities11" value="Winter Activities" onclick="toggleCheckbox(this)">Winter Activities</label>
+        </li>
+        <li>
+          <label><input class="activities" type="checkbox" id="activities12" name="activities12" value="Junior Ranger Program" onclick="toggleCheckbox(this)">Jr. Ranger Program</label>
+        </li>
+      </ul>
+      <button type="submit" id="find-parks" value="button">Find parks</button>
+    </form>
+  </main>
+
+  <script src="/assets/js/categories.js"></script>
+  <script src="/assets/js/parks.js"></script>
+  

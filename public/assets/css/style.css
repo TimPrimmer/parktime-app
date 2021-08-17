@@ -207,7 +207,7 @@ form button:hover {
   cursor: pointer;
 }
 
-#park-result-modal {
+.park-result-modal {
   display: none; /* Hidden by default */
   position: fixed; 
   z-index: 1; /* Sit on top */
@@ -216,13 +216,13 @@ form button:hover {
   width: 100%; 
   height: 100%;
   overflow: auto;
-  background-color: rgb(0,0,0);
+  /* background-color: rgb(0,0,0); */
   background-color: rgba(0,0,0,0.4);
   align-items: center;
   justify-content: center;
 }
 
-#park-result-content {
+.park-result-content {
   padding: 20px;
   background-color: white;
   height: 70%;
@@ -236,20 +236,20 @@ form button:hover {
   max-width: 900px;
 }
 
-#park-result-content h3:not(#modal-subtitle) { 
+.park-result-content h3:not(.modal-subtitle) { 
   width: 100%;
   padding-top: 20px;
   padding-bottom: 10px;
 }
 
-#modal-title {
+.modal-title {
   font-size: 30px;
   width: 90%;
   text-align: left;
   height: fit-content;
 }
 
-#modal-subtitle {
+.modal-subtitle {
   font-size: 20px;
   width: 100%;
   text-align: left;
@@ -257,18 +257,18 @@ form button:hover {
   padding-top: 5px;
 }
 
-#modal-distance {
+.modal-distance {
   padding-top: 10px;
   width: 100%;
   font-weight: 400;
   font-size: 20px;
 }
 
-#modal-description {
+.modal-description {
   padding-left: 20px;
 }
 
-#modal-website {
+.modal-website {
   margin-left: 20px;
   margin-top: 10px;
   font-weight: bold;
@@ -278,18 +278,18 @@ form button:hover {
   padding-bottom: 5px;
 }
 
-#modal-website:hover {
+.modal-website:hover {
   border-bottom: 2px solid #000;
 }
 
-#modal-saved {
+.modal-saved {
   padding-top: 10px;
   width: 100%;
   font-weight: 400;
   font-size: 20px;
 }
 
-#close-modal {
+.close-modal {
   font-size: 30px;
   width: 10%;
   text-align: right;
@@ -297,14 +297,14 @@ form button:hover {
   font-weight: lighter;
 }
 
-#modal-activities {
+.modal-activities {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   padding-left: 10px;
 }
 
-#modal-forecast-box {
+.modal-forecast-box {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -372,9 +372,9 @@ form button:hover {
   margin: 15px auto 0;
 }
 
-#results-page {
+/* #results-page {
   display: none;
-}
+} */
 
 #results-filters {
   font-weight: bold;
