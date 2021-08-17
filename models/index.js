@@ -1,5 +1,7 @@
 // import all models
-const Park = require('./Park');
+const Park = require("./Park");
+const User = require("./User");
+const Comment = require("./Comment");
 const Categories = require("./Categories");
 
 // create associations eventually

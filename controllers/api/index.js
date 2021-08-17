@@ -1,9 +1,11 @@
 const router = require("express").Router();
 
-const parksRoutes = require("./parks-routes");
-const categoryRoutes = require("./category-routes");
+const userRoutes = require("./user-routes.js");
+const parkRoutes = require("./park-routes.js");
+const commentRoutes = require("./comment-routes");
 
-router.use("/parks", parksRoutes);
-router.use("/categories", categoryRoutes);
+router.use("/users", userRoutes);
+router.use("/parks", parkRoutes);
+router.use("/comments", commentRoutes);
 
 module.exports = router;
