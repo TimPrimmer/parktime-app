@@ -1,4 +1,4 @@
-const { Park } = require('../models');
+const { Park, Categories } = require('../models');
 const fetch = require('node-fetch');
 const fs = require('fs');
 
@@ -43,7 +43,7 @@ const generateSqlArray = (parkData) => {
   let parks = parkData.parks;
   for (let x = 0; x < parks.length; x++) {
     formattedSql.push({
-      id: x + 1, 
+      // id: x + 1, 
       park_id: parks[x].id, 
       park_code: parks[x].parkCode,
       name: parks[x].fullName, 
@@ -58,6 +58,28 @@ const generateSqlArray = (parkData) => {
   return formattedSql;
 }
 
+const generateCategoriesSqlArray = (parkData) => {
+  let categorySql = [];
+  let parks = parkData.parks;
+  console.log(parks.length);
+  for (let i = 0; i < parks.length; i++) {
+    let activities = parks[i].activities;
+    if (activities.length > 0) {
+      for (let j = 0; j < activities.length; j++) {
+        if (activities[j].categoryAbbr) {
+          categorySql.push({
+            // id: 0,
+            name: parks[i].fullName, 
+            category_abbr: activities[j].categoryAbbr
+          })
+        }
+      }
+    }
+  }
+  console.log(categorySql);
+  return categorySql;
+}
+
 const seedParks = async () => {
   const parkData = await getParkData();
   // update parks.json file with categories 
@@ -67,8 +89,10 @@ const seedParks = async () => {
   // writeToFile("./data/parks.json", JSON.stringify(parkData))
 
   const parkSql = generateSqlArray(parkData);
+  const categoriesSql = generateCategoriesSqlArray(parkData);
 
   await Park.bulkCreate(parkSql);
+  await Categories.bulkCreate(categoriesSql);
   console.log('Parks seeded!');
 }
 

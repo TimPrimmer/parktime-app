@@ -1,6 +1,6 @@
 async function getParks(event) {
   event.preventDefault();
-  const response = await fetch("/api/parks", {
+  const response = await fetch("/parks", {
     method: "GET",
     headers: { "Content-Type": "application/json"}
   });

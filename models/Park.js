@@ -49,7 +49,7 @@ Park.init(
     longitude: {
       type: DataTypes.FLOAT,
       allowNull: false
-    } 
+    }
   },
   {
     sequelize,
