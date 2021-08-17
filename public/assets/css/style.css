@@ -563,7 +563,77 @@ footer a {
 #line {
   padding: 0 10px 0 20px;
 }
-  
+
+/* Login/Logout page styles */
+.login-section,
+.signup-section {
+  font-size: 1.125rem;
+  margin: 60px auto 10px;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  max-width: 500px;
+}
+
+.login-section p:first-child, 
+.signup-section p:first-child
+ {
+  background-color: var(--main-color);
+  color: #FFF;
+  padding: 10px 15px;
+}
+
+.login-section section,
+.signup-section section {
+  padding: 10px;
+}
+
+.login-form,
+.signup-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.login-form label,
+.login-form input,
+.signup-form label,
+.signup-form input {
+  flex: 100%;
+}
+
+.login-form input, 
+.signup-form input {
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: 2px solid var(--main-color);
+}
+
+.login-form button,
+.signup-form button {
+  padding: 10px 20px;
+  margin: 5px auto 15px;
+  background-color: var(--main-color);
+  color: #FFF;
+  font-size: 1.125rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+#signup-instead, 
+#login-instead {
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+}
+
+#signup-instead:hover, 
+#login-instead:hover {
+  border-bottom: 2px solid #000;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1024px) {
   form {
