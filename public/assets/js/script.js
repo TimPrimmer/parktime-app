@@ -71,7 +71,7 @@ savedParks.on("click", function (event) {
     displayParklist(true); // displaying all parks that are saved
   }
   else {
-    searchDisplayMsg(true, 2, "No saved parks"); // displays error message
+    //searchDisplayMsg(true, 2, "No saved parks"); // displays error message
   }
 });
 
