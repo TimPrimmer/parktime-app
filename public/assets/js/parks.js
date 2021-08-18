@@ -1,5 +1,24 @@
 let statusText = $("#status-text");
 
+
+var useCurrentLocation = function (event) {// fires if we get the users current location
+  event.preventDefault();
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(usersLatLon);
+  } else {
+    searchDisplayMsg(false, 3, "Error grabbing location");
+  }
+}
+
+let usersLatLon = (data) => { // updates the address field with the user lat and lon
+  userLat = data.coords.latitude;
+  userLon = data.coords.longitude;
+  searchDisplayMsg(false, 2, "Success"); // display success message
+  address = String(userLat) + ", " + String(userLon);
+  $("#address").val(address);
+}
+
+
 let myTimeout;
 const searchDisplayMsg = (isError, seconds, errorMsg) => {
   if (isError) {
@@ -50,7 +69,6 @@ const getParks = async (event) => {  // Fires when we click on "Find parks"
   }
   else {
     let userLoc = await convertAddressToLatLon(address);
-    console.log(userLoc);
     let fetchString = "/parks/" + userLoc.userLat + "/" + userLoc.userLon;
     const response = await fetch(fetchString, {
       method: "GET",
@@ -65,6 +83,6 @@ const getParks = async (event) => {  // Fires when we click on "Find parks"
   }
 }
 
-
-document.querySelector("#find-parks").addEventListener("click", getParks);
+$("#current-location").on("click", useCurrentLocation); // "use my location" button
+document.querySelector("#find-parks").addEventListener("click", getParks); // "find parks" button
 
