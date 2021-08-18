@@ -39,7 +39,8 @@ const generateSqlArray = (parkData) => {
       url: parks[x].url,
       image: parks[x].images[0].url,
       latitude: parks[x].latitude,
-      longitude: parks[x].longitude
+      longitude: parks[x].longitude,
+      activities: parks[x].activities
     })
   }
   return formattedSql;

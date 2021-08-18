@@ -14,7 +14,8 @@ router.get('/', (req, res) => {
       "url",
       "image", 
       "latitude",
-      "longitude"
+      "longitude",
+      "activities"
     ]
   })
     .then(dbParkData => res.json(dbParkData))
