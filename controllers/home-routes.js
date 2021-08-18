@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const fetch = require('node-fetch');
 const { Saved_Parks, Park } = require("../models");
+
 
 router.get('/', (req, res) => {
   res.render("homepage", {
@@ -43,9 +45,15 @@ router.get("/saved_list", (req, res) => {
         parks.push(element.park);
       });
 
-      if (parks.length > 1) {
+      if (parks.length > 0) {
         res.render("saved", {
           parks,
+          loggedIn: req.session.loggedIn,
+          user_id: req.session.user_id
+        });
+      }
+      else {
+        res.render("homepage", {
           loggedIn: req.session.loggedIn
         });
       }

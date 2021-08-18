@@ -1,14 +1,56 @@
-var modalSaved = $("#modal-saved");
-
+var resultsPage = $("#results-page");
 
 
 // fires when we click on the "save" or "saved" button in the modal
-modalSaved.on("click", function (event) {
-  //event.target).attr("index")
-  console.log($(event.target)); 
+$(".modal-saved").on('click', function (event) {
+  saveOrDelete(event);
 });
 
 // fires when we click on the "save" or "saved" button in the results section
-$(document).on("click", "p.saved", function (event) {
-  console.log($(event.target)); 
+$(".saved").on('click', function (event) {
+  saveOrDelete(event);
 });
+
+saveOrDelete = (event) => {
+  console.log($(event.target).attr("park_id"));
+  if ($(event.target).text() === "Save") {
+    fetch("/api/saved",
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          user_id: resultsPage.attr("user_id"),
+          park_id: $(event.target).attr("park_id")
+        })
+      })
+      .then(function (res) { 
+        console.log(res);
+        document.location.reload(); 
+      })
+      .catch(function (res) { console.log(res) })
+  }
+  else {
+    fetch("/api/saved",
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "DELETE",
+        body: JSON.stringify({
+          user_id: resultsPage.attr("user_id"),
+          park_id: $(event.target).attr("park_id")
+        })
+      })
+      .then(function (res) { 
+        console.log(res);
+        document.location.reload(); 
+      })
+      .catch(function (res) { console.log(res) })
+  }
+}
+
+
