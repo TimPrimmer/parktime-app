@@ -23,11 +23,13 @@ router.get('/', (req, res) => {
       if (req.session.user_id === undefined) { // checks to see if we are not signed in
         for (x = 0; x < parks.length; x++) {
           parks[x].saved = false;
-          res.render("parks", {
-            parks,
-            loggedIn: req.session.loggedIn
-          });
         }
+        res.render("parks", {
+          parks,
+          loggedIn: req.session.loggedIn,
+          user_id: 0
+        });
+
       }
       else {
         Saved_Parks.findAll({
@@ -54,7 +56,8 @@ router.get('/', (req, res) => {
             }
             res.render("parks", {
               parks,
-              loggedIn: req.session.loggedIn
+              loggedIn: req.session.loggedIn,
+              user_id: req.session.user_id
             });
           });
       }
