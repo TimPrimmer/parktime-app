@@ -11,7 +11,7 @@ const seedAll = async () => {
   await seedParks();
   
   console.log('--------------');
-  await seedUsers();
+  // await seedUsers();
   
   console.log('--------------');
   await seedSavedParks();

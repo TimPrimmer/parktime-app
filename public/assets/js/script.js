@@ -38,7 +38,7 @@ var loadedParkList = [];  // This will hold the parks we haved saved from local 
 // this style of event capture works for dynamically created html as well, aka like the park results we will be generating
 resultsBox.on("click", "span.park-modal", function (event) {
   modal.css("display", "flex");
-  populateModal($(event.target).attr("index"));
+  // populateModal($(event.target).attr("index"));
 });
 
 // // fires when we click on the "save" or "saved" button in the modal
@@ -112,10 +112,10 @@ var searchDisplayMsg = function (isError, seconds, errorMsg) {
   }, seconds * 1000); // hide after x seconds
 }
 
-var getParkCoordinates = function (index) {
-  var parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
-  getWeatherForecast(parkCoordinates);
-}
+// var getParkCoordinates = function (index) {
+//   var parkCoordinates = "lat=" + parkList[index].lat + "&lon=" + parkList[index].lon;
+//   getWeatherForecast(parkCoordinates);
+// }
 
 var resultsPageAddressDisplay = function () {
   loadUsersAddress();
