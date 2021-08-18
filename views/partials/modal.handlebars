@@ -24,9 +24,24 @@
     {{> weather-forecast}}
   </div>
   <h3>Comments</h3>
-  <div>
-    {{>comments}}
-  </div>
+
+    <div class="comments">
+       <ul class="comments"></ul>
+      {{#each comments}}
+   
+      <li>
+      <div class="text">
+        {{comment_text}}
+      </div>
+      <div class="username">
+        -
+        {{user.username}}
+      </div>
+</li>
+    </ul>
+  {{/each}}
+</div>
+
 
   <h3>Directions</h3>
   {{!-- <iframe src="" id="gmaps-box" width="2000" height="200" style="border:0;" allowfullscreen=""

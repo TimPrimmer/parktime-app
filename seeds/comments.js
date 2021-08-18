@@ -9,6 +9,16 @@ const userSql = [
   {
     comment_text: "This park is great!",
     user_id: 2,
+    park_id: 1,
+  },
+  {
+    comment_text: "This park is great!",
+    user_id: 3,
+    park_id: 1,
+  },
+  {
+    comment_text: "This park is great!",
+    user_id: 2,
     park_id: 2,
   },
   {

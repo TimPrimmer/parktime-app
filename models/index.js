@@ -26,4 +26,8 @@ Saved_Parks.belongsTo(User, {
   foreignKey: "user_id",
 });
 
+Comment.belongsTo(User, {
+  foreignKey: "user_id"
+})
+
 module.exports = { Park, Categories, Comment, User, Saved_Parks };
