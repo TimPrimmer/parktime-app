@@ -10,7 +10,12 @@
         <h4 class="park-name">{{name}}</h4>
         <p class="park-states">{{state}}</p>
         <p class="miles-away">40 miles away</p>
+        {{#if saved}}
         <p class="saved">Saved</p>
+        {{/if}}
+        {{#unless saved}}
+        <p class="saved">Save</p>
+        {{/unless}}
       </div>
       <hr class="park-horizontal-row">
       <div class="park-description-div">
@@ -33,5 +38,8 @@
 </section>
 
 
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+    integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 <script src="/assets/js/modal.js"></script>
 <script src="/assets/js/weather-forecast.js"></script>
+<script src="/assets/js/save-system.js"></script>

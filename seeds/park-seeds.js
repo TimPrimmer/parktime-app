@@ -1,6 +1,5 @@
 const { Park, Categories } = require('../models');
 const fetch = require('node-fetch');
-const fs = require('fs');
 
 const limit = 999; // how many parks we should return on fetch
 
@@ -23,18 +22,6 @@ const getParkData = async () => {
   let formattedData = await JSON.parse(changedJson);
 
   return formattedData;
-}
-
-// creates the park data file - data/parks.json
-const writeToFile = (fileName, data) => {
-  fs.writeFile(fileName, data, err => {
-    if (err) {
-      console.log("JSON generation failed.");
-      return console.error(err);
-    } else {
-      console.log("JSON generated successfully!");
-    }
-  });
 }
 
 // gets all the park ids and adds them into an array with a mysql id so we can reference the park later
@@ -61,7 +48,7 @@ const generateSqlArray = (parkData) => {
 const generateCategoriesSqlArray = (parkData) => {
   let categorySql = [];
   let parks = parkData.parks;
-  console.log(parks.length);
+  //console.log(parks.length);
   for (let i = 0; i < parks.length; i++) {
     let activities = parks[i].activities;
     if (activities.length > 0) {
@@ -75,7 +62,7 @@ const generateCategoriesSqlArray = (parkData) => {
       }
     }
   }
-  console.log(categorySql);
+  //console.log(categorySql);
   return categorySql;
 }
 
@@ -85,8 +72,6 @@ const seedParks = async () => {
   for (let park of parkData.parks) {
     updateActivitiesArray(park.activities);
   }
-  // writeToFile("./data/parks.json", JSON.stringify(parkData))
-
   const parkSql = generateSqlArray(parkData);
   const categoriesSql = generateCategoriesSqlArray(parkData);
 

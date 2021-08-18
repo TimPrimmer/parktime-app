@@ -11,12 +11,12 @@ const userSql = [
   {
     username: 'ErinH',
     email: 'webdev2@email.com',
-    password: 'Password123'
+    password: 'Test123'
   },
   {
     username: 'DerekB',
     email: 'webdev3@email.com',
-    password: '123tesT'
+    password: 'Test123'
   }
 ];
 

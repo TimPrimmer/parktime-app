@@ -1,9 +1,14 @@
 <div class="park-result-content">
   <h2 class="modal-title">{{name}}</h2>
   <p class="close-modal" data-park-code="{{park_code}}">X</p>
-  <h3 class="modal-subtitle">{{states}}</h3>
+  <h3 class="modal-subtitle">{{state}}</h3>
   <p class="modal-distance">40 miles away</p>
+  {{#if saved}}
   <p class="modal-saved"> &#9829; Saved</p>
+  {{/if}}
+  {{#unless saved}}
+  <p class="modal-saved"> &#9829; Save</p>
+  {{/unless}}
   <h3>Activities</h3>
   <div class="modal-activities">
     {{#each activities}}
@@ -15,9 +20,9 @@
   <a href="{{url}}" class="modal-website">View Website</a>
   <img class="external-link-icon" src="assets/icons/open-iconic/svg/external-link.svg" alt="external link icon">
   <h3 class="weather-forecast">5-Day Forecast</h3>
-  <div>  
+  <div>
     {{> weather-forecast}}
-</div>
+  </div>
   <h3>Directions</h3>
   {{!-- <iframe src="" id="gmaps-box" width="2000" height="200" style="border:0;" allowfullscreen=""
     loading="lazy"></iframe> --}}
