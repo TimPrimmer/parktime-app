@@ -41,27 +41,27 @@ resultsBox.on("click", "span.park-modal", function (event) {
   populateModal($(event.target).attr("index"));
 });
 
-// fires when we click on the "save" or "saved" button in the modal
-modalSaved.on("click", function (event) {
-  savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
-});
+// // fires when we click on the "save" or "saved" button in the modal
+// modalSaved.on("click", function (event) {
+//   savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
+// });
 
-// fires when we click on the "save" or "saved" button in the results section
-$(document).on("click", "p.saved", function (event) {
-  savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
-});
+// // fires when we click on the "save" or "saved" button in the results section
+// $(document).on("click", "p.saved", function (event) {
+//   savePark($(event.target).attr("index"), $(event.target)); // Passing in the index of the save button we clicked, and a reference to the p element itself
+// });
 
-// fires when we click on the span x in the modal
-closeModal.on("click", function (event) {
-  modal.css("display", "none");
-});
+// // fires when we click on the span x in the modal
+// closeModal.on("click", function (event) {
+//   modal.css("display", "none");
+// });
 
-// fires when we click outside of the modal
-window.onclick = function (event) {
-  if (event.target === modal[0]) {
-    modal.css("display", "none");
-  }
-}
+// // fires when we click outside of the modal
+// window.onclick = function (event) {
+//   if (event.target === modal[0]) {
+//     modal.css("display", "none");
+//   }
+// }
 
 // fires when we click on "saved parks"
 savedParks.on("click", function (event) {

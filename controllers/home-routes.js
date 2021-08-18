@@ -39,6 +39,7 @@ router.get("/saved_list", (req, res) => {
       const filteredParks = dbSavedData.map(park => park.get({ plain: true }));
       let parks = [];
       filteredParks.forEach((element) => {
+        element.park.saved = true;
         parks.push(element.park);
       });
 

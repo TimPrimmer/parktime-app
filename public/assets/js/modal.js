@@ -30,3 +30,4 @@ for (let i = 0; i < closeModalX.length; i++) {
     closeModal(closeModalX[i].dataset.parkCode);
   });
 }
+
