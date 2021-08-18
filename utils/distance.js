@@ -14,5 +14,7 @@ const getDistance = (lat1, lon1, lat2, lon2) => { // Returns distance in miles b
 }
 
 
-module.exports = getDistance;
+
+
+module.exports = { getDistance };
 

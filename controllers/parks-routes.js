@@ -1,6 +1,6 @@
 const router = require('express').Router();
 // const { parks } = require("../data/parks.json");
-const getDistance = require("../utils/distance.js");
+const { getDistance } = require("../utils/distance.js");
 const { Park, Saved_Parks } = require("../models");
 
 
