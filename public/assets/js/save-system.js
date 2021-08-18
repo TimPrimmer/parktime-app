@@ -12,44 +12,46 @@ $(".saved").on('click', function (event) {
 });
 
 saveOrDelete = (event) => {
-  console.log($(event.target).attr("park_id"));
-  if ($(event.target).text() === "Save") {
-    fetch("/api/saved",
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-          user_id: resultsPage.attr("user_id"),
-          park_id: $(event.target).attr("park_id")
+  if (resultsPage.attr("user_id") != 0) {
+
+    if ($(event.target).text() === "Save") {
+      fetch("/api/saved",
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({
+            user_id: resultsPage.attr("user_id"),
+            park_id: $(event.target).attr("park_id")
+          })
         })
-      })
-      .then(function (res) { 
-        console.log(res);
-        document.location.reload(); 
-      })
-      .catch(function (res) { console.log(res) })
-  }
-  else {
-    fetch("/api/saved",
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: "DELETE",
-        body: JSON.stringify({
-          user_id: resultsPage.attr("user_id"),
-          park_id: $(event.target).attr("park_id")
+        .then(function (res) {
+          console.log(res);
+          document.location.reload();
         })
-      })
-      .then(function (res) { 
-        console.log(res);
-        document.location.reload(); 
-      })
-      .catch(function (res) { console.log(res) })
+        .catch(function (res) { console.log(res) })
+    }
+    else {
+      fetch("/api/saved",
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: "DELETE",
+          body: JSON.stringify({
+            user_id: resultsPage.attr("user_id"),
+            park_id: $(event.target).attr("park_id")
+          })
+        })
+        .then(function (res) {
+          console.log(res);
+          document.location.reload();
+        })
+        .catch(function (res) { console.log(res) })
+    }
   }
 }
 
