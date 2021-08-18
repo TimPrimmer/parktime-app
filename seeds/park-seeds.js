@@ -57,7 +57,8 @@ const generateCategoriesSqlArray = (parkData) => {
         if (activities[j].categoryAbbr) {
           categorySql.push({
             name: parks[i].fullName, 
-            category_abbr: activities[j].categoryAbbr
+            category_abbr: activities[j].categoryAbbr,
+            park_id: i + 1
           })
         }
       }

@@ -1,15 +1,8 @@
 const router = require('express').Router();
-const { Categories, Park } = require("../../models");
+const { Categories } = require("../../models");
 
 router.get('/', (req, res) => {
-  // res.render("parks", {parks});
-  Categories.findAll({
-    attributes: [
-      "id",
-      "name",
-      "category_abbr"
-    ]
-  })
+  Categories.findAll()
     .then(dbCategoryData => res.json(dbCategoryData))
     .catch(err => {
       console.log(err);
