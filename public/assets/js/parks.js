@@ -60,7 +60,6 @@ const convertAddressToLatLon = async (address) => {
 }
 
 
-
 const getParks = async (event) => {  // Fires when we click on "Find parks"
   event.preventDefault();
   address = $("#address").val();
@@ -69,7 +68,7 @@ const getParks = async (event) => {  // Fires when we click on "Find parks"
   }
   else {
     let userLoc = await convertAddressToLatLon(address);
-    let fetchString = "/parks/" + userLoc.userLat + "/" + userLoc.userLon;
+    let fetchString = "/parks/" + userLoc.userLat + "/" + userLoc.userLon + "/1";
     const response = await fetch(fetchString, {
       method: "GET",
       headers: { "Content-Type": "application/json" }

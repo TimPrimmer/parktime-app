@@ -3,7 +3,7 @@ const router = require('express').Router();
 const { getDistance } = require("../utils/distance.js");
 const { Park, Saved_Parks } = require("../models");
 
-
+// renders ALL parks no pagination
 router.get('/', (req, res) => {
   // res.render("parks", {parks});
   Park.findAll({
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
   })
     .then(dbParkData => {
       const parks = dbParkData.map(park => park.get({ plain: true }));
-      
+
       for (x = 0; x < parks.length; x++) {
         parks[x].distance = 0; // setting the distance to 0 as we're accessing the page w/o any distance data
       }
@@ -34,7 +34,8 @@ router.get('/', (req, res) => {
         res.render("parks", {
           parks,
           loggedIn: req.session.loggedIn,
-          user_id: 0
+          user_id: 0,
+          pagination: false
         });
 
       }
@@ -64,7 +65,8 @@ router.get('/', (req, res) => {
             res.render("parks", {
               parks,
               loggedIn: req.session.loggedIn,
-              user_id: req.session.user_id
+              user_id: req.session.user_id,
+              pagination: false
             });
           });
       }
@@ -75,7 +77,10 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:lat/:lon', (req, res) => {
+
+
+// renders parks sorted by distance via given lat and lon, with pagination
+router.get('/:lat/:lon/:page', (req, res) => {
   // res.render("parks", {parks});
   Park.findAll({
     attributes: [
@@ -89,16 +94,37 @@ router.get('/:lat/:lon', (req, res) => {
       "image",
       "latitude",
       "longitude"
-    ]
+    ],
   })
     .then(dbParkData => {
-      const parks = dbParkData.map(park => park.get({ plain: true }));
-      
-      for (x = 0; x < parks.length; x++) {
-        parks[x].distance = getDistance(req.params.lat, req.params.lon, parks[x].latitude, parks[x].longitude);
+      const tempParks = dbParkData.map(park => park.get({ plain: true }));
+
+      for (x = 0; x < tempParks.length; x++) {
+        tempParks[x].distance = getDistance(req.params.lat, req.params.lon, tempParks[x].latitude, tempParks[x].longitude);
       }
 
-      parks.sort((a, b) => (a.distance > b.distance) ? 1 : -1); // sorts by distance
+      tempParks.sort((a, b) => (a.distance > b.distance) ? 1 : -1); // sorts by distance
+      let pageParam = parseInt(req.params.page);
+      let limit = 50;
+      let startOffset = (pageParam - 1) * limit;
+      let endOffset = startOffset + limit;
+      const parks = tempParks.slice(startOffset, endOffset); // limits results
+      let pages = Math.ceil(tempParks.length / limit);
+
+      let lastPage = false;
+      let firstPage = false;
+      let pagination = true;
+      
+      if (pageParam === 1) {
+        firstPage = true;
+      }
+      else if (pageParam === pages) {
+        lastPage = true;
+      }
+      else if (pageParam < 1 || pageParam > pages) {
+        res.redirect("/");
+        return;
+      }
 
       if (req.session.user_id === undefined) { // checks to see if we are not signed in
         for (x = 0; x < parks.length; x++) {
@@ -107,7 +133,10 @@ router.get('/:lat/:lon', (req, res) => {
         res.render("parks", {
           parks,
           loggedIn: req.session.loggedIn,
-          user_id: 0
+          user_id: 0,
+          firstPage: firstPage,
+          lastPage: lastPage,
+          pagination: pagination
         });
 
       }
@@ -137,7 +166,10 @@ router.get('/:lat/:lon', (req, res) => {
             res.render("parks", {
               parks,
               loggedIn: req.session.loggedIn,
-              user_id: req.session.user_id
+              user_id: req.session.user_id,
+              firstPage: firstPage,
+              lastPage: lastPage,
+              pagination: pagination
             });
           });
       }

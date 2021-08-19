@@ -536,6 +536,29 @@ form button:hover {
   padding-bottom: 5px;
 }
 
+.page-nav {
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.page-arrow {
+  font-size: 100px;
+}
+
+.page-num {
+  padding-top: 15px;
+  margin: 0px 5px 0px 5px;
+  font-size: 20px;
+}
+
+.page-highlight-num {
+  font-weight: bold;
+  font-size: 30px;
+}
+
 footer {
   background-color: var(--main-color);
   height: 180px;
