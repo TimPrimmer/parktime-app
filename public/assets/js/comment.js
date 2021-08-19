@@ -1,5 +1,5 @@
-async function commentFormHandler(park_id) {
 
+async function commentFormHandler(park_id) {
   const comment_text = document
     .querySelector(`textarea[name="comment-body-${park_id}"]`)
     .value.trim();
@@ -16,10 +16,16 @@ async function commentFormHandler(park_id) {
       },
     });
 
-  //   if (response.ok) {
-  //     document.location.reload();
-  //   } else {
-  //     alert(response.statusText);
-  //   }
+    //   if (response.ok) {
+    //     document.location.reload();
+    //   } else {
+    //     alert(response.statusText);
+    //   }
   }
 }
+
+document
+  .querySelector(".comment-form")
+  .addEventListener("submit", (event) => {
+    event.preventDefault();
+  });

@@ -4,10 +4,10 @@
   <h3 class="modal-subtitle">{{state}}</h3>
   <p class="modal-distance">40 miles away</p>
   {{#if saved}}
-  <p class="modal-saved" park_id="{{id}}">Saved</p>
+  <p class="modal-saved"> &#9829; Saved</p>
   {{/if}}
   {{#unless saved}}
-  <p class="modal-saved" park_id="{{id}}">Save</p>
+  <p class="modal-saved"> &#9829; Save</p>
   {{/unless}}
   <h3>Activities</h3>
   <div class="modal-activities">
@@ -43,13 +43,13 @@
 </div>
 {{#if loggedIn}}
 
-<form class="comment-form-{{id}}" onsubmit="commentFormHandler('{{id}}')">
+<form class="comment-form" method="post">
   <div>
     <textarea name="comment-body-{{id}}" class="comment-body"></textarea>
   </div> <br/>
 
   <div>
-    <button type="submit" class="btn btn-primary add-comment">add comment</button>
+    <button type="submit" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">add comment</button>
   </div>
 </form>
 
