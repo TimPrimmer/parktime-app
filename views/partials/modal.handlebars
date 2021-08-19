@@ -4,10 +4,10 @@
   <h3 class="modal-subtitle">{{state}}</h3>
   <p class="modal-distance">40 miles away</p>
   {{#if saved}}
-  <p class="modal-saved"> &#9829; Saved</p>
+  <p class="modal-saved" park_id="{{id}}">Saved</p>
   {{/if}}
   {{#unless saved}}
-  <p class="modal-saved"> &#9829; Save</p>
+  <p class="modal-saved" park_id="{{id}}">Save</p>
   {{/unless}}
   <h3>Activities</h3>
   <div class="modal-activities">

@@ -41,8 +41,10 @@ router.get('/', (req, res) => {
         }
         res.render("parks", {
           parks,
-          loggedIn: req.session.loggedIn
+          loggedIn: req.session.loggedIn,
+          user_id: 0
         });
+
       }
       else {
         Saved_Parks.findAll({
@@ -69,7 +71,8 @@ router.get('/', (req, res) => {
             }
             res.render("parks", {
               parks,
-              loggedIn: req.session.loggedIn
+              loggedIn: req.session.loggedIn,
+              user_id: req.session.user_id
             });
           });
       }
