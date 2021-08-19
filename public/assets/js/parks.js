@@ -9,8 +9,14 @@ function createQueryParams(params) {
 function getParks(event) {
   event.preventDefault();
   let queryParams = captureCheckedActivities();
-  let queryParamsPath = createQueryParams(queryParams);
-  window.location.replace("/parks?categories=" + queryParamsPath);
+  console.log(queryParams.length);
+  if (queryParams.length !== 0) {
+    let queryParamsPath = createQueryParams(queryParams);
+    window.location.replace("/parks?categories=" + queryParamsPath);
+  } else {
+    window.location.replace("/parks");
+  }
+  
 
 }
 
