@@ -513,8 +513,7 @@ form button:hover {
   font-size: 15px;
 }
 
-.saved::before,
-#modal-saved::before {
+.saved::before, .modal-saved::before {
   content: "";
   background-image: url(../icons/open-iconic/svg/heart.svg);
   width: 16px;

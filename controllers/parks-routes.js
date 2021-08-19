@@ -40,9 +40,11 @@ router.get("/", (req, res) => {
         }
         res.render("parks", {
           parks,
-          loggedIn: req.session.loggedIn,
+          loggedIn: req.session.loggedIn
         });
-      } else {
+
+      }
+      else {
         Saved_Parks.findAll({
           where: {
             user_id: req.session.user_id,

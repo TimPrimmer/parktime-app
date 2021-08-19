@@ -1,4 +1,4 @@
-<section id="results-page">
+<section id="results-page" user_id="{{user_id}}">
   <p id="results-filters"></p>
   <section id="results-container">
 
@@ -11,10 +11,10 @@
         <p class="park-states">{{state}}</p>
         <p class="miles-away">40 miles away</p>
         {{#if saved}}
-        <p class="saved">Saved</p>
+        <p class="saved" park_id="{{id}}">Saved</p>
         {{/if}}
         {{#unless saved}}
-        <p class="saved">Save</p>
+        <p class="saved" park_id="{{id}}">Save</p>
         {{/unless}}
       </div>
       <hr class="park-horizontal-row">
