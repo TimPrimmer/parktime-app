@@ -37,11 +37,11 @@ router.get("/", (req, res) => {
         // checks to see if we are not signed in
         for (x = 0; x < parks.length; x++) {
           parks[x].saved = false;
-          res.render("parks", {
-            parks,
-            loggedIn: req.session.loggedIn,
-          });
         }
+        res.render("parks", {
+          parks,
+          loggedIn: req.session.loggedIn,
+        });
       } else {
         Saved_Parks.findAll({
           where: {
@@ -69,7 +69,8 @@ router.get("/", (req, res) => {
           }
           res.render("parks", {
             parks,
-            loggedIn: true,
+            loggedIn: req.session.loggedIn,
+            user_id: req.session.user_id,
           });
         });
       }
