@@ -7,19 +7,27 @@ const Saved_Parks = require("./Saved-Parks");
 
 // create associations eventually
 Park.hasMany(Categories, {
-  foreignKey: "park_id"
+  foreignKey: "park_id",
+});
+
+Park.hasMany(Comment, {
+  foreignKey: "park_id",
 });
 
 Categories.belongsTo(Park, {
-  foreignKey: "park_id"
+  foreignKey: "park_id",
 });
 
 Saved_Parks.belongsTo(Park, {
-  foreignKey: "park_id"
+  foreignKey: "park_id",
 });
 
 Saved_Parks.belongsTo(User, {
-  foreignKey: "user_id"
+  foreignKey: "user_id",
 });
 
-module.exports = { Park, Categories, Comment, User, Saved_Parks};
+Comment.belongsTo(User, {
+  foreignKey: "user_id"
+})
+
+module.exports = { Park, Categories, Comment, User, Saved_Parks };

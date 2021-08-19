@@ -1,8 +1,8 @@
-const router = require('express').Router();
-const { Park } = require('../../models');
+const router = require("express").Router();
+const { Park, Comment, User } = require("../../models");
 
 // get all parks
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   Park.findAll({
     attributes: [
       "id",
@@ -12,32 +12,44 @@ router.get('/', (req, res) => {
       "description",
       "state",
       "url",
-      "image", 
+      "image",
       "latitude",
-      "longitude"
-    ]
+      "longitude",
+    ],
+    include: [
+      {
+        model: Comment,
+        attributes: ["id", "comment_text", "user_id"],
+        include: [
+          {
+            model: User,
+            attributes: ["username", "email"],
+          },
+        ],
+      },
+    ],
   })
-    .then(dbParkData => res.json(dbParkData))
-    .catch(err => {
+    .then((dbParkData) => res.json(dbParkData))
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   Park.findOne({
     where: {
-      id: req.params.id
-    }
+      id: req.params.id,
+    },
   })
-    .then(dbParkData => {
+    .then((dbParkData) => {
       if (!dbParkData) {
-        res.status(404).json({ message: 'No park found with this id' });
+        res.status(404).json({ message: "No park found with this id" });
         return;
       }
       res.json(dbParkData);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });

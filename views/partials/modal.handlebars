@@ -4,10 +4,10 @@
   <h3 class="modal-subtitle">{{state}}</h3>
   <p class="modal-distance">40 miles away</p>
   {{#if saved}}
-  <p class="modal-saved" park_id="{{id}}">Saved</p>
+  <p class="modal-saved"> &#9829; Saved</p>
   {{/if}}
   {{#unless saved}}
-  <p class="modal-saved" park_id="{{id}}">Save</p>
+  <p class="modal-saved"> &#9829; Save</p>
   {{/unless}}
   <h3>Activities</h3>
   <div class="modal-activities">
@@ -23,6 +23,45 @@
   <div>
     {{> weather-forecast}}
   </div>
+  <h3>Comments</h3>
+
+    <div class="comments">
+       <ul class="comments"></ul>
+      {{#each comments}}
+   
+      <li>
+      <div class="text">
+        {{comment_text}}
+      </div>
+      <div class="username">
+        🥾
+        {{user.username}}
+      </div>
+</li>
+    </ul>
+  {{/each}}
+</div>
+{{#if loggedIn}}
+
+<form class="comment-form" method="post">
+  <div>
+    <textarea name="comment-body-{{id}}" class="comment-body"></textarea>
+  </div> <br/>
+
+  <div>
+    <button type="submit" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">add comment</button>
+  </div>
+</form>
+
+{{/if}}
+
+{{#if loggedIn}}
+
+<script src="/assets/js/comment.js"></script>
+
+{{/if}}
+
+
   <h3>Directions</h3>
   {{!-- <iframe src="" id="gmaps-box" width="2000" height="200" style="border:0;" allowfullscreen=""
     loading="lazy"></iframe> --}}
