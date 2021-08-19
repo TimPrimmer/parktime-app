@@ -34,13 +34,32 @@
         {{comment_text}}
       </div>
       <div class="username">
-        -
+        🥾
         {{user.username}}
       </div>
 </li>
     </ul>
   {{/each}}
 </div>
+{{#if loggedIn}}
+
+<form class="comment-form">
+  <div>
+    <textarea name="comment-body" class="comment-body"></textarea>
+  </div> <br/>
+
+  <div>
+    <button type="submit" class="btn btn-primary add-comment">add comment</button>
+  </div>
+</form>
+
+{{/if}}
+
+{{#if loggedIn}}
+
+<script src="/assets/js/comment.js"></script>
+
+{{/if}}
 
 
   <h3>Directions</h3>

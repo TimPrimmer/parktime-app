@@ -936,3 +936,8 @@ footer a {
   background-color: white;
   color: var(--main-color);
 }
+
+.text {
+  padding-bottom: 5px;
+}
+

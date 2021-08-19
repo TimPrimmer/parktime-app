@@ -69,7 +69,7 @@ router.get("/", (req, res) => {
           }
           res.render("parks", {
             parks,
-            loggedIn: req.session.loggedIn,
+            loggedIn: true,
           });
         });
       }

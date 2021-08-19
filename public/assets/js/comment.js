@@ -4,7 +4,7 @@ async function commentFormHandler(event) {
   const comment_text = document
     .querySelector('textarea[name="comment-body"]')
     .value.trim();
-  const post_id = window.location.toString().split("/")[
+  const park_id = window.location.toString().split("/")[
     window.location.toString().split("/").length - 1
   ];
 
@@ -13,7 +13,6 @@ async function commentFormHandler(event) {
       method: "POST",
       body: JSON.stringify({
         comment_text,
-        user_id,
         park_id,
       }),
       headers: {
@@ -29,6 +28,6 @@ async function commentFormHandler(event) {
   }
 }
 
-// document
-//   .querySelector(".comment-form")
-//   .addEventListener("submit", commentFormHandler);
+document
+  .querySelector(".comment-form")
+  .addEventListener("submit", commentFormHandler);

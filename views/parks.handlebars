@@ -29,7 +29,9 @@
     <div id="modal-container">
       {{#each parks as |park| }}
       <div id="{{park_code}}-modal" class="park-result-modal" style="display: none">
+        
         {{> modal park}}
+       
       </div> 
       {{/each}}
     </div>
@@ -43,4 +45,3 @@
 <script src="/assets/js/modal.js"></script>
 <script src="/assets/js/weather-forecast.js"></script>
 <script src="/assets/js/save-system.js"></script>
-<script src="/assets/js/comment.js"></script>
