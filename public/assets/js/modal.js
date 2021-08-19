@@ -11,9 +11,9 @@ function openModal(parkCode) {
 
 const detailsLink = document.getElementsByClassName("park-modal");
 
-// adding event listener to "View Details" 
+// adding event listener to "View Details"
 for (let i = 0; i < detailsLink.length; i++) {
-  detailsLink[i].addEventListener("click", function(){
+  detailsLink[i].addEventListener("click", function() {
     openModal(detailsLink[i].dataset.parkCode);
   });
 }
@@ -30,4 +30,3 @@ for (let i = 0; i < closeModalX.length; i++) {
     closeModal(closeModalX[i].dataset.parkCode);
   });
 }
-

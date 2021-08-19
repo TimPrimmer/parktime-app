@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require("express").Router();
 // const { parks } = require("../data/parks.json");
 const { getDistance } = require("../utils/distance.js");
 const { Park, Saved_Parks } = require("../models");
@@ -17,8 +17,21 @@ router.get('/', (req, res) => {
       "url",
       "image",
       "latitude",
-      "longitude"
-    ]
+      "longitude",
+    ],
+    include: [
+      {
+        model: Comment,
+        attributes: ["id", "comment_text", "user_id"],
+
+        include: [
+          {
+            model: User,
+            attributes: ["username", "email"],
+          },
+        ],
+      },
+    ],
   })
     .then(dbParkData => {
       const parks = dbParkData.map(park => park.get({ plain: true }));
@@ -114,7 +127,7 @@ router.get('/:lat/:lon/:page', (req, res) => {
       let lastPage = false;
       let firstPage = false;
       let pagination = true;
-      
+
       if (pageParam === 1) {
         firstPage = true;
       }
@@ -149,18 +162,19 @@ router.get('/:lat/:lon/:page', (req, res) => {
             model: Park,
           },
           order: [
-            ['user_id', 'ASC'],
-            ['park_id', 'ASC']
-          ]
-        })
-          .then((dbSavedData) => {
-            const savedParks = dbSavedData.map(park => park.get({ plain: true }));
-            for (x = 0; x < parks.length; x++) { // these two for loops check each park to each saved park for a given user id, and updates their saved property
-              parks[x].saved = false;
-              for (y = 0; y < savedParks.length; y++) {
-                if (parks[x].id === savedParks[y].park_id) {
-                  parks[x].saved = true;
-                }
+            ["user_id", "ASC"],
+            ["park_id", "ASC"],
+          ],
+        }).then((dbSavedData) => {
+          const savedParks = dbSavedData.map((park) =>
+            park.get({ plain: true })
+          );
+          for (x = 0; x < parks.length; x++) {
+            // these two for loops check each park to each saved park for a given user id, and updates their saved property
+            parks[x].saved = false;
+            for (y = 0; y < savedParks.length; y++) {
+              if (parks[x].id === savedParks[y].park_id) {
+                parks[x].saved = true;
               }
             }
             res.render("parks", {
@@ -171,10 +185,11 @@ router.get('/:lat/:lon/:page', (req, res) => {
               lastPage: lastPage,
               pagination: pagination
             });
-          });
+          }
+        });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });

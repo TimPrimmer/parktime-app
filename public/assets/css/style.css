@@ -927,3 +927,27 @@ footer a {
     margin-left: 20px;
   }
 }
+
+.comments {
+  width: 100%;
+}
+
+.comments > li {
+  list-style-type: none;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.comments > li:nth-child(even) {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.comments > li:nth-child(odd) {
+  background-color: white;
+  color: var(--main-color);
+}
+
+.text {
+  padding-bottom: 5px;
+}
