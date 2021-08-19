@@ -316,6 +316,7 @@ form button:hover {
   text-align: right;
   height: fit-content;
   font-weight: lighter;
+  cursor: pointer;
 }
 
 .modal-activities {
@@ -482,7 +483,7 @@ form button:hover {
   padding-bottom: 7px;
 }
 
-#park-result-content .external-link-icon {
+.park-result-modal .external-link-icon {
   padding-top: 12px;
 }
 
@@ -634,21 +635,28 @@ footer a {
 }
 
 .login-form,
-.signup-form {
+.signup-form,
+.comment-form {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
 }
 
+.comment-form {
+  margin-top: 10px;
+}
+
 .login-form label,
 .login-form input,
 .signup-form label,
-.signup-form input {
+.signup-form input,
+.comment-form div {
   flex: 100%;
 }
 
 .login-form input, 
-.signup-form input {
+.signup-form input, 
+textarea.comment-body {
   height: 40px;
   margin-bottom: 10px;
   padding: 2px 5px;
@@ -657,8 +665,16 @@ footer a {
   border: 2px solid var(--main-color);
 }
 
+textarea.comment-body {
+  height: 50px;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 5px;
+}
+
 .login-form button,
-.signup-form button {
+.signup-form button,
+.comment-form button {
   padding: 10px 20px;
   margin: 5px auto 15px;
   background-color: var(--main-color);
