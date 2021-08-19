@@ -11,9 +11,17 @@ router.get('/', (req, res) => {
         category_abbr: categories,
       }
     }).then(dbCategoryData => {
-      let filteredParks = [1,2];
+      let filteredParks = [];
+      const parkMap = new Map();
       for (let i = 0; i < dbCategoryData.length; i++) {
-        // console.log(dbCategoryData);
+        if (parkMap.has(dbCategoryData[i].park_id)) {
+          parkMap.set(dbCategoryData[i].park_id, parkMap.get(dbCategoryData[i].park_id) + 1);
+        } else {
+          parkMap.set(dbCategoryData[i].park_id, 1);
+        }
+        if (categories.length === parkMap.get(dbCategoryData[i].park_id)) {
+          filteredParks.push(dbCategoryData[i].park_id);
+        }
       }
       Park.findAll({
         where: {
