@@ -43,9 +43,9 @@
 </div>
 {{#if loggedIn}}
 
-<form class="comment-form">
+<form class="comment-form-{{id}}" onsubmit="commentFormHandler('{{id}}')">
   <div>
-    <textarea name="comment-body" class="comment-body"></textarea>
+    <textarea name="comment-body-{{id}}" class="comment-body"></textarea>
   </div> <br/>
 
   <div>
