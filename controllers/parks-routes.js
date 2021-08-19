@@ -1,7 +1,7 @@
 const router = require("express").Router();
 // const { parks } = require("../data/parks.json");
 const { getDistance } = require("../utils/distance.js");
-const { Park, Saved_Parks } = require("../models");
+const { Park, Saved_Parks, Comment, User } = require("../models");
 
 // renders ALL parks no pagination
 router.get('/', (req, res) => {
@@ -118,11 +118,17 @@ router.get('/:lat/:lon/:page', (req, res) => {
 
       tempParks.sort((a, b) => (a.distance > b.distance) ? 1 : -1); // sorts by distance
       let pageParam = parseInt(req.params.page);
-      let limit = 50;
+      let limit = 25; // how many results per page
       let startOffset = (pageParam - 1) * limit;
       let endOffset = startOffset + limit;
       const parks = tempParks.slice(startOffset, endOffset); // limits results
       let pages = Math.ceil(tempParks.length / limit);
+
+      let pageArr = [];
+
+      for (x = 0; x < pages; x++) {
+        pageArr.push({pageNum: x + 1})
+      }
 
       let lastPage = false;
       let firstPage = false;
@@ -149,9 +155,10 @@ router.get('/:lat/:lon/:page', (req, res) => {
           user_id: 0,
           firstPage: firstPage,
           lastPage: lastPage,
-          pagination: pagination
+          pagination: pagination,
+          pageArr: pageArr
         });
-
+        return;
       }
       else {
         Saved_Parks.findAll({
@@ -183,8 +190,10 @@ router.get('/:lat/:lon/:page', (req, res) => {
               user_id: req.session.user_id,
               firstPage: firstPage,
               lastPage: lastPage,
-              pagination: pagination
+              pagination: pagination,
+              pageArr: pageArr
             });
+            return;
           }
         });
       }

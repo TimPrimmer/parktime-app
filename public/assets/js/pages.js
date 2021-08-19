@@ -6,7 +6,6 @@ const highlightPageNum = () => {
   let all = $(".page-num").map(function () {
     return this;
   }).get();
-  console.log(urlArr);
   $(all[parseInt(urlArr[6]) - 1]).addClass("page-highlight-num");
 }
 

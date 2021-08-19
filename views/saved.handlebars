@@ -23,9 +23,12 @@
     <div id="modal-container">
       {{#each parks as |park| }}
       <div id="{{park_code}}-modal" class="park-result-modal" style="display: none">
-        {{> modal park}}
+
+        {{> modal park=this loggedIn=../loggedIn }}
+
       </div>
       {{/each}}
+
     </div>
 
   </section>

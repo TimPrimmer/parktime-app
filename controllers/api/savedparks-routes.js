@@ -50,7 +50,6 @@ router.post("/", (req, res) => {
   })
     .then((dbSavedData) => {
       if (dbSavedData.length === 0) { // if this is a unique pair do the following
-
         Saved_Parks.create({
           user_id: req.body.user_id,
           park_id: req.body.park_id

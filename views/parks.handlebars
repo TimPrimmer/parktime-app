@@ -12,12 +12,14 @@
         {{#if distance}}
         <p class="miles-away">{{distance}} miles away</p>
         {{/if}}
-        {{#if saved}}
-        <p class="saved" park_id="{{id}}">Saved</p>
+        {{#if ../loggedIn}}
+          {{#if saved}}
+          <p class="saved" park_id="{{id}}">Saved</p>
+          {{/if}}
+          {{#unless saved}}
+          <p class="saved" park_id="{{id}}">Save</p>
+          {{/unless}}
         {{/if}}
-        {{#unless saved}}
-        <p class="saved" park_id="{{id}}">Save</p>
-        {{/unless}}
       </div>
       <hr class="park-horizontal-row">
       <div class="park-description-div">
@@ -31,10 +33,10 @@
     <div id="modal-container">
       {{#each parks as |park| }}
       <div id="{{park_code}}-modal" class="park-result-modal" style="display: none">
-        
+
         {{> modal park=this loggedIn=../loggedIn }}
-       
-      </div> 
+
+      </div>
       {{/each}}
 
     </div>
@@ -43,16 +45,9 @@
       {{#unless firstPage}}
       <h3 class="page-arrow" id="left-arrow">⬅</h3>
       {{/unless}}
-      <p class="page-num">1</p>
-      <p class="page-num">2</p>
-      <p class="page-num">3</p>
-      <p class="page-num">4</p>
-      <p class="page-num">5</p>
-      <p class="page-num">6</p>
-      <p class="page-num">7</p>
-      <p class="page-num">8</p>
-      <p class="page-num">9</p>
-      <p class="page-num">10</p>
+      {{#each pageArr as |page|}}
+      <p class="page-num">{{page.pageNum}}</p>
+      {{/each}}
       {{#unless lastPage}}
       <h3 class="page-arrow" id="right-arrow">➡</h3>
       {{/unless}}
