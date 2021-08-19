@@ -8,7 +8,7 @@
       </div>
       <div>
         <h4 class="park-name">{{name}}</h4>
-        <p class="park-states">{{state}}</p>
+        <p class="park-states" data-states={{state}}></p>
         <p class="miles-away">40 miles away</p>
         {{#if saved}}
         <p class="saved" park_id="{{id}}">Saved</p>
@@ -38,8 +38,7 @@
 </section>
 
 
-  <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
-    integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 <script src="/assets/js/modal.js"></script>
 <script src="/assets/js/weather-forecast.js"></script>
 <script src="/assets/js/save-system.js"></script>

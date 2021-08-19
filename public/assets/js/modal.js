@@ -31,3 +31,17 @@ for (let i = 0; i < closeModalX.length; i++) {
   });
 }
 
+
+// fix front-end css issue for parks with multiple states
+let states = document.getElementsByClassName("park-states");
+
+for (let state of states) {
+  let stateData = state.dataset.states;
+  let stateTextArr = stateData.split(",");
+  if (stateTextArr.length > 1) {
+    state.innerHTML = stateTextArr.join(", ");
+  } else {
+    state.innerHTML = stateData;
+  }
+}
+

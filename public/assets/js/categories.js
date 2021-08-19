@@ -16,8 +16,6 @@ const captureCheckedActivities = function () {
       checkedActivities.push(item.defaultValue.substring(0,3));
     }
   }
-  // console.log(checkedActivities);
+  
   return checkedActivities;
 }
-
-// document.querySelector("#find-parks").addEventListener("click", captureCheckedActivities);
