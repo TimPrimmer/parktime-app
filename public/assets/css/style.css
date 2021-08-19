@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -47,15 +47,14 @@ nav ul {
 
 nav ul li a {
   margin-right: 40px;
-  color: #fff;
+  color: #FFF;
   font-size: 18px;
   border-bottom: 2px solid transparent;
   padding-bottom: 5px;
 }
 
-nav ul li a:hover,
-#logout:hover {
-  border-bottom: 2px solid #fff;
+nav ul li a:hover, #logout:hover {
+  border-bottom: 2px solid #FFF;
 }
 
 #logout {
@@ -86,16 +85,17 @@ h1 {
 }
 
 h1 a {
-  color: #fff;
+  color: #FFF;
 }
 
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-  background-image: url("https://user-images.githubusercontent.com/47605442/122488851-fa3f3f80-cfa3-11eb-8ec1-6e58bc08cc6d.jpeg");
+  background-image:  url("https://user-images.githubusercontent.com/47605442/122488851-fa3f3f80-cfa3-11eb-8ec1-6e58bc08cc6d.jpeg");
 
   /* Set a specific height */
   height: 250px;
   width: 100%;
+
 
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
@@ -131,12 +131,12 @@ form {
 }
 
 form ul {
-  list-style-type: none;
-  grid-column: 8 / span 13;
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1 100%;
-  grid-gap: 8px;
+    list-style-type: none;
+    grid-column: 8 / span 13;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 100%;
+    grid-gap: 8px;
 }
 
 form ul li {
@@ -144,20 +144,17 @@ form ul li {
   padding-bottom: 10px;
 }
 
-#status-text {
-  /* Styling for the error/success text underneath the initial search bar */
+#status-text { /* Styling for the error/success text underneath the initial search bar */
   grid-column: 9 / span 3;
   justify-self: left;
 }
 
-.success {
-  /* Styling for the error/success text underneath the initial search bar */
+.success { /* Styling for the error/success text underneath the initial search bar */
   color: var(--success-color);
   display: block;
 }
 
-.error {
-  /* Styling for the error/success text underneath the initial search bar */
+.error { /* Styling for the error/success text underneath the initial search bar */
   color: var(--error-color);
   display: block;
 }
@@ -218,7 +215,7 @@ input:hover {
 form button {
   grid-column: 12 / span 3;
   font-size: 16px;
-  color: #fff;
+  color: #FFF;
   background-color: var(--main-color);
   border: none;
   border-radius: 5px;
@@ -233,15 +230,15 @@ form button:hover {
 
 .park-result-modal {
   display: none; /* Hidden by default */
-  position: fixed;
+  position: fixed; 
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%;
+  width: 100%; 
   height: 100%;
   overflow: auto;
   /* background-color: rgb(0,0,0); */
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0,0,0,0.4);
   align-items: center;
   justify-content: center;
 }
@@ -251,7 +248,7 @@ form button:hover {
   background-color: white;
   height: 70%;
   width: 70%;
-  display: flex;
+  display:flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
@@ -260,7 +257,7 @@ form button:hover {
   max-width: 900px;
 }
 
-.park-result-content h3:not(.modal-subtitle) {
+.park-result-content h3:not(.modal-subtitle) { 
   width: 100%;
   padding-top: 20px;
   padding-bottom: 10px;
@@ -347,7 +344,7 @@ form button:hover {
 .modal-forecast {
   background-color: var(--main-color);
   padding: 10px;
-  color: #fff;
+  color: #FFF;
   font-size: 14px;
   min-width: 150px;
   margin-right: 10px;
@@ -415,11 +412,10 @@ form button:hover {
   flex: 1 15%;
 }
 
-.park-card div:nth-child(2) {
-  /*Result Name, miles away, and saved box*/
+.park-card div:nth-child(2) { /*Result Name, miles away, and saved box*/
   flex: 1 15%;
   padding: 15px 10px 10px 15px;
-}
+} 
 
 .park-card div h4 {
   padding-bottom: 5px;
@@ -464,6 +460,7 @@ form button:hover {
   padding-top: 10px;
 }
 
+
 .park-description-div {
   display: flex;
   flex-wrap: wrap;
@@ -495,10 +492,9 @@ form button:hover {
   padding-bottom: 5px;
 }
 
-.miles-away::before,
-#modal-distance::before {
+.miles-away::before, #modal-distance::before {
   content: "";
-  background-image: url(../icons/open-iconic/svg/map-marker.svg);
+  background-image: url(../icons/open-iconic/svg/map-marker.svg); 
   width: 16px;
   height: 16px;
   background-size: 16px 16px;
@@ -515,7 +511,7 @@ form button:hover {
 
 .saved::before, .modal-saved::before {
   content: "";
-  background-image: url(../icons/open-iconic/svg/heart.svg);
+  background-image: url(../icons/open-iconic/svg/heart.svg); 
   width: 16px;
   height: 16px;
   background-size: 16px 16px;
@@ -525,25 +521,44 @@ form button:hover {
   margin-right: 6px;
 }
 
-.saved:hover,
-.park-modal-link:hover,
-#saved-parks:hover,
-#close-modal:hover,
-#modal-saved:hover,
-#current-location:hover {
+.saved:hover, .park-modal-link:hover, #saved-parks:hover
+,#close-modal:hover, #modal-saved:hover, #current-location:hover {
   cursor: pointer;
 }
 
-.park-modal-link,
-.park-website {
+.park-modal-link, .park-website {
   border-bottom: 2px solid transparent;
   padding-bottom: 5px;
 }
 
-.park-modal-link:hover,
-.park-website:hover {
+.park-modal-link:hover, .park-website:hover {
   border-bottom: 2px solid black;
   padding-bottom: 5px;
+}
+
+.page-nav {
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.page-arrow {
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.page-num {
+  padding-top: 10px;
+  margin: 0px 5px 0px 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.page-highlight-num {
+  font-weight: bold;
+  font-size: 30px;
 }
 
 footer {
@@ -555,13 +570,13 @@ footer {
 footer > p:first-of-type {
   font-size: 18px;
   line-height: 1.5;
-  color: #fff;
+  color: #FFF;
   text-align: center;
   padding-bottom: 20px;
 }
 
 footer .contact-info {
-  color: #fff;
+  color: #FFF;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -605,10 +620,11 @@ footer a {
   max-width: 500px;
 }
 
-.login-section p:first-child,
-.signup-section p:first-child {
+.login-section p:first-child, 
+.signup-section p:first-child
+ {
   background-color: var(--main-color);
-  color: #fff;
+  color: #FFF;
   padding: 10px 15px;
 }
 
@@ -631,7 +647,7 @@ footer a {
   flex: 100%;
 }
 
-.login-form input,
+.login-form input, 
 .signup-form input {
   height: 40px;
   margin-bottom: 10px;
@@ -646,20 +662,20 @@ footer a {
   padding: 10px 20px;
   margin: 5px auto 15px;
   background-color: var(--main-color);
-  color: #fff;
+  color: #FFF;
   font-size: 1.125rem;
   border-radius: 5px;
   border: none;
   cursor: pointer;
 }
 
-#signup-instead,
+#signup-instead, 
 #login-instead {
   padding-bottom: 3px;
   border-bottom: 2px solid transparent;
 }
 
-#signup-instead:hover,
+#signup-instead:hover, 
 #login-instead:hover {
   border-bottom: 2px solid #000;
   cursor: pointer;
@@ -669,12 +685,12 @@ footer a {
   form {
     grid-template-columns: repeat(13, 1fr);
   }
-
+  
   .address,
   #address {
     grid-column: 4 / span 6;
   }
-
+  
   #status-text {
     grid-column: 4 / span 2;
   }
@@ -703,7 +719,7 @@ footer a {
     flex: 1 20%;
   }
 
-  .park-modal-link,
+  .park-modal-link, 
   .park-website {
     padding-top: 10px;
   }
@@ -714,8 +730,7 @@ footer a {
 }
 
 @media screen and (max-width: 816px) {
-  .address,
-  #address {
+  .address, #address {
     grid-column: 4 / span 7;
   }
 
@@ -726,7 +741,7 @@ footer a {
   #status-text {
     grid-column: 4 / span 3;
   }
-
+  
   #current-location {
     grid-column: 7 / span 4;
   }
@@ -741,7 +756,7 @@ footer a {
 
   .park-card div:nth-child(2) {
     flex: 1 55%;
-  }
+  } 
 
   .park-horizontal-row {
     display: none;
@@ -762,8 +777,7 @@ footer a {
 }
 
 @media screen and (max-width: 670px) {
-  .address,
-  #address {
+  .address, #address {
     grid-column: 3 / span 9;
   }
 
@@ -789,9 +803,9 @@ footer a {
 
   #modal-subtitle {
     font-size: 16px;
-  }
-
-  #modal-distance,
+  } 
+  
+  #modal-distance, 
   #modal-saved {
     font-size: 16px;
   }
@@ -812,8 +826,7 @@ footer a {
 }
 
 @media screen and (max-width: 560px) {
-  .address,
-  #address {
+  .address, #address {
     grid-column: 2 / span 11;
   }
 
@@ -870,6 +883,7 @@ footer a {
   #line {
     display: none;
   }
+
 }
 
 @media screen and (max-width: 415px) {
@@ -890,7 +904,7 @@ footer a {
   nav ul {
     display: block;
     padding-bottom: 20px;
-  }
+  }  
 
   nav ul li {
     text-align: center;
@@ -939,4 +953,3 @@ footer a {
 .text {
   padding-bottom: 5px;
 }
-

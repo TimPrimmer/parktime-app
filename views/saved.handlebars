@@ -8,8 +8,7 @@
       </div>
       <div>
         <h4 class="park-name">{{name}}</h4>
-        <p class="park-states">{{state}}</p>
-        <p class="miles-away">40 miles away</p>
+        <p class="park-states" data-states={{state}}></p>
         <p class="saved" park_id="{{id}}">Saved</p>
       </div>
       <hr class="park-horizontal-row">
@@ -24,9 +23,12 @@
     <div id="modal-container">
       {{#each parks as |park| }}
       <div id="{{park_code}}-modal" class="park-result-modal" style="display: none">
-        {{> modal park}}
+
+        {{> modal park=this loggedIn=../loggedIn }}
+
       </div>
       {{/each}}
+
     </div>
 
   </section>
