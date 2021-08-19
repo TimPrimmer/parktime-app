@@ -47,7 +47,21 @@ router.get('/', (req, res) => {
       }).then(savedParks)
     })
   } else {
-    Park.findAll().then(dbParkData => {
+    Park.findAll({
+      include: [
+        {
+          model: Comment,
+          attributes: ["id", "comment_text", "user_id"],
+  
+          include: [
+            {
+              model: User,
+              attributes: ["username", "email"],
+            },
+          ],
+        },
+      ],
+    }).then(dbParkData => {
       return {
         res: res,
         req: req,
