@@ -29,6 +29,11 @@ const generateSqlArray = (parkData) => {
   let formattedSql = [];
   let parks = parkData.parks;
   for (let x = 0; x < parks.length; x++) {
+    // console.log(parks[x].activities);
+    let categoriesArray = [];
+    for (let y = 0; y < parks[x].activities.length; y++) {
+      categoriesArray.push(parks[x].activities[y].categoryAbbr);
+    }
     formattedSql.push({
       // id: x + 1, 
       park_id: parks[x].id, 
@@ -39,7 +44,8 @@ const generateSqlArray = (parkData) => {
       url: parks[x].url,
       image: parks[x].images[0].url,
       latitude: parks[x].latitude,
-      longitude: parks[x].longitude
+      longitude: parks[x].longitude,
+      activities: parks[x].activities
     })
   }
   return formattedSql;
@@ -48,21 +54,26 @@ const generateSqlArray = (parkData) => {
 const generateCategoriesSqlArray = (parkData) => {
   let categorySql = [];
   let parks = parkData.parks;
-  //console.log(parks.length);
   for (let i = 0; i < parks.length; i++) {
     let activities = parks[i].activities;
+    const uniqueCategories = new Map();
     if (activities.length > 0) {
       for (let j = 0; j < activities.length; j++) {
         if (activities[j].categoryAbbr) {
-          categorySql.push({
-            name: parks[i].fullName, 
-            category_abbr: activities[j].categoryAbbr
-          })
+          // only pushing unique categories in each park to categorySql array
+          if(!uniqueCategories.has(activities[j].categoryAbbr)) {
+            uniqueCategories.set(activities[j].categoryAbbr, true);
+            categorySql.push(
+              {
+                category_abbr: activities[j].categoryAbbr,
+                park_id: i + 1
+              }
+            )
+          }
         }
       }
     }
   }
-  //console.log(categorySql);
   return categorySql;
 }
 

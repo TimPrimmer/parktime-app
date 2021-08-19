@@ -59,26 +59,37 @@ const convertAddressToLatLon = async (address) => {
 
 }
 
+function createQueryParams(params) {
+  let paramsArray = [];
+  for (let i = 0; i < params.length; i++) {
+    paramsArray.push(params[i]);
+  }
+  return paramsArray.join("|");;
+}
 
 const getParks = async (event) => {  // Fires when we click on "Find parks"
   event.preventDefault();
+  let queryParams = captureCheckedActivities();
+
   address = $("#address").val();
+
   if (!address) { // checks to see if the user has entered in an address
     searchDisplayMsg(true, 2, "Invalid Location"); // display error message
   }
   else {
+    console.log(queryParams.length);
     let userLoc = await convertAddressToLatLon(address);
     let fetchString = "/parks/" + userLoc.userLat + "/" + userLoc.userLon + "/1";
-    const response = await fetch(fetchString, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
+    if (queryParams.length !== 0) {
 
+      let queryParamsPath = createQueryParams(queryParams);
 
-    if (response.ok) {
+      window.location.replace(fetchString + "?categories=" + queryParamsPath);
+
+    } else {
       window.location.replace(fetchString);
-
     }
+
   }
 }
 

@@ -49,6 +49,10 @@ Park.init(
     longitude: {
       type: DataTypes.FLOAT,
       allowNull: false
+    },
+    activities: {
+      type: DataTypes.JSON,
+      allowNull: false
     }
   },
   {

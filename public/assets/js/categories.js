@@ -16,5 +16,6 @@ const captureCheckedActivities = function () {
       checkedActivities.push(item.defaultValue.substring(0,3));
     }
   }
+  
   return checkedActivities;
 }

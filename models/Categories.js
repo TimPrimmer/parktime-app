@@ -11,14 +11,18 @@ Categories.init(
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    category_abbr: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    category_abbr: {
-      type: DataTypes.STRING, 
-      allowNull: false
-    }
+    park_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "park",
+        key: "id",
+      },
+    },
   },
   {
     sequelize,
