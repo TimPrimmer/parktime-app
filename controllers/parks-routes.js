@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { Park, Saved_Parks, Categories } = require("../models");
-const { Op } = require("sequelize");
 
 router.get('/', (req, res) => {
   if (req.query.categories) {
@@ -23,6 +22,19 @@ router.get('/', (req, res) => {
         }
       }
       Park.findAll({
+        include: [
+          {
+            model: Comment,
+            attributes: ["id", "comment_text", "user_id"],
+    
+            include: [
+              {
+                model: User,
+                attributes: ["username", "email"],
+              },
+            ],
+          },
+        ],
         where: {
           id: filteredParks
         }
@@ -41,7 +53,12 @@ router.get('/', (req, res) => {
         req: req,
         dbParkData: dbParkData
       }
-    }).then(savedParks);
+    }).then(savedParks)
+
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
   }
 })
 
@@ -86,6 +103,10 @@ function savedParks(obj) {
           loggedIn: obj.req.session.loggedIn,
           user_id: obj.req.session.user_id
         });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
       });
   }
 }
