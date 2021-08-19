@@ -4,12 +4,12 @@
   <h3 class="modal-subtitle" data-states={{state}}></h3>
   <p class="modal-distance">40 miles away</p>
   {{#if loggedIn}}
-    {{#if saved}}
-    <p class="modal-saved" park_id="{{id}}">Saved</p>
-    {{/if}}
-    {{#unless saved}}
-    <p class="modal-saved" park_id="{{id}}">Save</p>
-    {{/unless}}
+  {{#if saved}}
+  <p class="modal-saved" park_id="{{id}}">Saved</p>
+  {{/if}}
+  {{#unless saved}}
+  <p class="modal-saved" park_id="{{id}}">Save</p>
+  {{/unless}}
   {{/if}}
   <h3>Activities</h3>
   <div class="modal-activities">
@@ -27,11 +27,11 @@
   </div>
   <h3>Comments</h3>
 
-    <div class="comments">
-       <ul class="comments"></ul>
-      {{#each comments}}
-   
-      <li>
+  <div class="comments">
+    <ul class="comments"></ul>
+    {{#each comments}}
+
+    <li>
       <div class="text">
         {{comment_text}}
       </div>
@@ -39,29 +39,30 @@
         🥾
         {{user.username}}
       </div>
-</li>
+    </li>
     </ul>
-  {{/each}}
-</div>
-{{#if loggedIn}}
-
-<form class="comment-form" method="post">
-  <div>
-    <textarea name="comment-body-{{id}}" class="comment-body"></textarea>
-  </div> <br/>
-
-  <div>
-    <button type="submit" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">add comment</button>
+    {{/each}}
   </div>
-</form>
+  {{#if loggedIn}}
 
-{{/if}}
+  <form class="comment-form" method="post">
+    <div>
+      <textarea name="comment-body-{{id}}" class="comment-body"></textarea>
+    </div> <br />
 
-{{#if loggedIn}}
+    <div>
+      <button type="submit" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">add
+        comment</button>
+    </div>
+  </form>
 
-<script src="/assets/js/comment.js"></script>
+  {{/if}}
 
-{{/if}}
+  {{#if loggedIn}}
+
+  <script src="/assets/js/comment.js"></script>
+
+  {{/if}}
 
 
   <h3>Directions</h3>

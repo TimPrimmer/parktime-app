@@ -545,13 +545,15 @@ form button:hover {
 }
 
 .page-arrow {
-  font-size: 100px;
+  font-size: 50px;
+  cursor: pointer;
 }
 
 .page-num {
-  padding-top: 15px;
+  padding-top: 10px;
   margin: 0px 5px 0px 5px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .page-highlight-num {

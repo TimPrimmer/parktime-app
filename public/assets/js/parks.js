@@ -77,7 +77,6 @@ const getParks = async (event) => {  // Fires when we click on "Find parks"
     searchDisplayMsg(true, 2, "Invalid Location"); // display error message
   }
   else {
-    console.log(queryParams.length);
     let userLoc = await convertAddressToLatLon(address);
     let fetchString = "/parks/" + userLoc.userLat + "/" + userLoc.userLon + "/1";
     if (queryParams.length !== 0) {
