@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Park, Saved_Parks, Categories } = require("../models");
+const { Park, Saved_Parks, Comment, User, Categories } = require("../models");
 
 router.get('/', (req, res) => {
   if (req.query.categories) {
