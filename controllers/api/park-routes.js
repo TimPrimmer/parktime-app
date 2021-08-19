@@ -1,21 +1,14 @@
 const router = require('express').Router();
-const { Park } = require('../../models');
+const { Park, Categories } = require('../../models');
 
 // get all parks
 router.get('/', (req, res) => {
   Park.findAll({
-    attributes: [
-      "id",
-      "park_id",
-      "park_code",
-      "name",
-      "description",
-      "state",
-      "url",
-      "image", 
-      "latitude",
-      "longitude",
-      "activities"
+    include: [
+      {
+        model: Categories,
+        attribtues: ["id", "category_abbr", "park_id" ]
+      }
     ]
   })
     .then(dbParkData => res.json(dbParkData))

@@ -1,26 +1,39 @@
 const router = require('express').Router();
-// const { parks } = require("../data/parks.json");
-const { Park, Saved_Parks } = require("../models");
-const fetch = require('node-fetch');
+const { Park, Saved_Parks, Categories } = require("../models");
+const { Op } = require("sequelize");
 
 router.get('/', (req, res) => {
-  // res.render("parks", {parks});
-  Park.findAll({
-    attributes: [
-      "id",
-      "park_id",
-      "park_code",
-      "name",
-      "description",
-      "state",
-      "url",
-      "image",
-      "latitude",
-      "longitude",
-      "activities"
-    ]
-  })
-    .then(dbParkData => {
+  let findAllParks;
+  if (req.query.categories) {
+    const categories = req.query.categories.split("|");
+    let parksWithCategories = Categories.findAll({
+      order: [["park_id", "ASC"]],
+      where: {
+        category_abbr: categories, 
+      }
+    })
+      .then(dbParkCatData => {
+        for (let i = 0; i < dbParkCatData; i++) {
+          
+        }
+      })
+    findAllParks = Park.findAll({
+      include: [
+        {
+          model: Categories,
+          required: true,
+          attribtues: ["category_abbr", "park_id" ],
+          where: {
+            category_abbr: categories 
+          }
+        }
+      ]
+    })
+
+  } else {
+    findAllParks = Park.findAll();
+  }
+    findAllParks.then(dbParkData => {
       const parks = dbParkData.map(park => park.get({ plain: true }));
       if (req.session.user_id === undefined) { // checks to see if we are not signed in
         for (x = 0; x < parks.length; x++) {
