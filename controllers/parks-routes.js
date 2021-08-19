@@ -6,20 +6,19 @@ router.get('/', (req, res) => {
   if (req.query.categories) {
     const categories = req.query.categories.split("|");
     Categories.findAll({
-      order: [["park_id", "ASC"]],
       where: {
         category_abbr: categories,
       }
     }).then(dbCategoryData => {
       let filteredParks = [];
-      const parkMap = new Map();
+      const parkCategoryCount = new Map();
       for (let i = 0; i < dbCategoryData.length; i++) {
-        if (parkMap.has(dbCategoryData[i].park_id)) {
-          parkMap.set(dbCategoryData[i].park_id, parkMap.get(dbCategoryData[i].park_id) + 1);
+        if (parkCategoryCount.has(dbCategoryData[i].park_id)) {
+          parkCategoryCount.set(dbCategoryData[i].park_id, parkMap.get(dbCategoryData[i].park_id) + 1);
         } else {
-          parkMap.set(dbCategoryData[i].park_id, 1);
+          parkCategoryCount.set(dbCategoryData[i].park_id, 1);
         }
-        if (categories.length === parkMap.get(dbCategoryData[i].park_id)) {
+        if (categories.length === parkCategoryCount.get(dbCategoryData[i].park_id)) {
           filteredParks.push(dbCategoryData[i].park_id);
         }
       }
