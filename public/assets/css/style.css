@@ -643,7 +643,7 @@ footer a {
 }
 
 .comment-form {
-  margin-top: 10px;
+  margin-top: 0;
 }
 
 .login-form label,
@@ -670,6 +670,7 @@ textarea.comment-body {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif;
   padding: 5px;
+  margin-left: 10px;
 }
 
 .login-form button,
@@ -683,6 +684,10 @@ textarea.comment-body {
   border-radius: 5px;
   border: none;
   cursor: pointer;
+}
+
+.comment-form button {
+  margin-left: 10px;
 }
 
 #signup-instead, 

@@ -27,8 +27,9 @@
   <div>
     {{> weather-forecast}}
   </div>
+  {{#if comments}}
   <h3>Comments</h3>
-
+  {{/if}}
   <div class="comments">
     <ul class="comments"></ul>
     {{#each comments}}
@@ -49,12 +50,12 @@
 
   <form class="comment-form" method="post">
     <div>
+      <h3><label class="add-comment-label" for="comment-body">Add Comment</label></h3>
       <textarea name="comment-body-{{id}}" class="comment-body"></textarea>
-    </div> <br />
+    </div>
 
     <div>
-      <button type="submit" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">add
-        comment</button>
+      <button type="button" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">Add Comment</button>
     </div>
   </form>
 
@@ -67,7 +68,7 @@
   {{/if}}
 
 
-  <h3>Directions</h3>
+  {{!-- <h3>Directions</h3> --}}
   {{!-- <iframe src="" id="gmaps-box" width="2000" height="200" style="border:0;" allowfullscreen=""
     loading="lazy"></iframe> --}}
 </div>
