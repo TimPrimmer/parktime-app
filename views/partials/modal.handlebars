@@ -2,7 +2,9 @@
   <h2 class="modal-title">{{name}}</h2>
   <p class="close-modal" data-park-code="{{park_code}}">X</p>
   <h3 class="modal-subtitle" data-states={{state}}></h3>
-  <p class="modal-distance">40 miles away</p>
+  {{#if distance}}
+  <p class="modal-distance">{{distance}} miles away</p>
+  {{/if}}
   {{#if loggedIn}}
   {{#if saved}}
   <p class="modal-saved" park_id="{{id}}">Saved</p>
