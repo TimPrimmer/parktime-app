@@ -300,17 +300,18 @@ router.get('/:lat/:lon/:page', (req, res) => {
                 parks[x].saved = true;
               }
             }
-            res.render("parks", {
-              parks,
-              loggedIn: req.session.loggedIn,
-              user_id: req.session.user_id,
-              firstPage: firstPage,
-              lastPage: lastPage,
-              pagination: pagination,
-              pageArr: pageArr
-            });
-            return;
           }
+          res.render("parks", {
+            parks,
+            loggedIn: req.session.loggedIn,
+            user_id: req.session.user_id,
+            firstPage: firstPage,
+            lastPage: lastPage,
+            pagination: pagination,
+            pageArr: pageArr
+          });
+          return;
+
         });
       }
     })
