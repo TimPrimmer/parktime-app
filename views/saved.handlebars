@@ -1,0 +1,41 @@
+<section id="results-page" user_id="{{user_id}}">
+  <p id="results-filters"></p>
+  <section id="results-container">
+
+    {{#each parks }}
+    <div class="park-card">
+      <div class="park-image park-image-div" style="background-image: url({{image}})">
+      </div>
+      <div>
+        <h4 class="park-name">{{name}}</h4>
+        <p class="park-states" data-states={{state}}></p>
+        <p class="saved" park_id="{{id}}">Saved</p>
+      </div>
+      <hr class="park-horizontal-row">
+      <div class="park-description-div">
+        <p class="park-description">{{description}}</p>
+        <span class="park-modal park-modal-link" data-park-code="{{park_code}}">View details</span>
+        <a class="park-website" href="{{url}}">Website</a>
+        <img class="external-link-icon" src="/assets/icons/open-iconic/svg/external-link.svg" alt="external link icon">
+      </div>
+    </div>
+    {{/each}}
+    <div id="modal-container">
+      {{#each parks as |park| }}
+      <div id="{{park_code}}-modal" class="park-result-modal" style="display: none">
+
+        {{> modal park=this loggedIn=../loggedIn }}
+
+      </div>
+      {{/each}}
+
+    </div>
+
+  </section>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+  integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<script src="/assets/js/modal.js"></script>
+<script src="/assets/js/weather-forecast.js"></script>
+<script src="/assets/js/save-system.js"></script>

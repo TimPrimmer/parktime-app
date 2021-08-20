@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="#">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+    integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+  {{!-- added 2.0 temporarily to make sure handlebars is working --}}
+  <title>Parktime 2.0</title>
+</head>
+
+<body>
+  <header>
+
+    <h1><a href="/">Parktime</a></h1>
+    <nav>
+      <ul>
+        {{#unless loggedIn}}
+        <li>
+          <a href="/login">Login</a>
+        </li>
+        {{/unless}}
+        {{#if loggedIn}}
+        <li>
+          <img id="heart-icon" src="/assets/icons/open-iconic/svg/heart-white.svg" alt="">
+          <a id="saved-parks" href="/saved_list">Saved Parks</a>
+        </li>
+        <li>
+          <button id="logout">Logout</button>
+        </li>
+        {{/if}}
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {{{ body }}}
+  </main>
+</body>
+  <footer>
+    <p>Created By:</p>
+    <section class="contact-info">  
+      <section class="erin-info">
+        <p>Erin Holmes</p>
+        <a href="https://emholmes.github.io/erin-holmes-web-developer-portfolio/" target="_blank">
+          <img class="website-icon" src="/assets/icons/open-iconic/svg/globe.svg" title="Erin's portfolio" alt="Link to Erin's portfolio" />
+        </a>
+        <a href="https://github.com/emholmes" target="_blank">
+          <img class="github-icon" src="/assets/icons/GitHub-Mark-Light-32px.png" title="Erin's GitHub" alt="Link to Erin's GitHub" />
+        </a>
+        <a href="https://www.linkedin.com/in/erin-holmes-26861945/" target="_blank">
+          <img class="linked-icon" src="/assets/icons/iconfinder_1964405_linkedin_logo_media_social_icon.svg" title="Erin's LinkedIn" alt="Link to Erin's LinkedIn" />
+        </a>
+      </section>
+      <span id="line">|</span>
+      <section class="tim-info">
+        <p>Tim Primmer</p>
+        <a href="https://timprimmer.github.io/portfolio-website/" target="_blank">
+          <img class="website-icon" src="/assets/icons/open-iconic/svg/globe.svg" title="Tim's portfolio" alt="Link to Tim's portfolio" />
+        </a>
+        <a href="https://github.com/TimPrimmer" target="_blank">
+          <img class="github-icon" src="/assets/icons/GitHub-Mark-Light-32px.png" title="Tim's GitHub" alt="Link to Tim's GitHub" />
+        </a>
+        <a href="https://www.linkedin.com/in/timprimmer/" target="_blank">
+          <img class="linked-icon" src="/assets/icons/iconfinder_1964405_linkedin_logo_media_social_icon.svg" title="Tim's LinkedIn" alt="Link to Tim's LinkedIn" />
+        </a>
+      </section>
+      <span id="line">|</span>
+      <section class="tim-info">
+        <p>Derek Beckford</p>
+        <a href="https://derekbeckford.github.io/Derek-Beckford-Portfolio/" target="_blank">
+          <img class="website-icon" src="/assets/icons/open-iconic/svg/globe.svg" title="Derek's portfolio" alt="Link to Derek's portfolio" />
+        </a>
+        <a href="https://github.com/derekBeckford" target="_blank">
+          <img class="github-icon" src="/assets/icons/GitHub-Mark-Light-32px.png" title="Derek's GitHub" alt="Link to Derek's GitHub" />
+        </a>
+        <a href="https://www.linkedin.com/in/derekbeckford1/" target="_blank">
+          <img class="linked-icon" src="/assets/icons/iconfinder_1964405_linkedin_logo_media_social_icon.svg" title="Derek's LinkedIn" alt="Link to Derek's LinkedIn" />
+        </a>
+      </section>
+    </section>
+  </footer>
+  
+  {{!-- <script src="/assets/js/script.js"></script> --}}
+
+  {{#if loggedIn}}
+  <script src="/assets/js/logout.js"></script>
+  {{/if}}
+</body>
+
+</html>
