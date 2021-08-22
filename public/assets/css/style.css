@@ -708,6 +708,15 @@ textarea.comment-body {
   cursor: pointer;
 }
 
+#password-help {
+  padding: 0px 0px 10px 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #c7c7c7;
+  font-style: italic;
+}
+
 @media screen and (max-width: 1024px) {
   form {
     grid-template-columns: repeat(13, 1fr);
