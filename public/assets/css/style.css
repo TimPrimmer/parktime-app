@@ -326,6 +326,10 @@ form button:hover {
   padding-left: 10px;
 }
 
+.weather-container {
+  display: contents;
+}
+
 .modal-forecast-box {
   display: flex;
   justify-content: space-between;
@@ -792,7 +796,7 @@ textarea.comment-body {
     padding-bottom: 30px;
   }
 
-  #park-result-content {
+  .park-result-content {
     width: 90%;
   }
 }
@@ -973,4 +977,17 @@ textarea.comment-body {
 
 .text {
   padding-bottom: 5px;
+}
+
+.comments-msg {
+  padding: 0 20px;
+}
+
+.comments-msg a {
+  color: var(--main-color);
+  border-bottom: 1px solid transparent;
+}
+
+.comments-msg a:hover {
+  border-bottom: 1px solid var(--main-color);
 }
