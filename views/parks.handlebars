@@ -43,13 +43,13 @@
     {{#if pagination}}
     <div class="page-nav">
       {{#unless firstPage}}
-      <h3 class="page-arrow" id="left-arrow">⬅</h3>
+      <h3 class="page-arrow" id="left-arrow">&#8592;</h3>
       {{/unless}}
       {{#each pageArr as |page|}}
       <p class="page-num">{{page.pageNum}}</p>
       {{/each}}
       {{#unless lastPage}}
-      <h3 class="page-arrow" id="right-arrow">➡</h3>
+      <h3 class="page-arrow" id="right-arrow">&#8594;</h3>
       {{/unless}}
     </div>
     {{/if}}
