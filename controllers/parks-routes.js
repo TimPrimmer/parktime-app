@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { getDistance } = require("../utils/distance.js");
+const { convertName } = require("../utils/parkname-formatter.js");
 const { Park, Saved_Parks, Comment, User, Categories } = require("../models");
 
 // renders ALL parks no pagination
@@ -121,6 +122,7 @@ router.get('/:lat/:lon/:page', (req, res) => {
 
         for (x = 0; x < tempParks.length; x++) {
           tempParks[x].distance = getDistance(req.params.lat, req.params.lon, tempParks[x].latitude, tempParks[x].longitude);
+          tempParks[x].mapname = convertName(tempParks[x].name);
         }
 
         tempParks.sort((a, b) => (a.distance > b.distance) ? 1 : -1); // sorts by distance
@@ -230,6 +232,7 @@ router.get('/:lat/:lon/:page', (req, res) => {
 
       for (x = 0; x < tempParks.length; x++) {
         tempParks[x].distance = getDistance(req.params.lat, req.params.lon, tempParks[x].latitude, tempParks[x].longitude);
+        tempParks[x].mapname = convertName(tempParks[x].name);
       }
 
       tempParks.sort((a, b) => (a.distance > b.distance) ? 1 : -1); // sorts by distance
@@ -327,6 +330,7 @@ function savedParks(obj) {
 
   for (x = 0; x < parks.length; x++) {
     parks[x].distance = 0; // setting the distance to 0 as we're accessing the page w/o any distance data
+    parks[x].mapname = convertName(parks[x].name);
   }
 
   if (obj.req.session.user_id === undefined) { // checks to see if we are not signed in
