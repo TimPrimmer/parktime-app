@@ -27,9 +27,11 @@
   <div>
     {{> weather-forecast}}
   </div>
-  {{#if comments}}
+  
   <h3>Comments</h3>
-  {{/if}}
+  {{#unless comments}}
+  <p>There are no comments for this park yet. Please <a href="/login">login</a> to leave a comment. </p>
+  {{/unless}}
   <div class="comments">
     <ul class="comments"></ul>
     {{#each comments}}
