@@ -51,6 +51,10 @@ async function buildTempCommentCard(comment, userId, parkId) {
       listEl.append(userDiv);
       let commentTextBox = document.querySelector(`textarea[name="comment-body-${parkId}"]`);
       commentTextBox.value = "";
+
+      // hide comment message if this is the first comment and it's showing
+      let commentMsg = document.querySelector(`.comments-msg[data-park-id='${parkId}']`);
+      commentMsg.style.display = "none";
     })
   }
 }
