@@ -30,7 +30,12 @@
   
   <h3>Comments</h3>
   {{#unless comments}}
-  <p class="comments-msg" data-park-id="{{id}}">There are no comments for this park yet. Please <a href="/login">login</a> to leave a comment. </p>
+  <p class="comments-msg" data-park-id="{{id}}">
+    There are no comments for this park yet. 
+    {{#unless loggedIn}}
+    Please <a href="/login">login</a> to leave a comment. 
+    {{/unless}}
+  </p>
   {{/unless}}
   <div class="comments">
     <ul class="comments" data-park-id="{{id}}">
