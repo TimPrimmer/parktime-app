@@ -27,14 +27,15 @@ Parktime 2.0 is a completely revamped website, with all the same functionality o
 * Geoapify API
 * Google maps API
 * OpenWeather API
-* Sequelize
-* Express Session
-* Connect Session Sequelize
-* Express Handlebars
-* MySql2
-* Bcrypt
-* Node-fetch
-* Dotenv
+* [Express](https://www.npmjs.com/package/express)
+* [Sequelize](https://www.npmjs.com/package/sequelize)
+* [Express-Session](https://www.npmjs.com/package/express-session)
+* Connect-session-sequelize(https://www.npmjs.com/package/connect-session-sequelize)
+* [Express-handlebars](https://www.npmjs.com/package/express-handlebars)
+* [MySql2](https://www.npmjs.com/package/mysql2)
+* [bcrypt](https://www.npmjs.com/package/bcrypt)
+* [node-fetch](https://www.npmjs.com/package/node-fetch)
+* [dotenv](https://www.npmjs.com/package/dotenv)
 
 # Website
 https://parktime-2.herokuapp.com/
