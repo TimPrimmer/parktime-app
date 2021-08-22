@@ -57,7 +57,7 @@ Converting Parktime 1.0 to the MVC paradigm, converting a single-page app using 
 # Successes
 We collaborated well as a group, overcame the many challenges, merged very complicated files together, and learned a lot about full-stack web development throughout the process.
 
-# Screenshot
+# App Screenshots
 Homepage
 ![Screenshot of homepage](/public/assets/imgs/Parktime-2-home.png)
 Login Page
