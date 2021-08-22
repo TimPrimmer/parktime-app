@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const fetch = require('node-fetch');
-const { Saved_Parks, Park } = require("../models");
+const { Saved_Parks, Park, User, Comment } = require("../models");
 
 
 router.get('/', (req, res) => {
@@ -30,6 +30,19 @@ router.get("/saved_list", (req, res) => {
     },
     include: {
       model: Park,
+      include: [
+        {
+          model: Comment,
+          attributes: ["id", "comment_text", "user_id"],
+
+          include: [
+            {
+              model: User,
+              attributes: ["username", "email"],
+            },
+          ],
+        },
+      ],
     },
     order: [
       ['user_id', 'ASC'],
