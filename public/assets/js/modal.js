@@ -1,3 +1,13 @@
+
+// fires when we click outside of a modal
+$('.park-result-modal').click((event) => { 
+  event.stopPropagation();
+  let id = $(event.target).attr('id');
+  if (id != undefined) {
+    closeModal(id.split('-')[0]);
+  }
+}); 
+
 function openModal(parkCode) {
   document.getElementById(parkCode + "-modal").style.display = "flex";
 
