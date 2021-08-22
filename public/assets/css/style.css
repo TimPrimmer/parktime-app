@@ -305,9 +305,10 @@ form button:hover {
 
 .modal-saved {
   padding-top: 10px;
-  width: 100%;
   font-weight: 400;
   font-size: 20px;
+  cursor: pointer;
+  width: fit-content;
 }
 
 .close-modal {
@@ -508,6 +509,7 @@ form button:hover {
 .saved {
   font-weight: 600;
   font-size: 15px;
+  width: fit-content;
 }
 
 .saved::before, .modal-saved::before {
