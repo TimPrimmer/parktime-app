@@ -33,7 +33,7 @@
   <p class="comments-msg">There are no comments for this park yet. Please <a href="/login">login</a> to leave a comment. </p>
   {{/unless}}
   <div class="comments">
-    <ul class="comments"></ul>
+    <ul class="comments" data-park-id="{{id}}">
     {{#each comments}}
 
     <li>
@@ -45,8 +45,8 @@
         {{user.username}}
       </div>
     </li>
-    </ul>
     {{/each}}
+    </ul>
   </div>
   {{#if loggedIn}}
 

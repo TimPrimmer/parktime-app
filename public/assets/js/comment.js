@@ -1,4 +1,3 @@
-
 async function commentFormHandler(park_id) {
   const comment_text = document
     .querySelector(`textarea[name="comment-body-${park_id}"]`)
@@ -15,12 +14,44 @@ async function commentFormHandler(park_id) {
         "Content-Type": "application/json",
       },
     });
+      if (response.ok) {
+        response.json().then((data) => {
+          let userId = data.user_id;
+          buildTempCommentCard(comment_text, userId, park_id);
+        })
+      } else {
+        alert(response.statusText);
+      }
+  }
+}
 
-    //   if (response.ok) {
-    //     document.location.reload();
-    //   } else {
-    //     alert(response.statusText);
-    //   }
+async function buildTempCommentCard(comment, userId, parkId) {
+  const userData = await fetch(`/api/users/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  });
+
+  if (userData.ok) {
+    userData.json().then((data) => {
+      let username = data.username;
+      let commentUl = document.querySelector(`ul.comments[data-park-id='${parkId}']`);
+
+      // create comment HTML and append to ul container
+      let listEl = document.createElement("li");
+      commentUl.append(listEl);
+      let textDiv = document.createElement("div");
+      textDiv.innerHTML = comment;
+      textDiv.className = "text";
+      let userDiv = document.createElement("div");
+      userDiv.innerHTML = "🥾" + username;
+      userDiv.className = "username";
+      listEl.append(textDiv);
+      listEl.append(userDiv);
+      let commentTextBox = document.querySelector(`textarea[name="comment-body-${parkId}"]`);
+      commentTextBox.value = "";
+    })
   }
 }
 
