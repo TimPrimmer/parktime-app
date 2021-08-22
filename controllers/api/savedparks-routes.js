@@ -42,7 +42,7 @@ router.post("/", (req, res) => {
   // this shouldnt get triggered on the website as it should flip the "save" button to a "saved" button, but better safe than sorry
   Saved_Parks.findAll({
     Attributes: [[sequelize.fn('DISTINCT', sequelize.col('user_id')), 'user_id'], 'park_id'],
-    // group: ['user_id', 'park_id'],
+    //group: ['user_id', 'park_id'],
     where: {
       user_id: req.body.user_id,
       park_id: req.body.park_id

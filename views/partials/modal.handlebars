@@ -24,14 +24,21 @@
   <a href="{{url}}" class="modal-website">View Website</a>
   <img class="external-link-icon" src="/assets/icons/open-iconic/svg/external-link.svg" alt="external link icon">
   <h3 class="weather-forecast">5-Day Forecast</h3>
-  <div>
+  <div class="weather-container">
     {{> weather-forecast}}
   </div>
-  {{#if comments}}
+  
   <h3>Comments</h3>
-  {{/if}}
+  {{#unless comments}}
+  <p class="comments-msg" data-park-id="{{id}}">
+    There are no comments for this park yet. 
+    {{#unless loggedIn}}
+    Please <a href="/login">login</a> to leave a comment. 
+    {{/unless}}
+  </p>
+  {{/unless}}
   <div class="comments">
-    <ul class="comments"></ul>
+    <ul class="comments" data-park-id="{{id}}">
     {{#each comments}}
 
     <li>
@@ -43,8 +50,8 @@
         {{user.username}}
       </div>
     </li>
-    </ul>
     {{/each}}
+    </ul>
   </div>
   {{#if loggedIn}}
 
