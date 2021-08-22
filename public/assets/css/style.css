@@ -305,9 +305,10 @@ form button:hover {
 
 .modal-saved {
   padding-top: 10px;
-  width: 100%;
   font-weight: 400;
   font-size: 20px;
+  cursor: pointer;
+  width: fit-content;
 }
 
 .close-modal {
@@ -324,6 +325,10 @@ form button:hover {
   flex-wrap: wrap;
   justify-content: flex-start;
   padding-left: 10px;
+}
+
+.weather-container {
+  display: contents;
 }
 
 .modal-forecast-box {
@@ -508,6 +513,7 @@ form button:hover {
 .saved {
   font-weight: 600;
   font-size: 15px;
+  width: fit-content;
 }
 
 .saved::before, .modal-saved::before {
@@ -702,6 +708,15 @@ textarea.comment-body {
   cursor: pointer;
 }
 
+#password-help {
+  padding: 0px 0px 10px 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #c7c7c7;
+  font-style: italic;
+}
+
 @media screen and (max-width: 1024px) {
   form {
     grid-template-columns: repeat(13, 1fr);
@@ -792,7 +807,7 @@ textarea.comment-body {
     padding-bottom: 30px;
   }
 
-  #park-result-content {
+  .park-result-content {
     width: 90%;
   }
 }
@@ -973,4 +988,17 @@ textarea.comment-body {
 
 .text {
   padding-bottom: 5px;
+}
+
+.comments-msg {
+  padding: 0 20px;
+}
+
+.comments-msg a {
+  color: var(--main-color);
+  border-bottom: 1px solid transparent;
+}
+
+.comments-msg a:hover {
+  border-bottom: 1px solid var(--main-color);
 }

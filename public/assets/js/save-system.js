@@ -13,8 +13,6 @@ $(".saved").on('click', function (event) {
 
 saveOrDelete = (event) => {
 
-  console.log(resultsPage.attr("user_id"));
-  console.log($(event.target).attr("park_id"));
   if (resultsPage.attr("user_id") != 0) {
 
     if ($(event.target).text() === "Save") {
@@ -32,7 +30,6 @@ saveOrDelete = (event) => {
         .then(function (res) {
 
           if ($(event.target).hasClass("modal-saved")) { // if we click on the save button via the modal...
-            console.log("clicked on modal save");
             $(event.target).text("Saved"); // set modal to saved
             let parks = $(".saved").map(function () {
               if ($(this).attr("park_id") === $(event.target).attr("park_id")) {
@@ -43,7 +40,6 @@ saveOrDelete = (event) => {
           }
           else {
             if ($(event.target).hasClass("saved")) { // if we click on the save button via the park results
-              console.log("clicked on results save");
               $(event.target).text("Saved"); // set park results to saved
               let modalParks = $(".modal-saved").map(function () {
                 if ($(this).attr("park_id") === $(event.target).attr("park_id")) {
@@ -81,7 +77,6 @@ saveOrDelete = (event) => {
           }
           else {
             if ($(event.target).hasClass("saved")) { // if we click on the save button via the park results
-              console.log("clicked on results save");
               $(event.target).text("Save"); // set park results to save
               let modalParks = $(".modal-saved").map(function () {
                 if ($(this).attr("park_id") === $(event.target).attr("park_id")) {
