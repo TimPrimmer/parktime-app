@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const fetch = require('node-fetch');
+const { convertName } = require("../utils/parkname-formatter.js");
 const { Saved_Parks, Park, User, Comment } = require("../models");
 
 
@@ -55,6 +56,7 @@ router.get("/saved_list", (req, res) => {
       let parks = [];
       filteredParks.forEach((element) => {
         element.park.saved = true;
+        element.park.mapname = convertName(element.park.name);
         parks.push(element.park);
       });
 

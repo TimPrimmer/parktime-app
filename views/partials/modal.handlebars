@@ -27,30 +27,38 @@
   <div class="weather-container">
     {{> weather-forecast}}
   </div>
-  
+
+  <h3>Directions</h3>
+  <div class="maps-box">
+    <iframe class = "iframe"
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBvUej8oCiG__h7_jtiZKORjFKY1Uk-fu8&q={{mapname}}&zoom=6"
+       style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+
+
   <h3>Comments</h3>
   {{#unless comments}}
   <p class="comments-msg" data-park-id="{{id}}">
-    There are no comments for this park yet. 
+    There are no comments for this park yet.
     {{#unless loggedIn}}
-    Please <a href="/login">login</a> to leave a comment. 
+    Please <a href="/login">login</a> to leave a comment.
     {{/unless}}
   </p>
   {{/unless}}
   <div class="comments">
     <ul class="comments" data-park-id="{{id}}">
-    {{#each comments}}
+      {{#each comments}}
 
-    <li>
-      <div class="text">
-        {{comment_text}}
-      </div>
-      <div class="username">
-        🥾
-        {{user.username}}
-      </div>
-    </li>
-    {{/each}}
+      <li>
+        <div class="text">
+          {{comment_text}}
+        </div>
+        <div class="username">
+          🥾
+          {{user.username}}
+        </div>
+      </li>
+      {{/each}}
     </ul>
   </div>
   {{#if loggedIn}}
@@ -62,7 +70,8 @@
     </div>
 
     <div>
-      <button type="button" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">Add Comment</button>
+      <button type="button" class="btn btn-primary add-comment" onclick="commentFormHandler('{{id}}')">Add
+        Comment</button>
     </div>
   </form>
 
