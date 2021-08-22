@@ -30,7 +30,7 @@ Parktime 2.0 is a completely revamped website, with all the same functionality o
 * [Express](https://www.npmjs.com/package/express)
 * [Sequelize](https://www.npmjs.com/package/sequelize)
 * [Express-Session](https://www.npmjs.com/package/express-session)
-* Connect-session-sequelize(https://www.npmjs.com/package/connect-session-sequelize)
+* [Connect-session-sequelize](https://www.npmjs.com/package/connect-session-sequelize)
 * [Express-handlebars](https://www.npmjs.com/package/express-handlebars)
 * [MySql2](https://www.npmjs.com/package/mysql2)
 * [bcrypt](https://www.npmjs.com/package/bcrypt)
