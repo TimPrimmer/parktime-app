@@ -552,8 +552,9 @@ form button:hover {
 }
 
 .page-arrow {
-  font-size: 50px;
+  font-size: 40px;
   cursor: pointer;
+  padding: 0 10px;
 }
 
 .page-num {
@@ -873,6 +874,14 @@ textarea.comment-body {
 }
 
 @media screen and (max-width: 560px) {
+  h1 {
+    padding: 15px 5px 15px 25px;
+  }
+
+  nav {
+    padding: 15px 10px 15px 10px;
+  }
+
   .address, #address {
     grid-column: 2 / span 11;
   }
@@ -931,13 +940,39 @@ textarea.comment-body {
     display: none;
   }
 
+  footer {
+    height: 200px;
+    padding: 20px 10px 0;
+  }
+}
+
+@media screen and (max-width: 445px) {
+  header {
+    justify-content: center;
+  }
+
+  h1 {
+    padding: 15px 15px;
+  }
+
+  nav {
+    justify-content: center;
+    padding: 0 15px 5px;
+  }
+
+  #login {
+    padding: 15px 30px 15px 50px;
+  }
+
+  .login-section, .signup-section {
+    margin: 60px 15px 10px;
+  }
 }
 
 @media screen and (max-width: 415px) {
   h1 {
     text-align: center;
     flex: 100%;
-    padding-left: 0;
   }
 
   h1 a {
@@ -946,15 +981,24 @@ textarea.comment-body {
 
   header nav {
     flex: 100%;
+    justify-content: center;
+    padding: 0 15px 5px;
   }
 
-  nav ul {
-    display: block;
-    padding-bottom: 20px;
-  }  
-
   nav ul li {
-    text-align: center;
+    padding-right: 30px;
+  }
+
+  #login {
+    padding: 0;
+  }
+
+  #login a {
+    margin: 0 auto;
+  }
+
+  #logout {
+    margin-right: 0;
   }
 
   #saved-parks {
